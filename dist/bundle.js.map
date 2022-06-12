@@ -1,0 +1,1 @@
+{"version":3,"file":"bundle.js","mappings":";;;;;AAAA,mB","sources":["webpack://to-do-list/./src/index.js"],"sourcesContent":["console.log(\"YOM\");"],"names":[],"sourceRoot":""}
