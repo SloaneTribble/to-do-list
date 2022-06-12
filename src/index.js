@@ -1,5 +1,6 @@
 import Project from './project';
 import ToDo from './todo';
+import {test} from './test';
 
 let newProject = new Project("Dude", "Bro", 12, 1, "Hey");
 
@@ -10,5 +11,7 @@ newProject.addToDo(newToDo);
 newProject.addToDo("To do 2");
 
 newProject.getToDos();
+
+test(newProject);
 
 console.log("Yes");
