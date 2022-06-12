@@ -73,6 +73,68 @@ class Project{
     }
 }
 
+/***/ }),
+
+/***/ "./src/todo.js":
+/*!*********************!*\
+  !*** ./src/todo.js ***!
+  \*********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ToDo)
+/* harmony export */ });
+class ToDo{
+    constructor(title, description, dueDate, priority, notes){
+        this.title = title;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.priority = priority;
+        this.notes = notes;
+    }
+
+    setTitle(title){
+        this.title = title;
+    }
+
+    setDescription(description){
+        this.description = description;
+    }
+
+    setDueDate(dueDate){
+        this.dueDate = dueDate;
+    }
+
+    setPriority(priority){
+        this.priority = priority;
+    }
+
+    setNotes(notes){
+        this.notes = notes;
+    }
+
+    getTitle(){
+        return this.title;
+    }
+
+    getDescription(){
+        return this.description;
+    }
+
+    getDueDate(){
+        return this.dueDate
+    }
+
+    getPriority(){
+        return this.priority
+    }
+
+    getNotes(){
+        return this.notes
+    }
+}
+
 /***/ })
 
 /******/ 	});
@@ -139,11 +201,15 @@ var __webpack_exports__ = {};
   \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./project */ "./src/project.js");
+/* harmony import */ var _todo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./todo */ "./src/todo.js");
+
 
 
 let newProject = new _project__WEBPACK_IMPORTED_MODULE_0__["default"]("Dude", "Bro", 12, 1, "Hey");
 
-newProject.addToDo("To do1");
+let newToDo = new _todo__WEBPACK_IMPORTED_MODULE_1__["default"]("Wake up", "Time to get up", 13, 1, "Wake!");
+
+newProject.addToDo(newToDo);
 
 newProject.addToDo("To do 2");
 
