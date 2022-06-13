@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "html,\nbody{\n    box-sizing: border-box;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}", "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;;IAEI,sBAAsB;AAC1B;;AAEA;IACI,iBAAiB;IACjB,aAAa;IACb,OAAO;AACX;AACA;;;IAGI,mBAAmB;IACnB,eAAe;IACf,SAAS;AACb","sourcesContent":["html,\nbody{\n    box-sizing: border-box;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "html,\nbody{\n    box-sizing: border-box;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.project-form{\n    display: grid;\n}", "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;;IAEI,sBAAsB;AAC1B;;AAEA;IACI,iBAAiB;IACjB,aAAa;IACb,OAAO;AACX;AACA;;;IAGI,mBAAmB;IACnB,eAAe;IACf,SAAS;AACb;;AAEA;IACI,aAAa;AACjB","sourcesContent":["html,\nbody{\n    box-sizing: border-box;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.project-form{\n    display: grid;\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -599,12 +599,45 @@ function projectForm(){
     form.classList.add('project-form');
     form.setAttribute('onSubmit', 'return doForm()');
 
+    const titleLabel = document.createElement('label');
+    titleLabel.setAttribute('for', 'title');
+    titleLabel.innerText = "Title: ";
+
     const title = document.createElement('input');
     title.setAttribute('type', 'text');
     title.setAttribute('name', 'title');
     title.setAttribute('placeholder', 'Title');
+    title.setAttribute('id', 'title');
 
+    const descriptionLabel = document.createElement('label');
+    descriptionLabel.setAttribute('for', 'description');
+    descriptionLabel.innerText = "Description: ";
+
+    const description = document.createElement('input');
+    description.setAttribute('type', 'text');
+    description.setAttribute('name', 'description');
+    description.setAttribute('placeholder', 'Description (<200 characters)');
+    description.setAttribute('maxlength', '199');
+    description.setAttribute('id', 'description');
+
+    const dueDateLabel = document.createElement('label');
+    dueDateLabel.setAttribute('for', 'due-date');
+    dueDateLabel.innerText = "Due date: ";
+
+    const dueDate = document.createElement('input');
+    dueDate.setAttribute('type', 'date');
+    dueDate.setAttribute('name', 'due-date');
+    dueDate.setAttribute('id', 'due-date');
+
+    
+    form.appendChild(titleLabel);
     form.appendChild(title);
+
+    form.appendChild(descriptionLabel);
+    form.appendChild(description);
+
+    form.appendChild(dueDateLabel);
+    form.appendChild(dueDate);
 
     return form;
 }
