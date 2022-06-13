@@ -629,6 +629,23 @@ function projectForm(){
     dueDate.setAttribute('name', 'due-date');
     dueDate.setAttribute('id', 'due-date');
 
+    let priorities = ['low', 'high'];
+
+    const select = document.createElement('select');
+    select.name = 'priority';
+    select.id = 'priority';
+
+    for (const priority of priorities){
+        let option = document.createElement('option');
+        option.value = priority;
+        option.text = priority.charAt(0).toUpperCase() + priority.slice(1);
+        select.appendChild(option);
+    }
+
+    const priorityLabel = document.createElement('label');
+    priorityLabel.innerText = 'Priority: ';
+    priorityLabel.htmlFor = 'priority';
+
     
     form.appendChild(titleLabel);
     form.appendChild(title);
@@ -638,6 +655,9 @@ function projectForm(){
 
     form.appendChild(dueDateLabel);
     form.appendChild(dueDate);
+
+    form.appendChild(priorityLabel);
+    form.appendChild(select);
 
     return form;
 }
