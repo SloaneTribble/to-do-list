@@ -28,8 +28,12 @@ let currentProjects = localStorage.getObj(key) || [];
 
 localStorage.setObj(key, currentProjects);  
 
+
+
 let newProjectButton = document.querySelector('.new-project-button');
 newProjectButton.addEventListener('click', newProject);
+
+
 
 
 let project1 = new Project("Dude", "Bro", 12, 1, "Hey");

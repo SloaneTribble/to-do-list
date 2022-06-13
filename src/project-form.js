@@ -1,3 +1,6 @@
+import {projectSubmit} from './project-submit';
+
+
 function newProject(){
     const projectContainer = document.querySelector('.project-container');
     projectContainer.appendChild(projectForm());
@@ -6,7 +9,6 @@ function newProject(){
 function projectForm(){
     const form = document.createElement("form");
     form.classList.add('project-form');
-    form.setAttribute('onSubmit', 'return doForm()');
 
     const titleLabel = document.createElement('label');
     titleLabel.setAttribute('for', 'title');
@@ -17,6 +19,7 @@ function projectForm(){
     title.setAttribute('name', 'title');
     title.setAttribute('placeholder', 'Title');
     title.setAttribute('id', 'title');
+    title.required = true;
 
     const descriptionLabel = document.createElement('label');
     descriptionLabel.setAttribute('for', 'description');
@@ -28,6 +31,7 @@ function projectForm(){
     description.setAttribute('placeholder', 'Description (<200 characters)');
     description.setAttribute('maxlength', '199');
     description.setAttribute('id', 'description');
+    description.required = true;
 
     const dueDateLabel = document.createElement('label');
     dueDateLabel.setAttribute('for', 'due-date');
@@ -37,12 +41,18 @@ function projectForm(){
     dueDate.setAttribute('type', 'date');
     dueDate.setAttribute('name', 'due-date');
     dueDate.setAttribute('id', 'due-date');
+    dueDate.required = true;
+
+    const priorityLabel = document.createElement('label');
+    priorityLabel.innerText = 'Priority: ';
+    priorityLabel.htmlFor = 'priority';
 
     let priorities = ['low', 'high'];
 
     const select = document.createElement('select');
     select.name = 'priority';
     select.id = 'priority';
+    select.required = true;
 
     for (const priority of priorities){
         let option = document.createElement('option');
@@ -51,9 +61,11 @@ function projectForm(){
         select.appendChild(option);
     }
 
-    const priorityLabel = document.createElement('label');
-    priorityLabel.innerText = 'Priority: ';
-    priorityLabel.htmlFor = 'priority';
+    const submit = document.createElement('button');
+    submit.classList.add('project-submit');
+    submit.innerText = "Submit";
+    submit.onclick = projectSubmit;
+    
 
     
     form.appendChild(titleLabel);
@@ -67,6 +79,12 @@ function projectForm(){
 
     form.appendChild(priorityLabel);
     form.appendChild(select);
+
+    form.appendChild(submit);
+
+    function handleForm(event) {event.preventDefault();}
+    form.addEventListener('submit', handleForm);
+    
 
     return form;
 }

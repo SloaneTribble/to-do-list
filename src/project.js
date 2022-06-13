@@ -1,10 +1,9 @@
 export default class Project{
-    constructor(title, description, dueDate, priority, notes){
+    constructor(title, description, dueDate, priority){
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
-        this.notes = notes;
         this.toDos = [];
     }
 
@@ -36,10 +35,6 @@ export default class Project{
         this.priority = priority;
     }
 
-    setNotes(notes){
-        this.notes = notes;
-    }
-
     getTitle(){
         return this.title;
     }
@@ -56,7 +51,5 @@ export default class Project{
         return this.priority
     }
 
-    getNotes(){
-        return this.notes
-    }
+
 }
