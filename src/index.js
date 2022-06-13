@@ -49,8 +49,9 @@ currentProjects.push(project1);
 
 // Accessing individual todos from a given project
 
-console.log(currentProjects[0].toDos[1]);
+// console.log(currentProjects[0].toDos[1]);
 
-localStorage.setObj(key, currentProjects);
+// localStorage.setObj(key, currentProjects);
+
 
 

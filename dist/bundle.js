@@ -698,6 +698,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./project */ "./src/project.js");
 
 
+Storage.prototype.setObj = function(key, obj) {
+    return this.setItem(key, JSON.stringify(obj))
+}
+Storage.prototype.getObj = function(key) {
+    return JSON.parse(this.getItem(key))
+}
+
+const key = "projects";
+
+// If currentProjects is null, assign an empty array
+let currentProjects = localStorage.getObj(key) || [];
+
+
 function projectSubmit(){
     const title = document.getElementById("title").value;
     const description = document.getElementById("description").value;
@@ -705,6 +718,10 @@ function projectSubmit(){
     const priority = document.getElementById("priority").value;
 
     const newProject = new _project__WEBPACK_IMPORTED_MODULE_0__["default"](title, description, dueDate, priority);
+    currentProjects.push(newProject);
+
+    localStorage.setObj(key, currentProjects);  
+
 
     return newProject;
 }
@@ -979,9 +996,10 @@ currentProjects.push(project1);
 
 // Accessing individual todos from a given project
 
-console.log(currentProjects[0].toDos[1]);
+// console.log(currentProjects[0].toDos[1]);
 
-localStorage.setObj(key, currentProjects);
+// localStorage.setObj(key, currentProjects);
+
 
 
 
