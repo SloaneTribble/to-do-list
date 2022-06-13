@@ -540,6 +540,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "displayProjects": () => (/* binding */ displayProjects)
 /* harmony export */ });
+/* harmony import */ var _todo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo */ "./src/todo.js");
+
+
+
 Storage.prototype.setObj = function(key, obj) {
     return this.setItem(key, JSON.stringify(obj))
 }
@@ -577,14 +581,22 @@ function displayProjects(){
         priority.id = i + 1;
         priority.innerText = "Priority: " + currentProjects[i].priority;
 
+        const toDos = document.createElement('div');
+        toDos.id = i + 1;
+        let toDoTitle = (currentProjects[i].toDos.length > 0)? currentProjects[i].toDos[0].title: "None";
+        toDos.textContent = "To dos: " + toDoTitle;
+
+
         project.appendChild(title);
         project.appendChild(description);
         project.appendChild(dueDate);
         project.appendChild(priority);
+        project.appendChild(toDos);
 
         projectContainer.appendChild(project);
     }
 }
+
 
 
 
@@ -871,12 +883,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ ToDo)
 /* harmony export */ });
 class ToDo{
-    constructor(title, description, dueDate, priority, notes){
+    constructor(title, description, dueDate, priority){
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
-        this.notes = notes;
     }
 
     setTitle(title){
@@ -895,10 +906,6 @@ class ToDo{
         this.priority = priority;
     }
 
-    setNotes(notes){
-        this.notes = notes;
-    }
-
     getTitle(){
         return this.title;
     }
@@ -915,9 +922,6 @@ class ToDo{
         return this.priority
     }
 
-    getNotes(){
-        return this.notes
-    }
 }
 
 /***/ })
@@ -1050,22 +1054,22 @@ newProjectButton.addEventListener('click', _project_form__WEBPACK_IMPORTED_MODUL
 
 
 
-let project1 = new _project__WEBPACK_IMPORTED_MODULE_4__["default"]("Dude", "Bro", 12, 1, "Hey");
+let project1 = new _project__WEBPACK_IMPORTED_MODULE_4__["default"]("Dude", "Bro", 12, 1);
 
-let newToDo = new _todo__WEBPACK_IMPORTED_MODULE_5__["default"]("Wake up", "Time to get up", 13, 1, "Wake!");
+let newToDo = new _todo__WEBPACK_IMPORTED_MODULE_5__["default"]("Wake up", "Time to get up", 13, 1);
 
 project1.addToDo(newToDo);
 
 project1.addToDo("To do 2");
 
 
-currentProjects.push(project1);
 
 // Accessing individual todos from a given project
 
-// console.log(currentProjects[0].toDos[1]);
+console.log(currentProjects[0].toDos[1]);
 
-// localStorage.setObj(key, currentProjects);
+localStorage.setObj(key, currentProjects);
+
 
 
 
