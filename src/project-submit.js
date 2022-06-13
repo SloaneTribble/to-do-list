@@ -1,4 +1,5 @@
 import Project from './project';
+import {displayProjects} from './display-projects';
 
 Storage.prototype.setObj = function(key, obj) {
     return this.setItem(key, JSON.stringify(obj))
@@ -23,7 +24,7 @@ function projectSubmit(){
     currentProjects.push(newProject);
 
     localStorage.setObj(key, currentProjects);  
-
+    displayProjects();
 
     return newProject;
 }

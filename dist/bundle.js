@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "html,\nbody{\n    box-sizing: border-box;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.project-form{\n    display: grid;\n}", "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;;IAEI,sBAAsB;AAC1B;;AAEA;IACI,iBAAiB;IACjB,aAAa;IACb,OAAO;AACX;AACA;;;IAGI,mBAAmB;IACnB,eAAe;IACf,SAAS;AACb;;AAEA;IACI,aAAa;AACjB","sourcesContent":["html,\nbody{\n    box-sizing: border-box;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.project-form{\n    display: grid;\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "html,\nbody{\n    box-sizing: border-box;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.project-form{\n    display: grid;\n}\n\n.project-cell{\n    border: 2px solid black;\n}", "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;;IAEI,sBAAsB;AAC1B;;AAEA;IACI,iBAAiB;IACjB,aAAa;IACb,OAAO;AACX;AACA;;;IAGI,mBAAmB;IACnB,eAAe;IACf,SAAS;AACb;;AAEA;IACI,aAAa;AACjB;;AAEA;IACI,uBAAuB;AAC3B","sourcesContent":["html,\nbody{\n    box-sizing: border-box;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.project-form{\n    display: grid;\n}\n\n.project-cell{\n    border: 2px solid black;\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -530,6 +530,66 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
+/***/ "./src/display-projects.js":
+/*!*********************************!*\
+  !*** ./src/display-projects.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "displayProjects": () => (/* binding */ displayProjects)
+/* harmony export */ });
+Storage.prototype.setObj = function(key, obj) {
+    return this.setItem(key, JSON.stringify(obj))
+}
+Storage.prototype.getObj = function(key) {
+    return JSON.parse(this.getItem(key))
+}
+
+const key = "projects";
+
+// If currentProjects is null, assign an empty array
+let currentProjects = localStorage.getObj(key) || [];
+
+function displayProjects(){
+
+    for(let i = 0; i < currentProjects.length; i++) {
+
+        const projectContainer = document.querySelector(".project-container");
+
+        const project = document.createElement('div');
+        project.classList.add('project-cell');
+
+        const title = document.createElement('div');
+        title.id = i + 1;
+        title.innerText = "Title: " + currentProjects[i].title;
+
+        const description = document.createElement('div');
+        description.id = i + 1;
+        description.innerText = "Description: " + currentProjects[i].description;
+
+        const dueDate = document.createElement('div');
+        dueDate.id = i + 1;
+        dueDate.innerText = "Due date: " + currentProjects[i].dueDate;
+
+        const priority = document.createElement('div');
+        priority.id = i + 1;
+        priority.innerText = "Priority: " + currentProjects[i].priority;
+
+        project.appendChild(title);
+        project.appendChild(description);
+        project.appendChild(dueDate);
+        project.appendChild(priority);
+
+        projectContainer.appendChild(project);
+    }
+}
+
+
+
+/***/ }),
+
 /***/ "./src/home.js":
 /*!*********************!*\
   !*** ./src/home.js ***!
@@ -696,6 +756,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "projectSubmit": () => (/* binding */ projectSubmit)
 /* harmony export */ });
 /* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./project */ "./src/project.js");
+/* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
+
 
 
 Storage.prototype.setObj = function(key, obj) {
@@ -721,7 +783,7 @@ function projectSubmit(){
     currentProjects.push(newProject);
 
     localStorage.setObj(key, currentProjects);  
-
+    (0,_display_projects__WEBPACK_IMPORTED_MODULE_1__.displayProjects)();
 
     return newProject;
 }
@@ -942,12 +1004,15 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ "./src/style.css");
 /* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./home */ "./src/home.js");
-/* harmony import */ var _project_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./project-form */ "./src/project-form.js");
-/* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./project */ "./src/project.js");
-/* harmony import */ var _todo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./todo */ "./src/todo.js");
+/* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
+/* harmony import */ var _project_form__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./project-form */ "./src/project-form.js");
+/* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./project */ "./src/project.js");
+/* harmony import */ var _todo__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./todo */ "./src/todo.js");
 
 
 // Initial page load function
+
+
 
 
 
@@ -958,6 +1023,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 document.body.appendChild((0,_home__WEBPACK_IMPORTED_MODULE_1__.homeMaker)());
+
+(0,_display_projects__WEBPACK_IMPORTED_MODULE_2__.displayProjects)();
 
 // Extend default storage-objects to handle arrays and objects
 
@@ -978,14 +1045,14 @@ localStorage.setObj(key, currentProjects);
 
 
 let newProjectButton = document.querySelector('.new-project-button');
-newProjectButton.addEventListener('click', _project_form__WEBPACK_IMPORTED_MODULE_2__.newProject);
+newProjectButton.addEventListener('click', _project_form__WEBPACK_IMPORTED_MODULE_3__.newProject);
 
 
 
 
-let project1 = new _project__WEBPACK_IMPORTED_MODULE_3__["default"]("Dude", "Bro", 12, 1, "Hey");
+let project1 = new _project__WEBPACK_IMPORTED_MODULE_4__["default"]("Dude", "Bro", 12, 1, "Hey");
 
-let newToDo = new _todo__WEBPACK_IMPORTED_MODULE_4__["default"]("Wake up", "Time to get up", 13, 1, "Wake!");
+let newToDo = new _todo__WEBPACK_IMPORTED_MODULE_5__["default"]("Wake up", "Time to get up", 13, 1, "Wake!");
 
 project1.addToDo(newToDo);
 

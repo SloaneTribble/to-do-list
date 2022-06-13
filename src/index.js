@@ -3,6 +3,8 @@ import './style.css';
 // Initial page load function
 import {homeMaker} from './home';
 
+import {displayProjects} from './display-projects';
+
 import {newProject} from './project-form';
 
 // Project object
@@ -11,6 +13,8 @@ import Project from './project';
 import ToDo from './todo';
 
 document.body.appendChild(homeMaker());
+
+displayProjects();
 
 // Extend default storage-objects to handle arrays and objects
 

@@ -19,3 +19,7 @@ body{
 .project-form{
     display: grid;
 }
+
+.project-cell{
+    border: 2px solid black;
+}
