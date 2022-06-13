@@ -1,10 +1,9 @@
 export default class ToDo{
-    constructor(title, description, dueDate, priority, notes){
+    constructor(title, description, dueDate, priority){
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
-        this.notes = notes;
     }
 
     setTitle(title){
@@ -23,10 +22,6 @@ export default class ToDo{
         this.priority = priority;
     }
 
-    setNotes(notes){
-        this.notes = notes;
-    }
-
     getTitle(){
         return this.title;
     }
@@ -43,7 +38,4 @@ export default class ToDo{
         return this.priority
     }
 
-    getNotes(){
-        return this.notes
-    }
 }

@@ -1,3 +1,6 @@
+import { hoursToSeconds } from "date-fns";
+import ToDo from './todo';
+
 Storage.prototype.setObj = function(key, obj) {
     return this.setItem(key, JSON.stringify(obj))
 }
@@ -35,13 +38,21 @@ function displayProjects(){
         priority.id = i + 1;
         priority.innerText = "Priority: " + currentProjects[i].priority;
 
+        const toDos = document.createElement('div');
+        toDos.id = i + 1;
+        let toDoTitle = (currentProjects[i].toDos.length > 0)? currentProjects[i].toDos[0].title: "None";
+        toDos.textContent = "To dos: " + toDoTitle;
+
+
         project.appendChild(title);
         project.appendChild(description);
         project.appendChild(dueDate);
         project.appendChild(priority);
+        project.appendChild(toDos);
 
         projectContainer.appendChild(project);
     }
 }
+
 
 export {displayProjects};

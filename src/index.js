@@ -40,22 +40,22 @@ newProjectButton.addEventListener('click', newProject);
 
 
 
-let project1 = new Project("Dude", "Bro", 12, 1, "Hey");
+let project1 = new Project("Dude", "Bro", 12, 1);
 
-let newToDo = new ToDo("Wake up", "Time to get up", 13, 1, "Wake!");
+let newToDo = new ToDo("Wake up", "Time to get up", 13, 1);
 
 project1.addToDo(newToDo);
 
 project1.addToDo("To do 2");
 
 
-currentProjects.push(project1);
 
 // Accessing individual todos from a given project
 
-// console.log(currentProjects[0].toDos[1]);
+console.log(currentProjects[0].toDos[1]);
 
-// localStorage.setObj(key, currentProjects);
+localStorage.setObj(key, currentProjects);
+
 
 
 
