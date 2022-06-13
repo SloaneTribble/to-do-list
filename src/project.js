@@ -13,9 +13,11 @@ export default class Project{
     }
 
     getToDos(){
+        let toDos = [];
         for(let i = 0; i < this.toDos.length; i++){
-            console.log(this.toDos[i]);
+            toDos.push(this.toDos[i]);
         }
+        return toDos;
     }
 
     setTitle(title){
