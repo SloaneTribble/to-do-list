@@ -554,13 +554,19 @@ Storage.prototype.getObj = function(key) {
 const key = "projects";
 
 // If currentProjects is null, assign an empty array
-let currentProjects = localStorage.getObj(key) || [];
 
 function displayProjects(){
 
+    let currentProjects = localStorage.getObj(key) || [];
+
+    const projectContainer = document.querySelector(".project-container");
+
+    // Clear the current display to prevent repetition (?)
+    projectContainer.innerHTML = '';
+
+
     for(let i = 0; i < currentProjects.length; i++) {
 
-        const projectContainer = document.querySelector(".project-container");
 
         const project = document.createElement('div');
         project.classList.add('project-cell');
@@ -577,9 +583,14 @@ function displayProjects(){
         dueDate.id = i + 1;
         dueDate.innerText = "Due date: " + currentProjects[i].dueDate;
 
+        // Priority should affect border color
+
         const priority = document.createElement('div');
         priority.id = i + 1;
         priority.innerText = "Priority: " + currentProjects[i].priority;
+
+        // Need to iterate through to dos, and make sure to allow each one to be crossed off
+        // or deleted
 
         const toDos = document.createElement('div');
         toDos.id = i + 1;
@@ -679,32 +690,32 @@ function projectForm(){
     titleLabel.innerText = "Title: ";
 
     const title = document.createElement('input');
-    title.setAttribute('type', 'text');
-    title.setAttribute('name', 'title');
-    title.setAttribute('placeholder', 'Title');
-    title.setAttribute('id', 'title');
+    title.type = 'text';
+    title.name = 'title';
+    title.placeholder = 'Title';
+    title.id = 'title';
     title.required = true;
 
     const descriptionLabel = document.createElement('label');
-    descriptionLabel.setAttribute('for', 'description');
+    descriptionLabel.for = 'description';
     descriptionLabel.innerText = "Description: ";
 
     const description = document.createElement('input');
-    description.setAttribute('type', 'text');
-    description.setAttribute('name', 'description');
-    description.setAttribute('placeholder', 'Description (<200 characters)');
-    description.setAttribute('maxlength', '199');
-    description.setAttribute('id', 'description');
+    description.type = 'text';
+    description.name = 'description';
+    description.placeholder = 'Description (<200 characters)';
+    description.maxlength = '199';
+    description.id = 'description';
     description.required = true;
 
     const dueDateLabel = document.createElement('label');
-    dueDateLabel.setAttribute('for', 'due-date');
+    dueDateLabel.for= 'due-date';
     dueDateLabel.innerText = "Due date: ";
 
     const dueDate = document.createElement('input');
-    dueDate.setAttribute('type', 'date');
-    dueDate.setAttribute('name', 'due-date');
-    dueDate.setAttribute('id', 'due-date');
+    dueDate.type = 'date';
+    dueDate.name = 'due-date';
+    dueDate.id = 'due-date';
     dueDate.required = true;
 
     const priorityLabel = document.createElement('label');
@@ -769,6 +780,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./project */ "./src/project.js");
 /* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
+// This module contains a function for pushing a new project to the 
+// currentProjects array and locally storing that array
+
+// Each time currentProjects is updated, displayProjects() is called
+// to ensure that the user sees all of the projects in storage
+
 
 
 
@@ -1047,29 +1064,17 @@ let currentProjects = localStorage.getObj(key) || [];
 localStorage.setObj(key, currentProjects);  
 
 
+// Button for creating a new project
 
 let newProjectButton = document.querySelector('.new-project-button');
 newProjectButton.addEventListener('click', _project_form__WEBPACK_IMPORTED_MODULE_3__.newProject);
 
 
 
-
-let project1 = new _project__WEBPACK_IMPORTED_MODULE_4__["default"]("Dude", "Bro", 12, 1);
-
-let newToDo = new _todo__WEBPACK_IMPORTED_MODULE_5__["default"]("Wake up", "Time to get up", 13, 1);
-
-project1.addToDo(newToDo);
-
-project1.addToDo("To do 2");
-
-
-
 // Accessing individual todos from a given project
 
-console.log(currentProjects[0].toDos[1]);
 
 localStorage.setObj(key, currentProjects);
-
 
 
 
