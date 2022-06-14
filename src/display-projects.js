@@ -28,6 +28,7 @@ function displayProjects(){
 
         const project = document.createElement('div');
         project.classList.add('project-cell');
+        project.id = i + 1;
 
         const title = document.createElement('div');
         title.id = i + 1;
@@ -47,13 +48,14 @@ function displayProjects(){
         priority.id = i + 1;
         priority.innerText = "Priority: " + currentProjects[i].priority;
 
-        // Need to iterate through to dos, and make sure to allow each one to be crossed off
-        // or deleted
 
-        const toDos = document.createElement('div');
+        const toDos = document.createElement('button');
         toDos.id = i + 1;
-        let toDoTitle = (currentProjects[i].toDos.length > 0)? currentProjects[i].toDos[0].title: "None";
-        toDos.textContent = "To dos: " + toDoTitle;
+        toDos.innerText = "View to-dos";
+        toDos.addEventListener('click', function(){
+            project.appendChild(displayToDos(i));
+        });
+
 
         const addToDo = document.createElement('button');
         addToDo.classList.add('add-to-do-button');
@@ -81,6 +83,39 @@ function displayProjects(){
 
         projectContainer.appendChild(project);
     }
+}
+
+function displayToDos(index){
+
+    let currentProjects = localStorage.getObj(key) || [];
+
+    let project = currentProjects[index];
+    let projectToDos = project.toDos;
+    
+    const toDoList = document.createElement('div');
+    toDoList.classList.add('to-do');
+
+    for (const toDo in projectToDos){
+
+        const title = document.createElement('div');
+        title.innerText = projectToDos[toDo].title;
+
+        const description = document.createElement('div');
+        description.innerText = projectToDos[toDo].description;
+
+        const dueDate = document.createElement('div');
+        dueDate.innerText = projectToDos[toDo].dueDate;
+
+        const priority = document.createElement('div');
+        priority.innerText = projectToDos[toDo].priority;
+
+        toDoList.appendChild(title);
+        toDoList.appendChild(description);
+        toDoList.appendChild(dueDate);
+        toDoList.appendChild(priority);
+    }
+
+    return toDoList;
 }
 
 function remove(index){

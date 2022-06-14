@@ -16,11 +16,14 @@ Storage.prototype.getObj = function(key) {
 
 const key = "projects";
 
-// If currentProjects is null, assign an empty array
-let currentProjects = localStorage.getObj(key) || [];
+
 
 
 function projectSubmit(){
+
+    // If currentProjects is null, assign an empty array
+    let currentProjects = localStorage.getObj(key) || [];
+    
     const title = document.getElementById("title").value;
     const description = document.getElementById("description").value;
     const dueDate = document.getElementById("due-date").value;
