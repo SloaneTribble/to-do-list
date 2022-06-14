@@ -604,7 +604,7 @@ function displayProjects(){
         addToDo.innerText = 'Add to-do';
         addToDo.addEventListener('click', function(){
             project.appendChild((0,_form__WEBPACK_IMPORTED_MODULE_1__.form)('todo', i));
-        })
+        });
 
 
         const removeProject = document.createElement('button');
@@ -749,9 +749,6 @@ function form(input, index){
     return form;
 }
 
-function sayHi(){
-    console.log("hi");
-}
 
 
 
@@ -981,11 +978,13 @@ Storage.prototype.getObj = function(key) {
 
 const key = "projects";
 
-// If currentProjects is null, assign an empty array
-let currentProjects = localStorage.getObj(key) || [];
+
 
 
 function toDoSubmit(index){
+
+    // If currentProjects is null, assign an empty array
+    let currentProjects = localStorage.getObj(key) || [];
 
     let project = currentProjects[index];
 
@@ -1190,7 +1189,6 @@ newProjectButton.addEventListener('click', _project_form__WEBPACK_IMPORTED_MODUL
 
 
 // Accessing individual todos from a given project
-
 
 
 
