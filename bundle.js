@@ -603,7 +603,7 @@ function displayProjects(){
         addToDo.classList.add('add-to-do-button');
         addToDo.innerText = 'Add to-do';
         addToDo.addEventListener('click', function(){
-            project.appendChild((0,_form__WEBPACK_IMPORTED_MODULE_1__.form)('todo'));
+            project.appendChild((0,_form__WEBPACK_IMPORTED_MODULE_1__.form)('todo', i));
         })
 
 
@@ -651,12 +651,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "form": () => (/* binding */ form)
 /* harmony export */ });
 /* harmony import */ var _project_submit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./project-submit */ "./src/project-submit.js");
+/* harmony import */ var _todo_submit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./todo-submit */ "./src/todo-submit.js");
 
 
 
-function form(input){
+
+function form(input, index){
 
     let type = input;
+    let projectIndex = index;
 
     const form = document.createElement("form");
     form.classList.add('project-form');
@@ -718,7 +721,9 @@ function form(input){
     if(type === 'project'){    
         submit.onclick = _project_submit__WEBPACK_IMPORTED_MODULE_0__.projectSubmit;
     } else if (type === 'todo'){
-        submit.onclick = sayHi;
+        submit.addEventListener('click', function(){
+            (0,_todo_submit__WEBPACK_IMPORTED_MODULE_1__.toDoSubmit)(index);
+        })
     }
     
 
@@ -818,7 +823,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function newProject(){
     const projectContainer = document.querySelector('.project-container');
-    projectContainer.appendChild((0,_form__WEBPACK_IMPORTED_MODULE_0__.form)('project'));
+    projectContainer.appendChild((0,_form__WEBPACK_IMPORTED_MODULE_0__.form)('project', "N/A"));
 }
 
 
@@ -943,6 +948,62 @@ class Project{
 
 
 }
+
+/***/ }),
+
+/***/ "./src/todo-submit.js":
+/*!****************************!*\
+  !*** ./src/todo-submit.js ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "toDoSubmit": () => (/* binding */ toDoSubmit)
+/* harmony export */ });
+/* harmony import */ var _todo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo */ "./src/todo.js");
+/* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
+// This module contains a function for pushing a new todo to the 
+// a given project in the currentProjects array and then locally storing that array
+
+// Each time currentProjects is updated, displayProjects() is called
+// to ensure that the user sees all of the projects in storage
+
+
+
+
+Storage.prototype.setObj = function(key, obj) {
+    return this.setItem(key, JSON.stringify(obj))
+}
+Storage.prototype.getObj = function(key) {
+    return JSON.parse(this.getItem(key))
+}
+
+const key = "projects";
+
+// If currentProjects is null, assign an empty array
+let currentProjects = localStorage.getObj(key) || [];
+
+
+function toDoSubmit(index){
+
+    let project = currentProjects[index];
+
+    const title = document.getElementById("title").value;
+    const description = document.getElementById("description").value;
+    const dueDate = document.getElementById("due-date").value;
+    const priority = document.getElementById("priority").value;
+
+    const toDo = new _todo__WEBPACK_IMPORTED_MODULE_0__["default"](title, description, dueDate, priority);
+    project.toDos.push(toDo);
+
+    localStorage.setObj(key, currentProjects);  
+    (0,_display_projects__WEBPACK_IMPORTED_MODULE_1__.displayProjects)();
+
+    return toDo;
+}
+
+
 
 /***/ }),
 
