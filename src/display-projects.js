@@ -1,5 +1,6 @@
-import { hoursToSeconds } from "date-fns";
+import { add, hoursToSeconds } from "date-fns";
 import ToDo from './todo';
+import {form} from './form';
 
 Storage.prototype.setObj = function(key, obj) {
     return this.setItem(key, JSON.stringify(obj))
@@ -54,6 +55,14 @@ function displayProjects(){
         let toDoTitle = (currentProjects[i].toDos.length > 0)? currentProjects[i].toDos[0].title: "None";
         toDos.textContent = "To dos: " + toDoTitle;
 
+        const addToDo = document.createElement('button');
+        addToDo.classList.add('add-to-do-button');
+        addToDo.innerText = 'Add to-do';
+        addToDo.addEventListener('click', function(){
+            project.appendChild(form('todo'));
+        })
+
+
         const removeProject = document.createElement('button');
         removeProject.classList.add('remove-project-button');
         removeProject.innerText = 'Remove project';
@@ -67,6 +76,7 @@ function displayProjects(){
         project.appendChild(dueDate);
         project.appendChild(priority);
         project.appendChild(toDos);
+        project.appendChild(addToDo);
         project.appendChild(removeProject);
 
         projectContainer.appendChild(project);
