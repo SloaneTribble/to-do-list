@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "html,\nbody{\n    box-sizing: border-box;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.project-form{\n    display: grid;\n}\n\n.project-cell{\n    border: 2px solid black;\n}", "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;;IAEI,sBAAsB;AAC1B;;AAEA;IACI,iBAAiB;IACjB,aAAa;IACb,OAAO;AACX;AACA;;;IAGI,mBAAmB;IACnB,eAAe;IACf,SAAS;AACb;;AAEA;IACI,aAAa;AACjB;;AAEA;IACI,uBAAuB;AAC3B","sourcesContent":["html,\nbody{\n    box-sizing: border-box;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.project-form{\n    display: grid;\n}\n\n.project-cell{\n    border: 2px solid black;\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "html,\nbody{\n    box-sizing: border-box;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.project-form{\n    display: grid;\n}\n\n.project-cell{\n    border: 2px solid black;\n}\n\n.to-do{\n    border: 1px solid black;\n}", "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;;IAEI,sBAAsB;AAC1B;;AAEA;IACI,iBAAiB;IACjB,aAAa;IACb,OAAO;AACX;AACA;;;IAGI,mBAAmB;IACnB,eAAe;IACf,SAAS;AACb;;AAEA;IACI,aAAa;AACjB;;AAEA;IACI,uBAAuB;AAC3B;;AAEA;IACI,uBAAuB;AAC3B","sourcesContent":["html,\nbody{\n    box-sizing: border-box;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.project-form{\n    display: grid;\n}\n\n.project-cell{\n    border: 2px solid black;\n}\n\n.to-do{\n    border: 1px solid black;\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -594,10 +594,23 @@ function displayProjects(){
 
 
         const toDos = document.createElement('button');
+        toDos.classList.add('to-do-display');
         toDos.id = i + 1;
         toDos.innerText = "View to-dos";
+
+        const toDoList = displayToDos(i);
+
         toDos.addEventListener('click', function(){
-            project.appendChild(displayToDos(i));
+            project.appendChild(toDoList);
+            project.appendChild(hideToDos);
+        });
+
+        const hideToDos = document.createElement('button');
+        hideToDos.innerText = "Hide to-dos";
+        hideToDos.classList.add('to-do-display');
+        hideToDos.addEventListener('click', function(){
+            project.removeChild(toDoList);
+            project.removeChild(hideToDos);
         });
 
 
@@ -637,9 +650,12 @@ function displayToDos(index){
     let projectToDos = project.toDos;
     
     const toDoList = document.createElement('div');
-    toDoList.classList.add('to-do');
+    toDoList.classList.add('to-do-list');
 
     for (const toDo in projectToDos){
+
+        const singleToDo = document.createElement('div');
+        singleToDo.classList.add('to-do');
 
         const title = document.createElement('div');
         title.innerText = projectToDos[toDo].title;
@@ -653,10 +669,12 @@ function displayToDos(index){
         const priority = document.createElement('div');
         priority.innerText = projectToDos[toDo].priority;
 
-        toDoList.appendChild(title);
-        toDoList.appendChild(description);
-        toDoList.appendChild(dueDate);
-        toDoList.appendChild(priority);
+        singleToDo.appendChild(title);
+        singleToDo.appendChild(description);
+        singleToDo.appendChild(dueDate);
+        singleToDo.appendChild(priority);
+
+        toDoList.appendChild(singleToDo);
     }
 
     return toDoList;

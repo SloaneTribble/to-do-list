@@ -50,10 +50,23 @@ function displayProjects(){
 
 
         const toDos = document.createElement('button');
+        toDos.classList.add('to-do-display');
         toDos.id = i + 1;
         toDos.innerText = "View to-dos";
+
+        const toDoList = displayToDos(i);
+
         toDos.addEventListener('click', function(){
-            project.appendChild(displayToDos(i));
+            project.appendChild(toDoList);
+            project.appendChild(hideToDos);
+        });
+
+        const hideToDos = document.createElement('button');
+        hideToDos.innerText = "Hide to-dos";
+        hideToDos.classList.add('to-do-display');
+        hideToDos.addEventListener('click', function(){
+            project.removeChild(toDoList);
+            project.removeChild(hideToDos);
         });
 
 
@@ -93,9 +106,12 @@ function displayToDos(index){
     let projectToDos = project.toDos;
     
     const toDoList = document.createElement('div');
-    toDoList.classList.add('to-do');
+    toDoList.classList.add('to-do-list');
 
     for (const toDo in projectToDos){
+
+        const singleToDo = document.createElement('div');
+        singleToDo.classList.add('to-do');
 
         const title = document.createElement('div');
         title.innerText = projectToDos[toDo].title;
@@ -109,10 +125,12 @@ function displayToDos(index){
         const priority = document.createElement('div');
         priority.innerText = projectToDos[toDo].priority;
 
-        toDoList.appendChild(title);
-        toDoList.appendChild(description);
-        toDoList.appendChild(dueDate);
-        toDoList.appendChild(priority);
+        singleToDo.appendChild(title);
+        singleToDo.appendChild(description);
+        singleToDo.appendChild(dueDate);
+        singleToDo.appendChild(priority);
+
+        toDoList.appendChild(singleToDo);
     }
 
     return toDoList;

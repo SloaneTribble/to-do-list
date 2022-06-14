@@ -23,3 +23,7 @@ body{
 .project-cell{
     border: 2px solid black;
 }
+
+.to-do{
+    border: 1px solid black;
+}
