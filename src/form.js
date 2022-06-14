@@ -95,9 +95,6 @@ function form(input, index){
     return form;
 }
 
-function sayHi(){
-    console.log("hi");
-}
 
 export{form};
 

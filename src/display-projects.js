@@ -60,7 +60,7 @@ function displayProjects(){
         addToDo.innerText = 'Add to-do';
         addToDo.addEventListener('click', function(){
             project.appendChild(form('todo', i));
-        })
+        });
 
 
         const removeProject = document.createElement('button');

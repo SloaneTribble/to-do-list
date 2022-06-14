@@ -16,11 +16,13 @@ Storage.prototype.getObj = function(key) {
 
 const key = "projects";
 
-// If currentProjects is null, assign an empty array
-let currentProjects = localStorage.getObj(key) || [];
+
 
 
 function toDoSubmit(index){
+
+    // If currentProjects is null, assign an empty array
+    let currentProjects = localStorage.getObj(key) || [];
 
     let project = currentProjects[index];
 
