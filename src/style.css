@@ -1,6 +1,7 @@
 html,
 body{
     box-sizing: border-box;
+    position: relative;
 }
 
 body{
@@ -17,11 +18,20 @@ body{
 }
 
 .project-form{
+    position: absolute;
+    background-color: white;
+    top: 32px;
+    left: 50%;
     display: grid;
 }
 
 .project-cell{
     border: 2px solid black;
+    font-size: 1.1rem;
+}
+
+.to-do-list{
+    font-size: 1rem;
 }
 
 .to-do{

@@ -5,21 +5,19 @@ import {toDoSubmit} from './todo-submit';
 function form(input, index){
 
     let type = input;
-    let projectIndex = index;
 
     const form = document.createElement("form");
     form.classList.add('project-form');
 
     const titleLabel = document.createElement('label');
     titleLabel.setAttribute('for', 'title');
-    titleLabel.innerText = "Title: ";
+    titleLabel.innerText = (type === 'project')? "Project Title: " : "To-do";
 
     const title = document.createElement('input');
     title.type = 'text';
     title.name = 'title';
     title.placeholder = 'Title';
     title.id = 'title';
-    title.required = true;
 
     const descriptionLabel = document.createElement('label');
     descriptionLabel.for = 'description';
@@ -31,7 +29,6 @@ function form(input, index){
     description.placeholder = 'Description (<200 characters)';
     description.maxlength = '199';
     description.id = 'description';
-    description.required = true;
 
     const dueDateLabel = document.createElement('label');
     dueDateLabel.for= 'due-date';
@@ -41,18 +38,16 @@ function form(input, index){
     dueDate.type = 'date';
     dueDate.name = 'due-date';
     dueDate.id = 'due-date';
-    dueDate.required = true;
 
     const priorityLabel = document.createElement('label');
     priorityLabel.innerText = 'Priority: ';
     priorityLabel.htmlFor = 'priority';
 
-    let priorities = ['low', 'high'];
+    let priorities = ['low', 'medium', 'high'];
 
     const select = document.createElement('select');
     select.name = 'priority';
     select.id = 'priority';
-    select.required = true;
 
     for (const priority of priorities){
         let option = document.createElement('option');
@@ -61,18 +56,26 @@ function form(input, index){
         select.appendChild(option);
     }
 
+    function handleForm(event) { event.preventDefault(); } 
+    form.addEventListener('submit', handleForm);
+
     const submit = document.createElement('button');
     submit.classList.add('submit');
+    submit.type = 'submit';
     submit.innerText = "Submit";
-    if(type === 'project'){    
-        submit.onclick = projectSubmit;
-    } else if (type === 'todo'){
-        submit.addEventListener('click', function(){
+    form.addEventListener('submit', function(){
+        if (title.value === ""){
+            alert("Please include a title.");
+            return;
+        }
+        if(type === 'project'){
+            projectSubmit();
+        } else if (type === 'todo'){
             toDoSubmit(index);
-        })
-    }
+        }
+        form.reset();
+    });
     
-
     
     form.appendChild(titleLabel);
     form.appendChild(title);

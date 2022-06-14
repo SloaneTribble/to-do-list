@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "html,\nbody{\n    box-sizing: border-box;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.project-form{\n    display: grid;\n}\n\n.project-cell{\n    border: 2px solid black;\n}\n\n.to-do{\n    border: 1px solid black;\n}", "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;;IAEI,sBAAsB;AAC1B;;AAEA;IACI,iBAAiB;IACjB,aAAa;IACb,OAAO;AACX;AACA;;;IAGI,mBAAmB;IACnB,eAAe;IACf,SAAS;AACb;;AAEA;IACI,aAAa;AACjB;;AAEA;IACI,uBAAuB;AAC3B;;AAEA;IACI,uBAAuB;AAC3B","sourcesContent":["html,\nbody{\n    box-sizing: border-box;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.project-form{\n    display: grid;\n}\n\n.project-cell{\n    border: 2px solid black;\n}\n\n.to-do{\n    border: 1px solid black;\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "html,\nbody{\n    box-sizing: border-box;\n    position: relative;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.project-form{\n    position: absolute;\n    background-color: white;\n    top: 32px;\n    left: 50%;\n    display: grid;\n}\n\n.project-cell{\n    border: 2px solid black;\n    font-size: 1.1rem;\n}\n\n.to-do-list{\n    font-size: 1rem;\n}\n\n.to-do{\n    border: 1px solid black;\n}", "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;;IAEI,sBAAsB;IACtB,kBAAkB;AACtB;;AAEA;IACI,iBAAiB;IACjB,aAAa;IACb,OAAO;AACX;AACA;;;IAGI,mBAAmB;IACnB,eAAe;IACf,SAAS;AACb;;AAEA;IACI,kBAAkB;IAClB,uBAAuB;IACvB,SAAS;IACT,SAAS;IACT,aAAa;AACjB;;AAEA;IACI,uBAAuB;IACvB,iBAAiB;AACrB;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,uBAAuB;AAC3B","sourcesContent":["html,\nbody{\n    box-sizing: border-box;\n    position: relative;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.project-form{\n    position: absolute;\n    background-color: white;\n    top: 32px;\n    left: 50%;\n    display: grid;\n}\n\n.project-cell{\n    border: 2px solid black;\n    font-size: 1.1rem;\n}\n\n.to-do-list{\n    font-size: 1rem;\n}\n\n.to-do{\n    border: 1px solid black;\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -540,9 +540,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "displayProjects": () => (/* binding */ displayProjects)
 /* harmony export */ });
-/* harmony import */ var _todo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo */ "./src/todo.js");
-/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./form */ "./src/form.js");
-
+/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./form */ "./src/form.js");
 
 
 
@@ -618,7 +616,7 @@ function displayProjects(){
         addToDo.classList.add('add-to-do-button');
         addToDo.innerText = 'Add to-do';
         addToDo.addEventListener('click', function(){
-            project.appendChild((0,_form__WEBPACK_IMPORTED_MODULE_1__.form)('todo', i));
+            project.appendChild((0,_form__WEBPACK_IMPORTED_MODULE_0__.form)('todo', i));
         });
 
 
@@ -658,16 +656,16 @@ function displayToDos(index){
         singleToDo.classList.add('to-do');
 
         const title = document.createElement('div');
-        title.innerText = projectToDos[toDo].title;
+        title.innerText = "Task: " + projectToDos[toDo].title;
 
         const description = document.createElement('div');
-        description.innerText = projectToDos[toDo].description;
+        description.innerText = "Description: " + projectToDos[toDo].description;
 
         const dueDate = document.createElement('div');
-        dueDate.innerText = projectToDos[toDo].dueDate;
+        dueDate.innerText = "Due date: " + projectToDos[toDo].dueDate;
 
         const priority = document.createElement('div');
-        priority.innerText = projectToDos[toDo].priority;
+        priority.innerText = "Priority: " + projectToDos[toDo].priority;
 
         singleToDo.appendChild(title);
         singleToDo.appendChild(description);
@@ -712,21 +710,19 @@ __webpack_require__.r(__webpack_exports__);
 function form(input, index){
 
     let type = input;
-    let projectIndex = index;
 
     const form = document.createElement("form");
     form.classList.add('project-form');
 
     const titleLabel = document.createElement('label');
     titleLabel.setAttribute('for', 'title');
-    titleLabel.innerText = "Title: ";
+    titleLabel.innerText = (type === 'project')? "Project Title: " : "To-do";
 
     const title = document.createElement('input');
     title.type = 'text';
     title.name = 'title';
     title.placeholder = 'Title';
     title.id = 'title';
-    title.required = true;
 
     const descriptionLabel = document.createElement('label');
     descriptionLabel.for = 'description';
@@ -738,7 +734,6 @@ function form(input, index){
     description.placeholder = 'Description (<200 characters)';
     description.maxlength = '199';
     description.id = 'description';
-    description.required = true;
 
     const dueDateLabel = document.createElement('label');
     dueDateLabel.for= 'due-date';
@@ -748,18 +743,16 @@ function form(input, index){
     dueDate.type = 'date';
     dueDate.name = 'due-date';
     dueDate.id = 'due-date';
-    dueDate.required = true;
 
     const priorityLabel = document.createElement('label');
     priorityLabel.innerText = 'Priority: ';
     priorityLabel.htmlFor = 'priority';
 
-    let priorities = ['low', 'high'];
+    let priorities = ['low', 'medium', 'high'];
 
     const select = document.createElement('select');
     select.name = 'priority';
     select.id = 'priority';
-    select.required = true;
 
     for (const priority of priorities){
         let option = document.createElement('option');
@@ -768,18 +761,26 @@ function form(input, index){
         select.appendChild(option);
     }
 
+    function handleForm(event) { event.preventDefault(); } 
+    form.addEventListener('submit', handleForm);
+
     const submit = document.createElement('button');
     submit.classList.add('submit');
+    submit.type = 'submit';
     submit.innerText = "Submit";
-    if(type === 'project'){    
-        submit.onclick = _project_submit__WEBPACK_IMPORTED_MODULE_0__.projectSubmit;
-    } else if (type === 'todo'){
-        submit.addEventListener('click', function(){
+    form.addEventListener('submit', function(){
+        if (title.value === ""){
+            alert("Please include a title.");
+            return;
+        }
+        if(type === 'project'){
+            (0,_project_submit__WEBPACK_IMPORTED_MODULE_0__.projectSubmit)();
+        } else if (type === 'todo'){
             (0,_todo_submit__WEBPACK_IMPORTED_MODULE_1__.toDoSubmit)(index);
-        })
-    }
+        }
+        form.reset();
+    });
     
-
     
     form.appendChild(titleLabel);
     form.appendChild(title);
@@ -821,6 +822,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 function homeMaker(){
     const pageContainer = document.createElement('div');
+    pageContainer.classList.add('page-container');
 
     pageContainer.appendChild(headerMaker());
     pageContainer.appendChild(projectContainerMaker());
@@ -872,8 +874,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function newProject(){
-    const projectContainer = document.querySelector('.project-container');
-    projectContainer.appendChild((0,_form__WEBPACK_IMPORTED_MODULE_0__.form)('project', "N/A"));
+    const pageContainer = document.querySelector('.page-container');
+    pageContainer.appendChild((0,_form__WEBPACK_IMPORTED_MODULE_0__.form)('project', "N/A"));
 }
 
 
@@ -911,7 +913,14 @@ Storage.prototype.getObj = function(key) {
 const key = "projects";
 
 
+let currentProjects = localStorage.getObj(key) || [];
+currentProjects.sort(function compare(a, b) {
+        let dateA = new Date(a.dueDate);
+        let dateB = new Date(b.dueDate);
+        return dateA - dateB;
+    });
 
+localStorage.setObj(key, currentProjects); 
 
 function projectSubmit(){
 
@@ -928,6 +937,7 @@ function projectSubmit(){
 
     localStorage.setObj(key, currentProjects);  
     (0,_display_projects__WEBPACK_IMPORTED_MODULE_1__.displayProjects)();
+    window.location.reload();
 
     return newProject;
 }
@@ -1040,7 +1050,7 @@ const key = "projects";
 function toDoSubmit(index){
 
     // If currentProjects is null, assign an empty array
-    // It's important to check for the latest info whenever this function is called
+    // Check for the latest info whenever this function is called
     let currentProjects = localStorage.getObj(key) || [];
 
     let project = currentProjects[index];
@@ -1201,8 +1211,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./home */ "./src/home.js");
 /* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
 /* harmony import */ var _project_form__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./project-form */ "./src/project-form.js");
-/* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./project */ "./src/project.js");
-/* harmony import */ var _todo__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./todo */ "./src/todo.js");
 
 
 // Initial page load function
@@ -1212,40 +1220,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// Project object
-
-// To-do object
 
 
 document.body.appendChild((0,_home__WEBPACK_IMPORTED_MODULE_1__.homeMaker)());
 
 (0,_display_projects__WEBPACK_IMPORTED_MODULE_2__.displayProjects)();
 
-// Extend default storage-objects to handle arrays and objects
-
-Storage.prototype.setObj = function(key, obj) {
-    return this.setItem(key, JSON.stringify(obj))
-}
-Storage.prototype.getObj = function(key) {
-    return JSON.parse(this.getItem(key))
-}
-
-const key = "projects";
-
-// If currentProjects is null, assign an empty array
-let currentProjects = localStorage.getObj(key) || [];
-
-localStorage.setObj(key, currentProjects);  
-
 
 // Button for creating a new project
 
-let newProjectButton = document.querySelector('.new-project-button');
-newProjectButton.addEventListener('click', _project_form__WEBPACK_IMPORTED_MODULE_3__.newProject);
 
-
-
-// Accessing individual todos from a given project
+const newProjectButton = document.querySelector('.new-project-button');
+newProjectButton.addEventListener('click', function(){
+    (0,_project_form__WEBPACK_IMPORTED_MODULE_3__.newProject)();
+    newProjectButton.disabled = true;});
 
 
 

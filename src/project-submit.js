@@ -17,7 +17,14 @@ Storage.prototype.getObj = function(key) {
 const key = "projects";
 
 
+let currentProjects = localStorage.getObj(key) || [];
+currentProjects.sort(function compare(a, b) {
+        let dateA = new Date(a.dueDate);
+        let dateB = new Date(b.dueDate);
+        return dateA - dateB;
+    });
 
+localStorage.setObj(key, currentProjects); 
 
 function projectSubmit(){
 
@@ -34,6 +41,7 @@ function projectSubmit(){
 
     localStorage.setObj(key, currentProjects);  
     displayProjects();
+    window.location.reload();
 
     return newProject;
 }

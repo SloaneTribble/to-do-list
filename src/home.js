@@ -1,5 +1,6 @@
 function homeMaker(){
     const pageContainer = document.createElement('div');
+    pageContainer.classList.add('page-container');
 
     pageContainer.appendChild(headerMaker());
     pageContainer.appendChild(projectContainerMaker());

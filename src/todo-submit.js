@@ -22,7 +22,7 @@ const key = "projects";
 function toDoSubmit(index){
 
     // If currentProjects is null, assign an empty array
-    // It's important to check for the latest info whenever this function is called
+    // Check for the latest info whenever this function is called
     let currentProjects = localStorage.getObj(key) || [];
 
     let project = currentProjects[index];

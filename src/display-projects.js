@@ -1,5 +1,4 @@
 import { add, hoursToSeconds } from "date-fns";
-import ToDo from './todo';
 import {form} from './form';
 
 Storage.prototype.setObj = function(key, obj) {
@@ -114,16 +113,16 @@ function displayToDos(index){
         singleToDo.classList.add('to-do');
 
         const title = document.createElement('div');
-        title.innerText = projectToDos[toDo].title;
+        title.innerText = "Task: " + projectToDos[toDo].title;
 
         const description = document.createElement('div');
-        description.innerText = projectToDos[toDo].description;
+        description.innerText = "Description: " + projectToDos[toDo].description;
 
         const dueDate = document.createElement('div');
-        dueDate.innerText = projectToDos[toDo].dueDate;
+        dueDate.innerText = "Due date: " + projectToDos[toDo].dueDate;
 
         const priority = document.createElement('div');
-        priority.innerText = projectToDos[toDo].priority;
+        priority.innerText = "Priority: " + projectToDos[toDo].priority;
 
         singleToDo.appendChild(title);
         singleToDo.appendChild(description);
