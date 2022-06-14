@@ -1,9 +1,11 @@
 import {projectSubmit} from './project-submit';
+import {toDoSubmit} from './todo-submit';
 
 
-function form(input){
+function form(input, index){
 
     let type = input;
+    let projectIndex = index;
 
     const form = document.createElement("form");
     form.classList.add('project-form');
@@ -65,7 +67,9 @@ function form(input){
     if(type === 'project'){    
         submit.onclick = projectSubmit;
     } else if (type === 'todo'){
-        submit.onclick = sayHi;
+        submit.addEventListener('click', function(){
+            toDoSubmit(index);
+        })
     }
     
 

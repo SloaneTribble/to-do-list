@@ -59,7 +59,7 @@ function displayProjects(){
         addToDo.classList.add('add-to-do-button');
         addToDo.innerText = 'Add to-do';
         addToDo.addEventListener('click', function(){
-            project.appendChild(form('todo'));
+            project.appendChild(form('todo', i));
         })
 
 

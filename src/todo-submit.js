@@ -1,0 +1,41 @@
+// This module contains a function for pushing a new todo to the 
+// a given project in the currentProjects array and then locally storing that array
+
+// Each time currentProjects is updated, displayProjects() is called
+// to ensure that the user sees all of the projects in storage
+
+import ToDo from './todo';
+import {displayProjects} from './display-projects';
+
+Storage.prototype.setObj = function(key, obj) {
+    return this.setItem(key, JSON.stringify(obj))
+}
+Storage.prototype.getObj = function(key) {
+    return JSON.parse(this.getItem(key))
+}
+
+const key = "projects";
+
+// If currentProjects is null, assign an empty array
+let currentProjects = localStorage.getObj(key) || [];
+
+
+function toDoSubmit(index){
+
+    let project = currentProjects[index];
+
+    const title = document.getElementById("title").value;
+    const description = document.getElementById("description").value;
+    const dueDate = document.getElementById("due-date").value;
+    const priority = document.getElementById("priority").value;
+
+    const toDo = new ToDo(title, description, dueDate, priority);
+    project.toDos.push(toDo);
+
+    localStorage.setObj(key, currentProjects);  
+    displayProjects();
+
+    return toDo;
+}
+
+export {toDoSubmit};
