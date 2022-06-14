@@ -541,6 +541,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "displayProjects": () => (/* binding */ displayProjects)
 /* harmony export */ });
 /* harmony import */ var _todo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo */ "./src/todo.js");
+/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./form */ "./src/form.js");
+
 
 
 
@@ -597,6 +599,14 @@ function displayProjects(){
         let toDoTitle = (currentProjects[i].toDos.length > 0)? currentProjects[i].toDos[0].title: "None";
         toDos.textContent = "To dos: " + toDoTitle;
 
+        const addToDo = document.createElement('button');
+        addToDo.classList.add('add-to-do-button');
+        addToDo.innerText = 'Add to-do';
+        addToDo.addEventListener('click', function(){
+            project.appendChild((0,_form__WEBPACK_IMPORTED_MODULE_1__.form)('todo'));
+        })
+
+
         const removeProject = document.createElement('button');
         removeProject.classList.add('remove-project-button');
         removeProject.innerText = 'Remove project';
@@ -610,6 +620,7 @@ function displayProjects(){
         project.appendChild(dueDate);
         project.appendChild(priority);
         project.appendChild(toDos);
+        project.appendChild(addToDo);
         project.appendChild(removeProject);
 
         projectContainer.appendChild(project);
@@ -623,6 +634,120 @@ function remove(index){
     localStorage.setObj(key, currentProjects);
     window.location.reload();
 }
+
+
+
+
+/***/ }),
+
+/***/ "./src/form.js":
+/*!*********************!*\
+  !*** ./src/form.js ***!
+  \*********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "form": () => (/* binding */ form)
+/* harmony export */ });
+/* harmony import */ var _project_submit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./project-submit */ "./src/project-submit.js");
+
+
+
+function form(input){
+
+    let type = input;
+
+    const form = document.createElement("form");
+    form.classList.add('project-form');
+
+    const titleLabel = document.createElement('label');
+    titleLabel.setAttribute('for', 'title');
+    titleLabel.innerText = "Title: ";
+
+    const title = document.createElement('input');
+    title.type = 'text';
+    title.name = 'title';
+    title.placeholder = 'Title';
+    title.id = 'title';
+    title.required = true;
+
+    const descriptionLabel = document.createElement('label');
+    descriptionLabel.for = 'description';
+    descriptionLabel.innerText = "Description: ";
+
+    const description = document.createElement('input');
+    description.type = 'text';
+    description.name = 'description';
+    description.placeholder = 'Description (<200 characters)';
+    description.maxlength = '199';
+    description.id = 'description';
+    description.required = true;
+
+    const dueDateLabel = document.createElement('label');
+    dueDateLabel.for= 'due-date';
+    dueDateLabel.innerText = "Due date: ";
+
+    const dueDate = document.createElement('input');
+    dueDate.type = 'date';
+    dueDate.name = 'due-date';
+    dueDate.id = 'due-date';
+    dueDate.required = true;
+
+    const priorityLabel = document.createElement('label');
+    priorityLabel.innerText = 'Priority: ';
+    priorityLabel.htmlFor = 'priority';
+
+    let priorities = ['low', 'high'];
+
+    const select = document.createElement('select');
+    select.name = 'priority';
+    select.id = 'priority';
+    select.required = true;
+
+    for (const priority of priorities){
+        let option = document.createElement('option');
+        option.value = priority;
+        option.text = priority.charAt(0).toUpperCase() + priority.slice(1);
+        select.appendChild(option);
+    }
+
+    const submit = document.createElement('button');
+    submit.classList.add('submit');
+    submit.innerText = "Submit";
+    if(type === 'project'){    
+        submit.onclick = _project_submit__WEBPACK_IMPORTED_MODULE_0__.projectSubmit;
+    } else if (type === 'todo'){
+        submit.onclick = sayHi;
+    }
+    
+
+    
+    form.appendChild(titleLabel);
+    form.appendChild(title);
+
+    form.appendChild(descriptionLabel);
+    form.appendChild(description);
+
+    form.appendChild(dueDateLabel);
+    form.appendChild(dueDate);
+
+    form.appendChild(priorityLabel);
+    form.appendChild(select);
+
+    form.appendChild(submit);
+
+    function handleForm(event) {event.preventDefault();}
+    form.addEventListener('submit', handleForm);
+    
+
+    return form;
+}
+
+function sayHi(){
+    console.log("hi");
+}
+
 
 
 
@@ -688,96 +813,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "newProject": () => (/* binding */ newProject)
 /* harmony export */ });
-/* harmony import */ var _project_submit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./project-submit */ "./src/project-submit.js");
-
+/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./form */ "./src/form.js");
 
 
 function newProject(){
     const projectContainer = document.querySelector('.project-container');
-    projectContainer.appendChild(projectForm());
-}
-
-function projectForm(){
-    const form = document.createElement("form");
-    form.classList.add('project-form');
-
-    const titleLabel = document.createElement('label');
-    titleLabel.setAttribute('for', 'title');
-    titleLabel.innerText = "Title: ";
-
-    const title = document.createElement('input');
-    title.type = 'text';
-    title.name = 'title';
-    title.placeholder = 'Title';
-    title.id = 'title';
-    title.required = true;
-
-    const descriptionLabel = document.createElement('label');
-    descriptionLabel.for = 'description';
-    descriptionLabel.innerText = "Description: ";
-
-    const description = document.createElement('input');
-    description.type = 'text';
-    description.name = 'description';
-    description.placeholder = 'Description (<200 characters)';
-    description.maxlength = '199';
-    description.id = 'description';
-    description.required = true;
-
-    const dueDateLabel = document.createElement('label');
-    dueDateLabel.for= 'due-date';
-    dueDateLabel.innerText = "Due date: ";
-
-    const dueDate = document.createElement('input');
-    dueDate.type = 'date';
-    dueDate.name = 'due-date';
-    dueDate.id = 'due-date';
-    dueDate.required = true;
-
-    const priorityLabel = document.createElement('label');
-    priorityLabel.innerText = 'Priority: ';
-    priorityLabel.htmlFor = 'priority';
-
-    let priorities = ['low', 'high'];
-
-    const select = document.createElement('select');
-    select.name = 'priority';
-    select.id = 'priority';
-    select.required = true;
-
-    for (const priority of priorities){
-        let option = document.createElement('option');
-        option.value = priority;
-        option.text = priority.charAt(0).toUpperCase() + priority.slice(1);
-        select.appendChild(option);
-    }
-
-    const submit = document.createElement('button');
-    submit.classList.add('project-submit');
-    submit.innerText = "Submit";
-    submit.onclick = _project_submit__WEBPACK_IMPORTED_MODULE_0__.projectSubmit;
-    
-
-    
-    form.appendChild(titleLabel);
-    form.appendChild(title);
-
-    form.appendChild(descriptionLabel);
-    form.appendChild(description);
-
-    form.appendChild(dueDateLabel);
-    form.appendChild(dueDate);
-
-    form.appendChild(priorityLabel);
-    form.appendChild(select);
-
-    form.appendChild(submit);
-
-    function handleForm(event) {event.preventDefault();}
-    form.addEventListener('submit', handleForm);
-    
-
-    return form;
+    projectContainer.appendChild((0,_form__WEBPACK_IMPORTED_MODULE_0__.form)('project'));
 }
 
 
