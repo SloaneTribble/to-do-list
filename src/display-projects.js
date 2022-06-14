@@ -54,15 +54,31 @@ function displayProjects(){
         let toDoTitle = (currentProjects[i].toDos.length > 0)? currentProjects[i].toDos[0].title: "None";
         toDos.textContent = "To dos: " + toDoTitle;
 
+        const removeProject = document.createElement('button');
+        removeProject.classList.add('remove-project-button');
+        removeProject.innerText = 'Remove project';
+        removeProject.addEventListener('click', function(){
+            remove(i);
+        });
+
 
         project.appendChild(title);
         project.appendChild(description);
         project.appendChild(dueDate);
         project.appendChild(priority);
         project.appendChild(toDos);
+        project.appendChild(removeProject);
 
         projectContainer.appendChild(project);
     }
+}
+
+function remove(index){
+    let currentProjects = localStorage.getObj(key) || [];
+
+    currentProjects.splice(index, 1);
+    localStorage.setObj(key, currentProjects);
+    window.location.reload();
 }
 
 

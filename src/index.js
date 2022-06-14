@@ -43,7 +43,6 @@ newProjectButton.addEventListener('click', newProject);
 // Accessing individual todos from a given project
 
 
-localStorage.setObj(key, currentProjects);
 
 
 
