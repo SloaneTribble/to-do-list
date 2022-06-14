@@ -1,3 +1,9 @@
+// This module contains a function for pushing a new project to the 
+// currentProjects array and locally storing that array
+
+// Each time currentProjects is updated, displayProjects() is called
+// to ensure that the user sees all of the projects in storage
+
 import Project from './project';
 import {displayProjects} from './display-projects';
 

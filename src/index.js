@@ -33,29 +33,17 @@ let currentProjects = localStorage.getObj(key) || [];
 localStorage.setObj(key, currentProjects);  
 
 
+// Button for creating a new project
 
 let newProjectButton = document.querySelector('.new-project-button');
 newProjectButton.addEventListener('click', newProject);
 
 
 
-
-let project1 = new Project("Dude", "Bro", 12, 1);
-
-let newToDo = new ToDo("Wake up", "Time to get up", 13, 1);
-
-project1.addToDo(newToDo);
-
-project1.addToDo("To do 2");
-
-
-
 // Accessing individual todos from a given project
 
-console.log(currentProjects[0].toDos[1]);
 
 localStorage.setObj(key, currentProjects);
-
 
 
 

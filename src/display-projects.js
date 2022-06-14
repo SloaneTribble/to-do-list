@@ -11,13 +11,19 @@ Storage.prototype.getObj = function(key) {
 const key = "projects";
 
 // If currentProjects is null, assign an empty array
-let currentProjects = localStorage.getObj(key) || [];
 
 function displayProjects(){
 
+    let currentProjects = localStorage.getObj(key) || [];
+
+    const projectContainer = document.querySelector(".project-container");
+
+    // Clear the current display to prevent repetition (?)
+    projectContainer.innerHTML = '';
+
+
     for(let i = 0; i < currentProjects.length; i++) {
 
-        const projectContainer = document.querySelector(".project-container");
 
         const project = document.createElement('div');
         project.classList.add('project-cell');
@@ -34,9 +40,14 @@ function displayProjects(){
         dueDate.id = i + 1;
         dueDate.innerText = "Due date: " + currentProjects[i].dueDate;
 
+        // Priority should affect border color
+
         const priority = document.createElement('div');
         priority.id = i + 1;
         priority.innerText = "Priority: " + currentProjects[i].priority;
+
+        // Need to iterate through to dos, and make sure to allow each one to be crossed off
+        // or deleted
 
         const toDos = document.createElement('div');
         toDos.id = i + 1;

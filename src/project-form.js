@@ -15,32 +15,32 @@ function projectForm(){
     titleLabel.innerText = "Title: ";
 
     const title = document.createElement('input');
-    title.setAttribute('type', 'text');
-    title.setAttribute('name', 'title');
-    title.setAttribute('placeholder', 'Title');
-    title.setAttribute('id', 'title');
+    title.type = 'text';
+    title.name = 'title';
+    title.placeholder = 'Title';
+    title.id = 'title';
     title.required = true;
 
     const descriptionLabel = document.createElement('label');
-    descriptionLabel.setAttribute('for', 'description');
+    descriptionLabel.for = 'description';
     descriptionLabel.innerText = "Description: ";
 
     const description = document.createElement('input');
-    description.setAttribute('type', 'text');
-    description.setAttribute('name', 'description');
-    description.setAttribute('placeholder', 'Description (<200 characters)');
-    description.setAttribute('maxlength', '199');
-    description.setAttribute('id', 'description');
+    description.type = 'text';
+    description.name = 'description';
+    description.placeholder = 'Description (<200 characters)';
+    description.maxlength = '199';
+    description.id = 'description';
     description.required = true;
 
     const dueDateLabel = document.createElement('label');
-    dueDateLabel.setAttribute('for', 'due-date');
+    dueDateLabel.for= 'due-date';
     dueDateLabel.innerText = "Due date: ";
 
     const dueDate = document.createElement('input');
-    dueDate.setAttribute('type', 'date');
-    dueDate.setAttribute('name', 'due-date');
-    dueDate.setAttribute('id', 'due-date');
+    dueDate.type = 'date';
+    dueDate.name = 'due-date';
+    dueDate.id = 'due-date';
     dueDate.required = true;
 
     const priorityLabel = document.createElement('label');
