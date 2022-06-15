@@ -111,6 +111,7 @@ function displayToDos(index){
 
         const singleToDo = document.createElement('div');
         singleToDo.classList.add('to-do');
+        singleToDo.id = toDo;
 
         const title = document.createElement('div');
         title.innerText = "Task: " + projectToDos[toDo].title;
@@ -124,10 +125,23 @@ function displayToDos(index){
         const priority = document.createElement('div');
         priority.innerText = "Priority: " + projectToDos[toDo].priority;
 
+        const removeToDo = document.createElement('button');
+        removeToDo.classList.add("remove-to-do-button");
+        removeToDo.innerText = "Remove";
+        removeToDo.addEventListener('click', function(e){
+            console.log(e.currentTarget.parentNode.id);
+            projectToDos.splice(e.currentTarget.parentNode.id, 1);
+            localStorage.setObj(key, currentProjects);
+            window.location.reload();
+            // e.currentTarget.parentNode.remove();
+            
+        }, false);
+
         singleToDo.appendChild(title);
         singleToDo.appendChild(description);
         singleToDo.appendChild(dueDate);
         singleToDo.appendChild(priority);
+        singleToDo.appendChild(removeToDo);
 
         toDoList.appendChild(singleToDo);
     }
