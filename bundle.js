@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "html,\nbody{\n    box-sizing: border-box;\n    position: relative;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.page-container{\n    height: 100%;\n    width: 100%;\n}\n\n.header{\n    border: 2px solid black;\n    background-color: aqua;\n}\n\n.project-form{\n    position: absolute;\n    background-color: white;\n    top: 32px;\n    left: 50%;\n    display: grid;\n}\n\n.project-details{\n    border: 1px solid black;\n    border-bottom-width: 3px;\n}\n\n.project-cell{\n    border: 3px solid black;\n    font-size: 1.1rem;\n}\n\n.to-do-list{\n    font-size: 1rem;\n}\n\n.to-do{\n    border: 1px solid black;\n}\n\n.high-priority{\n    background: linear-gradient(45deg,  white, rgba(255, 99, 71, 0.4));\n}\n\n.medium-priority{\n    background: linear-gradient(45deg,  white, rgba(106, 90, 205, .4));\n\n\n}\n\n.low-priority{\n    background: linear-gradient(45deg,  white, rgba(60, 179, 113, 0.4));\n\n\n}", "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;;IAEI,sBAAsB;IACtB,kBAAkB;AACtB;;AAEA;IACI,iBAAiB;IACjB,aAAa;IACb,OAAO;AACX;AACA;;;IAGI,mBAAmB;IACnB,eAAe;IACf,SAAS;AACb;;AAEA;IACI,YAAY;IACZ,WAAW;AACf;;AAEA;IACI,uBAAuB;IACvB,sBAAsB;AAC1B;;AAEA;IACI,kBAAkB;IAClB,uBAAuB;IACvB,SAAS;IACT,SAAS;IACT,aAAa;AACjB;;AAEA;IACI,uBAAuB;IACvB,wBAAwB;AAC5B;;AAEA;IACI,uBAAuB;IACvB,iBAAiB;AACrB;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,uBAAuB;AAC3B;;AAEA;IACI,kEAAkE;AACtE;;AAEA;IACI,kEAAkE;;;AAGtE;;AAEA;IACI,mEAAmE;;;AAGvE","sourcesContent":["html,\nbody{\n    box-sizing: border-box;\n    position: relative;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.page-container{\n    height: 100%;\n    width: 100%;\n}\n\n.header{\n    border: 2px solid black;\n    background-color: aqua;\n}\n\n.project-form{\n    position: absolute;\n    background-color: white;\n    top: 32px;\n    left: 50%;\n    display: grid;\n}\n\n.project-details{\n    border: 1px solid black;\n    border-bottom-width: 3px;\n}\n\n.project-cell{\n    border: 3px solid black;\n    font-size: 1.1rem;\n}\n\n.to-do-list{\n    font-size: 1rem;\n}\n\n.to-do{\n    border: 1px solid black;\n}\n\n.high-priority{\n    background: linear-gradient(45deg,  white, rgba(255, 99, 71, 0.4));\n}\n\n.medium-priority{\n    background: linear-gradient(45deg,  white, rgba(106, 90, 205, .4));\n\n\n}\n\n.low-priority{\n    background: linear-gradient(45deg,  white, rgba(60, 179, 113, 0.4));\n\n\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "html,\nbody{\n    box-sizing: border-box;\n    position: relative;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.page-container{\n    height: 100%;\n    width: 100%;\n}\n\n.header{\n    border: 2px solid black;\n    background-color: aqua;\n}\n\n.project-form{\n    position: absolute;\n    background-color: white;\n    top: 32px;\n    left: 50%;\n    display: grid;\n}\n\n.project-details{\n    border: 1px solid black;\n    border-bottom-width: 3px;\n    display: grid;\n    grid-template-columns: repeat(7, 1fr);\n}\n\n.project-details > * {\n    border: 1px solid black;\n}\n\n.project-details > button{\n    height: 50%;\n    width: 80%;\n}\n\n.to-do-button-container{\n    border: none;\n}\n\n.to-do-button-container > button{\n    height: 50%;\n    width: 80%;\n}\n\n.project-cell{\n    border: 3px solid black;\n    font-size: 1.1rem;\n}\n\n.to-do-list{\n    font-size: 1rem;\n}\n\n\n.to-do{\n    border: 1px solid black;\n}\n\n.to-do-header{\n    display: grid;\n    grid-template-columns: repeat(5, 1fr);\n}\n\n.high-priority{\n    background: linear-gradient(45deg,  white, rgba(255, 99, 71, 0.4));\n}\n\n.medium-priority{\n    background: linear-gradient(45deg,  white, rgba(106, 90, 205, .4));\n\n\n}\n\n.low-priority{\n    background: linear-gradient(45deg,  white, rgba(60, 179, 113, 0.4));\n\n\n}", "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;;IAEI,sBAAsB;IACtB,kBAAkB;AACtB;;AAEA;IACI,iBAAiB;IACjB,aAAa;IACb,OAAO;AACX;AACA;;;IAGI,mBAAmB;IACnB,eAAe;IACf,SAAS;AACb;;AAEA;IACI,YAAY;IACZ,WAAW;AACf;;AAEA;IACI,uBAAuB;IACvB,sBAAsB;AAC1B;;AAEA;IACI,kBAAkB;IAClB,uBAAuB;IACvB,SAAS;IACT,SAAS;IACT,aAAa;AACjB;;AAEA;IACI,uBAAuB;IACvB,wBAAwB;IACxB,aAAa;IACb,qCAAqC;AACzC;;AAEA;IACI,uBAAuB;AAC3B;;AAEA;IACI,WAAW;IACX,UAAU;AACd;;AAEA;IACI,YAAY;AAChB;;AAEA;IACI,WAAW;IACX,UAAU;AACd;;AAEA;IACI,uBAAuB;IACvB,iBAAiB;AACrB;;AAEA;IACI,eAAe;AACnB;;;AAGA;IACI,uBAAuB;AAC3B;;AAEA;IACI,aAAa;IACb,qCAAqC;AACzC;;AAEA;IACI,kEAAkE;AACtE;;AAEA;IACI,kEAAkE;;;AAGtE;;AAEA;IACI,mEAAmE;;;AAGvE","sourcesContent":["html,\nbody{\n    box-sizing: border-box;\n    position: relative;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.page-container{\n    height: 100%;\n    width: 100%;\n}\n\n.header{\n    border: 2px solid black;\n    background-color: aqua;\n}\n\n.project-form{\n    position: absolute;\n    background-color: white;\n    top: 32px;\n    left: 50%;\n    display: grid;\n}\n\n.project-details{\n    border: 1px solid black;\n    border-bottom-width: 3px;\n    display: grid;\n    grid-template-columns: repeat(7, 1fr);\n}\n\n.project-details > * {\n    border: 1px solid black;\n}\n\n.project-details > button{\n    height: 50%;\n    width: 80%;\n}\n\n.to-do-button-container{\n    border: none;\n}\n\n.to-do-button-container > button{\n    height: 50%;\n    width: 80%;\n}\n\n.project-cell{\n    border: 3px solid black;\n    font-size: 1.1rem;\n}\n\n.to-do-list{\n    font-size: 1rem;\n}\n\n\n.to-do{\n    border: 1px solid black;\n}\n\n.to-do-header{\n    display: grid;\n    grid-template-columns: repeat(5, 1fr);\n}\n\n.high-priority{\n    background: linear-gradient(45deg,  white, rgba(255, 99, 71, 0.4));\n}\n\n.medium-priority{\n    background: linear-gradient(45deg,  white, rgba(106, 90, 205, .4));\n\n\n}\n\n.low-priority{\n    background: linear-gradient(45deg,  white, rgba(60, 179, 113, 0.4));\n\n\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -699,9 +699,7 @@ function displayToDos(index){
         removeToDo.classList.add("remove-to-do-button");
         removeToDo.innerText = "Remove";
         removeToDo.addEventListener('click', function(e){
-            console.log(e.currentTarget.parentNode.id);
-            projectToDos.splice(e.currentTarget.parentNode.id, 1);
-            localStorage.setObj(key, currentProjects);
+            removeIndividual(e, projectToDos, currentProjects);
             window.location.reload();
         }, false);
 
@@ -715,22 +713,32 @@ function displayToDos(index){
                 projectToDos[toDo].description,
                 projectToDos[toDo].dueDate
                 ));
-            console.log(e.currentTarget.parentNode.id);
-            projectToDos.splice(e.currentTarget.parentNode.id, 1);
-            localStorage.setObj(key, currentProjects);
+            removeIndividual(e, projectToDos, currentProjects);
         });
 
-        singleToDo.appendChild(title);
-        singleToDo.appendChild(description);
-        singleToDo.appendChild(dueDate);
-        singleToDo.appendChild(priority);
-        singleToDo.appendChild(removeToDo);
-        singleToDo.appendChild(editToDo);
+        const toDoHeader = document.createElement('div');
+        toDoHeader.classList.add('to-do-header');
 
+        
+
+        toDoHeader.appendChild(title);
+        toDoHeader.appendChild(dueDate);
+        toDoHeader.appendChild(priority);
+        toDoHeader.appendChild(editToDo);
+        toDoHeader.appendChild(removeToDo);
+        singleToDo.appendChild(toDoHeader);
+        singleToDo.appendChild(description);
+        
         toDoList.appendChild(singleToDo);
     }
 
     return toDoList;
+}
+
+function removeIndividual(e, projectToDos, currentProjects){
+    console.log(e.currentTarget.parentNode.id);
+    projectToDos.splice(e.currentTarget.parentNode.id, 1);
+    localStorage.setObj(key, currentProjects);
 }
 
 function remove(index){
@@ -757,6 +765,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "edit": () => (/* binding */ edit)
 /* harmony export */ });
 /* harmony import */ var _todo_submit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo-submit */ "./src/todo-submit.js");
+// This file contains very similar code to form.js except that it takes
+// different arguments and performs some different activities
+
 
 
 function edit(index, currentTitle, currentDescription, currentDueDate){
@@ -893,8 +904,8 @@ function form(input, index){
     const description = document.createElement('input');
     description.type = 'text';
     description.name = 'description';
-    description.placeholder = 'Description (<200 characters)';
-    description.maxlength = '199';
+    description.placeholder = 'Description (<500 characters)';
+    description.maxLength = '499';
     description.id = 'description';
 
     const dueDateLabel = document.createElement('label');
@@ -1240,6 +1251,8 @@ function toDoSubmit(index){
 
     localStorage.setObj(key, currentProjects);  
     (0,_display_projects__WEBPACK_IMPORTED_MODULE_1__.displayProjects)();
+
+    window.location.reload();
 
     return toDo;
 }
