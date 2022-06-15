@@ -29,6 +29,9 @@ function displayProjects(){
         project.classList.add('project-cell');
         project.id = i + 1;
 
+        const projectDetails = document.createElement('div');
+        projectDetails.classList.add('project-details');
+
         const title = document.createElement('div');
         title.id = i + 1;
         title.innerText = "Title: " + currentProjects[i].title;
@@ -46,18 +49,36 @@ function displayProjects(){
         const priority = document.createElement('div');
         priority.id = i + 1;
         priority.innerText = "Priority: " + currentProjects[i].priority;
+        let priorityColor;
+        switch(currentProjects[i].priority){
+            case 'high': priorityColor = 'high-priority';
+            priority.style.fontWeight = "bold";
+            break;
 
+            case 'medium': priorityColor = 'medium-priority';
+            break;
+
+            case 'low': priorityColor = 'low-priority';
+            break;
+        }
+        project.classList.add(priorityColor);
+
+        const toDoButtonContainer = document.createElement('div');
+        toDoButtonContainer.classList.add('to-do-button-container');
 
         const toDos = document.createElement('button');
         toDos.classList.add('to-do-display');
         toDos.id = i + 1;
         toDos.innerText = "View to-dos";
 
+        toDoButtonContainer.appendChild(toDos);
+
         const toDoList = displayToDos(i);
 
         toDos.addEventListener('click', function(){
             project.appendChild(toDoList);
-            project.appendChild(hideToDos);
+            toDoButtonContainer.removeChild(toDos);
+            toDoButtonContainer.appendChild(hideToDos);
         });
 
         const hideToDos = document.createElement('button');
@@ -65,7 +86,8 @@ function displayProjects(){
         hideToDos.classList.add('to-do-display');
         hideToDos.addEventListener('click', function(){
             project.removeChild(toDoList);
-            project.removeChild(hideToDos);
+            toDoButtonContainer.removeChild(hideToDos);
+            toDoButtonContainer.appendChild(toDos);
         });
 
 
@@ -85,13 +107,16 @@ function displayProjects(){
         });
 
 
-        project.appendChild(title);
-        project.appendChild(description);
-        project.appendChild(dueDate);
-        project.appendChild(priority);
-        project.appendChild(toDos);
-        project.appendChild(addToDo);
-        project.appendChild(removeProject);
+        projectDetails.appendChild(title);
+        projectDetails.appendChild(description);
+        projectDetails.appendChild(dueDate);
+        projectDetails.appendChild(priority);
+        projectDetails.appendChild(toDoButtonContainer);
+        projectDetails.appendChild(addToDo);
+        projectDetails.appendChild(removeProject);
+
+        project.appendChild(projectDetails);
+        
 
         projectContainer.appendChild(project);
     }
@@ -133,8 +158,6 @@ function displayToDos(index){
             projectToDos.splice(e.currentTarget.parentNode.id, 1);
             localStorage.setObj(key, currentProjects);
             window.location.reload();
-            // e.currentTarget.parentNode.remove();
-            
         }, false);
 
         singleToDo.appendChild(title);
