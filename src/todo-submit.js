@@ -38,6 +38,8 @@ function toDoSubmit(index){
     localStorage.setObj(key, currentProjects);  
     displayProjects();
 
+    window.location.reload();
+
     return toDo;
 }
 

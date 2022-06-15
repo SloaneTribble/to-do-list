@@ -155,9 +155,7 @@ function displayToDos(index){
         removeToDo.classList.add("remove-to-do-button");
         removeToDo.innerText = "Remove";
         removeToDo.addEventListener('click', function(e){
-            console.log(e.currentTarget.parentNode.id);
-            projectToDos.splice(e.currentTarget.parentNode.id, 1);
-            localStorage.setObj(key, currentProjects);
+            removeIndividual(e, projectToDos, currentProjects);
             window.location.reload();
         }, false);
 
@@ -171,22 +169,32 @@ function displayToDos(index){
                 projectToDos[toDo].description,
                 projectToDos[toDo].dueDate
                 ));
-            console.log(e.currentTarget.parentNode.id);
-            projectToDos.splice(e.currentTarget.parentNode.id, 1);
-            localStorage.setObj(key, currentProjects);
+            removeIndividual(e, projectToDos, currentProjects);
         });
 
-        singleToDo.appendChild(title);
-        singleToDo.appendChild(description);
-        singleToDo.appendChild(dueDate);
-        singleToDo.appendChild(priority);
-        singleToDo.appendChild(removeToDo);
-        singleToDo.appendChild(editToDo);
+        const toDoHeader = document.createElement('div');
+        toDoHeader.classList.add('to-do-header');
 
+        
+
+        toDoHeader.appendChild(title);
+        toDoHeader.appendChild(dueDate);
+        toDoHeader.appendChild(priority);
+        toDoHeader.appendChild(editToDo);
+        toDoHeader.appendChild(removeToDo);
+        singleToDo.appendChild(toDoHeader);
+        singleToDo.appendChild(description);
+        
         toDoList.appendChild(singleToDo);
     }
 
     return toDoList;
+}
+
+function removeIndividual(e, projectToDos, currentProjects){
+    console.log(e.currentTarget.parentNode.id);
+    projectToDos.splice(e.currentTarget.parentNode.id, 1);
+    localStorage.setObj(key, currentProjects);
 }
 
 function remove(index){

@@ -1,3 +1,6 @@
+// This file contains very similar code to form.js except that it takes
+// different arguments and performs some different activities
+
 import {toDoSubmit} from './todo-submit';
 
 function edit(index, currentTitle, currentDescription, currentDueDate){

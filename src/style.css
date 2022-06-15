@@ -38,6 +38,26 @@ body{
 .project-details{
     border: 1px solid black;
     border-bottom-width: 3px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.project-details > * {
+    border: 1px solid black;
+}
+
+.project-details > button{
+    height: 50%;
+    width: 80%;
+}
+
+.to-do-button-container{
+    border: none;
+}
+
+.to-do-button-container > button{
+    height: 50%;
+    width: 80%;
 }
 
 .project-cell{
@@ -49,8 +69,14 @@ body{
     font-size: 1rem;
 }
 
+
 .to-do{
     border: 1px solid black;
+}
+
+.to-do-header{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
 }
 
 .high-priority{
