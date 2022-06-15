@@ -541,6 +541,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "displayProjects": () => (/* binding */ displayProjects)
 /* harmony export */ });
 /* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./form */ "./src/form.js");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
+
 
 
 
@@ -703,11 +705,27 @@ function displayToDos(index){
             window.location.reload();
         }, false);
 
+        const editToDo = document.createElement('button');
+        editToDo.classList.add('edit-to-do-button');
+        editToDo.innerText = "Edit";
+        editToDo.addEventListener('click', function(e){
+            toDoList.appendChild((0,_edit__WEBPACK_IMPORTED_MODULE_1__.edit)(
+                index,
+                projectToDos[toDo].title,
+                projectToDos[toDo].description,
+                projectToDos[toDo].dueDate
+                ));
+            console.log(e.currentTarget.parentNode.id);
+            projectToDos.splice(e.currentTarget.parentNode.id, 1);
+            localStorage.setObj(key, currentProjects);
+        });
+
         singleToDo.appendChild(title);
         singleToDo.appendChild(description);
         singleToDo.appendChild(dueDate);
         singleToDo.appendChild(priority);
         singleToDo.appendChild(removeToDo);
+        singleToDo.appendChild(editToDo);
 
         toDoList.appendChild(singleToDo);
     }
@@ -721,6 +739,113 @@ function remove(index){
     currentProjects.splice(index, 1);
     localStorage.setObj(key, currentProjects);
     window.location.reload();
+}
+
+
+
+
+/***/ }),
+
+/***/ "./src/edit.js":
+/*!*********************!*\
+  !*** ./src/edit.js ***!
+  \*********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "edit": () => (/* binding */ edit)
+/* harmony export */ });
+/* harmony import */ var _todo_submit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo-submit */ "./src/todo-submit.js");
+
+
+function edit(index, currentTitle, currentDescription, currentDueDate){
+
+    const form = document.createElement("form");
+    form.classList.add('project-form');
+
+    const titleLabel = document.createElement('label');
+    titleLabel.setAttribute('for', 'title');
+    titleLabel.innerText = "To-do";
+
+    const title = document.createElement('input');
+    title.type = 'text';
+    title.name = 'title';
+    title.placeholder = 'Title';
+    title.id = 'title';
+    title.defaultValue = currentTitle;
+
+    const descriptionLabel = document.createElement('label');
+    descriptionLabel.for = 'description';
+    descriptionLabel.innerText = "Description: ";
+
+    const description = document.createElement('input');
+    description.type = 'text';
+    description.name = 'description';
+    description.placeholder = 'Description (<200 characters)';
+    description.maxlength = '199';
+    description.id = 'description';
+    description.defaultValue = currentDescription;
+
+    const dueDateLabel = document.createElement('label');
+    dueDateLabel.for= 'due-date';
+    dueDateLabel.innerText = "Due date: ";
+
+    const dueDate = document.createElement('input');
+    dueDate.type = 'date';
+    dueDate.name = 'due-date';
+    dueDate.id = 'due-date';
+    dueDate.defaultValue = currentDueDate;
+
+    const priorityLabel = document.createElement('label');
+    priorityLabel.innerText = 'Priority: ';
+    priorityLabel.htmlFor = 'priority';
+
+    let priorities = ['low', 'medium', 'high'];
+
+    const select = document.createElement('select');
+    select.name = 'priority';
+    select.id = 'priority';
+
+    for (const priority of priorities){
+        let option = document.createElement('option');
+        option.value = priority;
+        option.text = priority.charAt(0).toUpperCase() + priority.slice(1);
+        select.appendChild(option);
+    }
+
+    function handleForm(event) { event.preventDefault(); } 
+    form.addEventListener('submit', handleForm);
+
+    const submit = document.createElement('button');
+    submit.classList.add('submit');
+    submit.type = 'submit';
+    submit.innerText = "Submit";
+    form.addEventListener('submit', function(){
+         (0,_todo_submit__WEBPACK_IMPORTED_MODULE_0__.toDoSubmit)(index);
+        form.reset();
+    });
+    
+    
+    form.appendChild(titleLabel);
+    form.appendChild(title);
+
+    form.appendChild(descriptionLabel);
+    form.appendChild(description);
+
+    form.appendChild(dueDateLabel);
+    form.appendChild(dueDate);
+
+    form.appendChild(priorityLabel);
+    form.appendChild(select);
+
+    form.appendChild(submit);
+
+    function handleForm(event) {event.preventDefault();}
+    form.addEventListener('submit', handleForm);
+    
+
+    return form;
 }
 
 
@@ -949,6 +1074,7 @@ Storage.prototype.getObj = function(key) {
 
 const key = "projects";
 
+// Sort projects based on date
 
 let currentProjects = localStorage.getObj(key) || [];
 currentProjects.sort(function compare(a, b) {
@@ -956,6 +1082,18 @@ currentProjects.sort(function compare(a, b) {
         let dateB = new Date(b.dueDate);
         return dateA - dateB;
     });
+
+for (let project in currentProjects){
+    let currentToDos = currentProjects[project].toDos;
+    currentToDos.sort(function compare(a, b){
+        let dateA = new Date(a.dueDate);
+        let dateB = new Date(b.dueDate);
+        return dateA - dateB;
+    });
+}
+    
+
+
 
 localStorage.setObj(key, currentProjects); 
 

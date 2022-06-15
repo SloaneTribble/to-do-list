@@ -16,6 +16,7 @@ Storage.prototype.getObj = function(key) {
 
 const key = "projects";
 
+// Sort projects based on date
 
 let currentProjects = localStorage.getObj(key) || [];
 currentProjects.sort(function compare(a, b) {
@@ -23,6 +24,18 @@ currentProjects.sort(function compare(a, b) {
         let dateB = new Date(b.dueDate);
         return dateA - dateB;
     });
+
+for (let project in currentProjects){
+    let currentToDos = currentProjects[project].toDos;
+    currentToDos.sort(function compare(a, b){
+        let dateA = new Date(a.dueDate);
+        let dateB = new Date(b.dueDate);
+        return dateA - dateB;
+    });
+}
+    
+
+
 
 localStorage.setObj(key, currentProjects); 
 

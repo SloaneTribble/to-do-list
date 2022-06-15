@@ -1,5 +1,6 @@
 import { add, hoursToSeconds } from "date-fns";
 import {form} from './form';
+import {edit} from './edit';
 
 Storage.prototype.setObj = function(key, obj) {
     return this.setItem(key, JSON.stringify(obj))
@@ -160,11 +161,27 @@ function displayToDos(index){
             window.location.reload();
         }, false);
 
+        const editToDo = document.createElement('button');
+        editToDo.classList.add('edit-to-do-button');
+        editToDo.innerText = "Edit";
+        editToDo.addEventListener('click', function(e){
+            toDoList.appendChild(edit(
+                index,
+                projectToDos[toDo].title,
+                projectToDos[toDo].description,
+                projectToDos[toDo].dueDate
+                ));
+            console.log(e.currentTarget.parentNode.id);
+            projectToDos.splice(e.currentTarget.parentNode.id, 1);
+            localStorage.setObj(key, currentProjects);
+        });
+
         singleToDo.appendChild(title);
         singleToDo.appendChild(description);
         singleToDo.appendChild(dueDate);
         singleToDo.appendChild(priority);
         singleToDo.appendChild(removeToDo);
+        singleToDo.appendChild(editToDo);
 
         toDoList.appendChild(singleToDo);
     }
