@@ -28,27 +28,23 @@ function displayProjects(){
 
         const project = document.createElement('div');
         project.classList.add('project-cell');
-        project.id = i + 1;
 
         const projectDetails = document.createElement('div');
         projectDetails.classList.add('project-details');
 
         const title = document.createElement('div');
-        title.id = i + 1;
         title.innerText = "Title: " + currentProjects[i].title;
 
         const description = document.createElement('div');
-        description.id = i + 1;
+        description.classList.add('project-description');
         description.innerText = "Description: " + currentProjects[i].description;
 
         const dueDate = document.createElement('div');
-        dueDate.id = i + 1;
         dueDate.innerText = "Due date: " + currentProjects[i].dueDate;
 
         // Priority should affect border color
 
         const priority = document.createElement('div');
-        priority.id = i + 1;
         priority.innerText = "Priority: " + currentProjects[i].priority;
         let priorityColor;
         switch(currentProjects[i].priority){
@@ -69,7 +65,6 @@ function displayProjects(){
 
         const toDos = document.createElement('button');
         toDos.classList.add('to-do-display');
-        toDos.id = i + 1;
         toDos.innerText = "View to-dos";
 
         toDoButtonContainer.appendChild(toDos);

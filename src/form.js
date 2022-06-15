@@ -26,8 +26,9 @@ function form(input, index){
     const description = document.createElement('input');
     description.type = 'text';
     description.name = 'description';
-    description.placeholder = 'Description (<500 characters)';
-    description.maxLength = '499';
+    let placeHolder = (type === 'project')? "50" : "500";
+    description.placeholder = `Description (<${placeHolder} characters)`;
+    description.maxLength = placeHolder - 1;
     description.id = 'description';
 
     const dueDateLabel = document.createElement('label');

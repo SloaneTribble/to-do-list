@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "html,\nbody{\n    box-sizing: border-box;\n    position: relative;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.page-container{\n    height: 100%;\n    width: 100%;\n}\n\n.header{\n    border: 2px solid black;\n    background-color: aqua;\n}\n\n.project-form{\n    position: absolute;\n    background-color: white;\n    top: 32px;\n    left: 50%;\n    display: grid;\n}\n\n.project-details{\n    border: 1px solid black;\n    border-bottom-width: 3px;\n    display: grid;\n    grid-template-columns: repeat(7, 1fr);\n}\n\n.project-details > * {\n    border: 1px solid black;\n}\n\n.project-details > button{\n    height: 50%;\n    width: 80%;\n}\n\n.to-do-button-container{\n    border: none;\n}\n\n.to-do-button-container > button{\n    height: 50%;\n    width: 80%;\n}\n\n.project-cell{\n    border: 3px solid black;\n    font-size: 1.1rem;\n}\n\n.to-do-list{\n    font-size: 1rem;\n}\n\n\n.to-do{\n    border: 1px solid black;\n}\n\n.to-do-header{\n    display: grid;\n    grid-template-columns: repeat(5, 1fr);\n}\n\n.high-priority{\n    background: linear-gradient(45deg,  white, rgba(255, 99, 71, 0.4));\n}\n\n.medium-priority{\n    background: linear-gradient(45deg,  white, rgba(106, 90, 205, .4));\n\n\n}\n\n.low-priority{\n    background: linear-gradient(45deg,  white, rgba(60, 179, 113, 0.4));\n\n\n}", "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;;IAEI,sBAAsB;IACtB,kBAAkB;AACtB;;AAEA;IACI,iBAAiB;IACjB,aAAa;IACb,OAAO;AACX;AACA;;;IAGI,mBAAmB;IACnB,eAAe;IACf,SAAS;AACb;;AAEA;IACI,YAAY;IACZ,WAAW;AACf;;AAEA;IACI,uBAAuB;IACvB,sBAAsB;AAC1B;;AAEA;IACI,kBAAkB;IAClB,uBAAuB;IACvB,SAAS;IACT,SAAS;IACT,aAAa;AACjB;;AAEA;IACI,uBAAuB;IACvB,wBAAwB;IACxB,aAAa;IACb,qCAAqC;AACzC;;AAEA;IACI,uBAAuB;AAC3B;;AAEA;IACI,WAAW;IACX,UAAU;AACd;;AAEA;IACI,YAAY;AAChB;;AAEA;IACI,WAAW;IACX,UAAU;AACd;;AAEA;IACI,uBAAuB;IACvB,iBAAiB;AACrB;;AAEA;IACI,eAAe;AACnB;;;AAGA;IACI,uBAAuB;AAC3B;;AAEA;IACI,aAAa;IACb,qCAAqC;AACzC;;AAEA;IACI,kEAAkE;AACtE;;AAEA;IACI,kEAAkE;;;AAGtE;;AAEA;IACI,mEAAmE;;;AAGvE","sourcesContent":["html,\nbody{\n    box-sizing: border-box;\n    position: relative;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.page-container{\n    height: 100%;\n    width: 100%;\n}\n\n.header{\n    border: 2px solid black;\n    background-color: aqua;\n}\n\n.project-form{\n    position: absolute;\n    background-color: white;\n    top: 32px;\n    left: 50%;\n    display: grid;\n}\n\n.project-details{\n    border: 1px solid black;\n    border-bottom-width: 3px;\n    display: grid;\n    grid-template-columns: repeat(7, 1fr);\n}\n\n.project-details > * {\n    border: 1px solid black;\n}\n\n.project-details > button{\n    height: 50%;\n    width: 80%;\n}\n\n.to-do-button-container{\n    border: none;\n}\n\n.to-do-button-container > button{\n    height: 50%;\n    width: 80%;\n}\n\n.project-cell{\n    border: 3px solid black;\n    font-size: 1.1rem;\n}\n\n.to-do-list{\n    font-size: 1rem;\n}\n\n\n.to-do{\n    border: 1px solid black;\n}\n\n.to-do-header{\n    display: grid;\n    grid-template-columns: repeat(5, 1fr);\n}\n\n.high-priority{\n    background: linear-gradient(45deg,  white, rgba(255, 99, 71, 0.4));\n}\n\n.medium-priority{\n    background: linear-gradient(45deg,  white, rgba(106, 90, 205, .4));\n\n\n}\n\n.low-priority{\n    background: linear-gradient(45deg,  white, rgba(60, 179, 113, 0.4));\n\n\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "html,\nbody{\n    box-sizing: border-box;\n    position: relative;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.page-container{\n    height: 100%;\n    width: 100%;\n}\n\n.header{\n    border: 2px solid black;\n    background-color: aqua;\n}\n\n.project-form{\n    position: absolute;\n    background-color: white;\n    top: 32px;\n    left: 50%;\n    display: grid;\n}\n\n.project-details{\n    border: 1px solid black;\n    border-bottom-width: 3px;\n    display: grid;\n    grid-template-columns: repeat(7, 1fr);\n    grid-template-rows: 1fr 1fr;\n}\n\n.project-description{\n    grid-row: 2;\n    grid-column: 1 / 8;\n    display: flex;\n    align-items: center;\n}\n\n.project-details > * {\n    border: 1px solid black;\n}\n\n.project-details > button{\n    align-self: center;\n    justify-self: center;\n    height: 50%;\n    width: 80%;\n}\n\n.to-do-button-container{\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    border: none;\n}\n\n.to-do-button-container > button{\n    height: 50%;\n    width: 80%;\n}\n\n.project-cell{\n    border: 3px solid black;\n    font-size: 1.1rem;\n}\n\n.to-do-list{\n    font-size: 1rem;\n}\n\n\n.to-do{\n    border: 1px solid black;\n}\n\n.to-do-header{\n    display: grid;\n    grid-template-columns: repeat(5, 1fr);\n}\n\n.high-priority{\n    background: linear-gradient(45deg,  white, rgba(255, 99, 71, 0.4));\n}\n\n.medium-priority{\n    background: linear-gradient(45deg,  white, rgba(106, 90, 205, .4));\n\n\n}\n\n.low-priority{\n    background: linear-gradient(45deg,  white, rgba(60, 179, 113, 0.4));\n\n\n}", "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;;IAEI,sBAAsB;IACtB,kBAAkB;AACtB;;AAEA;IACI,iBAAiB;IACjB,aAAa;IACb,OAAO;AACX;AACA;;;IAGI,mBAAmB;IACnB,eAAe;IACf,SAAS;AACb;;AAEA;IACI,YAAY;IACZ,WAAW;AACf;;AAEA;IACI,uBAAuB;IACvB,sBAAsB;AAC1B;;AAEA;IACI,kBAAkB;IAClB,uBAAuB;IACvB,SAAS;IACT,SAAS;IACT,aAAa;AACjB;;AAEA;IACI,uBAAuB;IACvB,wBAAwB;IACxB,aAAa;IACb,qCAAqC;IACrC,2BAA2B;AAC/B;;AAEA;IACI,WAAW;IACX,kBAAkB;IAClB,aAAa;IACb,mBAAmB;AACvB;;AAEA;IACI,uBAAuB;AAC3B;;AAEA;IACI,kBAAkB;IAClB,oBAAoB;IACpB,WAAW;IACX,UAAU;AACd;;AAEA;IACI,aAAa;IACb,mBAAmB;IACnB,uBAAuB;IACvB,YAAY;AAChB;;AAEA;IACI,WAAW;IACX,UAAU;AACd;;AAEA;IACI,uBAAuB;IACvB,iBAAiB;AACrB;;AAEA;IACI,eAAe;AACnB;;;AAGA;IACI,uBAAuB;AAC3B;;AAEA;IACI,aAAa;IACb,qCAAqC;AACzC;;AAEA;IACI,kEAAkE;AACtE;;AAEA;IACI,kEAAkE;;;AAGtE;;AAEA;IACI,mEAAmE;;;AAGvE","sourcesContent":["html,\nbody{\n    box-sizing: border-box;\n    position: relative;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.page-container{\n    height: 100%;\n    width: 100%;\n}\n\n.header{\n    border: 2px solid black;\n    background-color: aqua;\n}\n\n.project-form{\n    position: absolute;\n    background-color: white;\n    top: 32px;\n    left: 50%;\n    display: grid;\n}\n\n.project-details{\n    border: 1px solid black;\n    border-bottom-width: 3px;\n    display: grid;\n    grid-template-columns: repeat(7, 1fr);\n    grid-template-rows: 1fr 1fr;\n}\n\n.project-description{\n    grid-row: 2;\n    grid-column: 1 / 8;\n    display: flex;\n    align-items: center;\n}\n\n.project-details > * {\n    border: 1px solid black;\n}\n\n.project-details > button{\n    align-self: center;\n    justify-self: center;\n    height: 50%;\n    width: 80%;\n}\n\n.to-do-button-container{\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    border: none;\n}\n\n.to-do-button-container > button{\n    height: 50%;\n    width: 80%;\n}\n\n.project-cell{\n    border: 3px solid black;\n    font-size: 1.1rem;\n}\n\n.to-do-list{\n    font-size: 1rem;\n}\n\n\n.to-do{\n    border: 1px solid black;\n}\n\n.to-do-header{\n    display: grid;\n    grid-template-columns: repeat(5, 1fr);\n}\n\n.high-priority{\n    background: linear-gradient(45deg,  white, rgba(255, 99, 71, 0.4));\n}\n\n.medium-priority{\n    background: linear-gradient(45deg,  white, rgba(106, 90, 205, .4));\n\n\n}\n\n.low-priority{\n    background: linear-gradient(45deg,  white, rgba(60, 179, 113, 0.4));\n\n\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -572,27 +572,23 @@ function displayProjects(){
 
         const project = document.createElement('div');
         project.classList.add('project-cell');
-        project.id = i + 1;
 
         const projectDetails = document.createElement('div');
         projectDetails.classList.add('project-details');
 
         const title = document.createElement('div');
-        title.id = i + 1;
         title.innerText = "Title: " + currentProjects[i].title;
 
         const description = document.createElement('div');
-        description.id = i + 1;
+        description.classList.add('project-description');
         description.innerText = "Description: " + currentProjects[i].description;
 
         const dueDate = document.createElement('div');
-        dueDate.id = i + 1;
         dueDate.innerText = "Due date: " + currentProjects[i].dueDate;
 
         // Priority should affect border color
 
         const priority = document.createElement('div');
-        priority.id = i + 1;
         priority.innerText = "Priority: " + currentProjects[i].priority;
         let priorityColor;
         switch(currentProjects[i].priority){
@@ -613,7 +609,6 @@ function displayProjects(){
 
         const toDos = document.createElement('button');
         toDos.classList.add('to-do-display');
-        toDos.id = i + 1;
         toDos.innerText = "View to-dos";
 
         toDoButtonContainer.appendChild(toDos);
@@ -904,8 +899,9 @@ function form(input, index){
     const description = document.createElement('input');
     description.type = 'text';
     description.name = 'description';
-    description.placeholder = 'Description (<500 characters)';
-    description.maxLength = '499';
+    let placeHolder = (type === 'project')? "50" : "500";
+    description.placeholder = `Description (<${placeHolder} characters)`;
+    description.maxLength = placeHolder - 1;
     description.id = 'description';
 
     const dueDateLabel = document.createElement('label');
