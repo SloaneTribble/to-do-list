@@ -711,6 +711,7 @@ function displayToDos(index){
         editToDo.innerText = "Edit";
         editToDo.addEventListener('click', function(e){
             toDoList.appendChild((0,_edit__WEBPACK_IMPORTED_MODULE_1__.edit)(
+                "to-do",
                 index,
                 projectToDos[toDo].title,
                 projectToDos[toDo].description,
@@ -757,6 +758,80 @@ function remove(index){
 
 /***/ }),
 
+/***/ "./src/edit-project.js":
+/*!*****************************!*\
+  !*** ./src/edit-project.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "editProject": () => (/* binding */ editProject)
+/* harmony export */ });
+/* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
+
+
+Storage.prototype.setObj = function(key, obj) {
+    return this.setItem(key, JSON.stringify(obj))
+}
+Storage.prototype.getObj = function(key) {
+    return JSON.parse(this.getItem(key))
+}
+
+const key = "projects";
+
+// Sort projects based on date
+
+let currentProjects = localStorage.getObj(key) || [];
+currentProjects.sort(function compare(a, b) {
+        let dateA = new Date(a.dueDate);
+        let dateB = new Date(b.dueDate);
+        return dateA - dateB;
+    });
+
+for (let project in currentProjects){
+    let currentToDos = currentProjects[project].toDos;
+    currentToDos.sort(function compare(a, b){
+        let dateA = new Date(a.dueDate);
+        let dateB = new Date(b.dueDate);
+        return dateA - dateB;
+    });
+}
+    
+
+
+
+localStorage.setObj(key, currentProjects); 
+
+function editProject(index){
+
+    // If currentProjects is null, assign an empty array
+    let currentProjects = localStorage.getObj(key) || [];
+    
+    const title = document.getElementById("title").value;
+    const description = document.getElementById("description").value;
+    const dueDate = document.getElementById("due-date").value;
+    const priority = document.getElementById("priority").value;
+
+    
+    currentProjects[index].title = title;
+    currentProjects[index].description = description;
+    currentProjects[index].dueDate = dueDate;
+    currentProjects[index].priority = priority;
+
+    
+
+    localStorage.setObj(key, currentProjects);  
+    (0,_display_projects__WEBPACK_IMPORTED_MODULE_0__.displayProjects)();
+    window.location.reload();
+
+    return newProject;
+}
+
+
+
+/***/ }),
+
 /***/ "./src/edit.js":
 /*!*********************!*\
   !*** ./src/edit.js ***!
@@ -768,12 +843,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "edit": () => (/* binding */ edit)
 /* harmony export */ });
 /* harmony import */ var _todo_submit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo-submit */ "./src/todo-submit.js");
+/* harmony import */ var _edit_project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit-project */ "./src/edit-project.js");
 // This file contains very similar code to form.js except that it takes
 // different arguments and performs some different activities
 
 
 
-function edit(index, currentTitle, currentDescription, currentDueDate){
+
+Storage.prototype.setObj = function(key, obj) {
+    return this.setItem(key, JSON.stringify(obj))
+}
+Storage.prototype.getObj = function(key) {
+    return JSON.parse(this.getItem(key))
+}
+
+const key = "projects";
+
+let currentProjects = localStorage.getObj(key) || [];
+
+function edit(type, index, currentTitle, currentDescription, currentDueDate){
 
     const form = document.createElement("form");
     form.classList.add('project-form');
@@ -836,7 +924,12 @@ function edit(index, currentTitle, currentDescription, currentDueDate){
     submit.type = 'submit';
     submit.innerText = "Submit";
     form.addEventListener('submit', function(){
-         (0,_todo_submit__WEBPACK_IMPORTED_MODULE_0__.toDoSubmit)(index);
+        
+        if(type === 'to-do') {(0,_todo_submit__WEBPACK_IMPORTED_MODULE_0__.toDoSubmit)(index)
+        } else if(type === 'project'){
+            (0,_edit_project__WEBPACK_IMPORTED_MODULE_1__.editProject)(index);
+            return
+        };
         form.reset();
     });
     
@@ -1403,6 +1496,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./home */ "./src/home.js");
 /* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
 /* harmony import */ var _project_form__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./project-form */ "./src/project-form.js");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
 
 
 // Initial page load function
@@ -1414,9 +1508,22 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 document.body.appendChild((0,_home__WEBPACK_IMPORTED_MODULE_1__.homeMaker)());
 
 (0,_display_projects__WEBPACK_IMPORTED_MODULE_2__.displayProjects)();
+
+Storage.prototype.setObj = function(key, obj) {
+    return this.setItem(key, JSON.stringify(obj))
+}
+Storage.prototype.getObj = function(key) {
+    return JSON.parse(this.getItem(key))
+}
+
+const key = "projects";
+
+let currentProjects = localStorage.getObj(key) || [];
 
 
 // Button for creating a new project
@@ -1431,7 +1538,18 @@ const editProjectButtons = document.querySelectorAll('.edit-project-button');
 
 editProjectButtons.forEach((button) => {
     button.addEventListener('click', ()=> {
-        console.log(button.id);
+
+        let type = "project";
+        let index = button.id;
+        let title = currentProjects[index].title;
+        let description = currentProjects[index].description;
+        let dueDate = currentProjects[index].dueDate;
+        let priority = currentProjects[index].priority;
+
+        document.body.appendChild((0,_edit__WEBPACK_IMPORTED_MODULE_4__.edit)(type, index, title, description, dueDate, priority));
+
+        
+    
     });
 });
 

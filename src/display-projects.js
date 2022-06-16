@@ -167,6 +167,7 @@ function displayToDos(index){
         editToDo.innerText = "Edit";
         editToDo.addEventListener('click', function(e){
             toDoList.appendChild(edit(
+                "to-do",
                 index,
                 projectToDos[toDo].title,
                 projectToDos[toDo].description,

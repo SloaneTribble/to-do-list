@@ -2,8 +2,20 @@
 // different arguments and performs some different activities
 
 import {toDoSubmit} from './todo-submit';
+import {editProject} from './edit-project';
 
-function edit(index, currentTitle, currentDescription, currentDueDate){
+Storage.prototype.setObj = function(key, obj) {
+    return this.setItem(key, JSON.stringify(obj))
+}
+Storage.prototype.getObj = function(key) {
+    return JSON.parse(this.getItem(key))
+}
+
+const key = "projects";
+
+let currentProjects = localStorage.getObj(key) || [];
+
+function edit(type, index, currentTitle, currentDescription, currentDueDate){
 
     const form = document.createElement("form");
     form.classList.add('project-form');
@@ -66,7 +78,12 @@ function edit(index, currentTitle, currentDescription, currentDueDate){
     submit.type = 'submit';
     submit.innerText = "Submit";
     form.addEventListener('submit', function(){
-         toDoSubmit(index);
+        
+        if(type === 'to-do') {toDoSubmit(index)
+        } else if(type === 'project'){
+            editProject(index);
+            return
+        };
         form.reset();
     });
     
