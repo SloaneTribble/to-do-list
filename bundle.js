@@ -708,6 +708,8 @@ function displayToDos(index){
         singleToDo.classList.add('to-do');
         singleToDo.id = toDo;
 
+        let toDoIndex = toDo;
+
         const title = document.createElement('div');
         title.innerText = "Task: " + projectToDos[toDo].title;
 
@@ -738,9 +740,9 @@ function displayToDos(index){
                 projectToDos[toDo].title,
                 projectToDos[toDo].description,
                 projectToDos[toDo].dueDate,
-                projectToDos[toDo].priority
+                projectToDos[toDo].priority,
+                toDoIndex
                 ));
-                removeIndividual(toDo, projectToDos, currentProjects)
         });
 
         const toDoHeader = document.createElement('div');
@@ -848,7 +850,85 @@ function editProject(index){
     (0,_display_projects__WEBPACK_IMPORTED_MODULE_0__.displayProjects)();
     window.location.reload();
 
-    return newProject;
+    return;
+}
+
+
+
+/***/ }),
+
+/***/ "./src/edit-todo.js":
+/*!**************************!*\
+  !*** ./src/edit-todo.js ***!
+  \**************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "editToDo": () => (/* binding */ editToDo)
+/* harmony export */ });
+/* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
+
+
+Storage.prototype.setObj = function(key, obj) {
+    return this.setItem(key, JSON.stringify(obj))
+}
+Storage.prototype.getObj = function(key) {
+    return JSON.parse(this.getItem(key))
+}
+
+const key = "projects";
+
+// Sort projects based on date
+
+let currentProjects = localStorage.getObj(key) || [];
+currentProjects.sort(function compare(a, b) {
+        let dateA = new Date(a.dueDate);
+        let dateB = new Date(b.dueDate);
+        return dateA - dateB;
+    });
+
+for (let project in currentProjects){
+    let currentToDos = currentProjects[project].toDos;
+    currentToDos.sort(function compare(a, b){
+        let dateA = new Date(a.dueDate);
+        let dateB = new Date(b.dueDate);
+        return dateA - dateB;
+    });
+}
+    
+
+
+
+localStorage.setObj(key, currentProjects); 
+
+function editToDo(index, toDo){
+
+    // If currentProjects is null, assign an empty array
+    let currentProjects = localStorage.getObj(key) || [];
+    let projectToDos = currentProjects[index].toDos;
+
+
+    
+    const title = document.getElementById("title").value;
+    const description = document.getElementById("description").value;
+    const dueDate = document.getElementById("due-date").value;
+    const priority = document.getElementById("priority").value;
+
+    console.log(toDo);
+
+    projectToDos[toDo].title = title;
+    projectToDos[toDo].description = description;
+    projectToDos[toDo].dueDate = dueDate;
+    projectToDos[toDo].priority = priority;
+
+    
+
+    localStorage.setObj(key, currentProjects);  
+    (0,_display_projects__WEBPACK_IMPORTED_MODULE_0__.displayProjects)();
+    window.location.reload();
+
+    return;
 }
 
 
@@ -865,7 +945,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "edit": () => (/* binding */ edit)
 /* harmony export */ });
-/* harmony import */ var _todo_submit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo-submit */ "./src/todo-submit.js");
+/* harmony import */ var _edit_todo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edit-todo */ "./src/edit-todo.js");
 /* harmony import */ var _edit_project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit-project */ "./src/edit-project.js");
 // This file contains very similar code to form.js except that it takes
 // different arguments and performs some different activities
@@ -884,7 +964,7 @@ const key = "projects";
 
 let currentProjects = localStorage.getObj(key) || [];
 
-function edit(type, index, currentTitle, currentDescription, currentDueDate, currentPriority){
+function edit(type, index, currentTitle, currentDescription, currentDueDate, currentPriority, toDo = 0){
 
     const formContainer = document.createElement('div');
     formContainer.classList.add('form-container');
@@ -953,7 +1033,7 @@ function edit(type, index, currentTitle, currentDescription, currentDueDate, cur
     submit.innerText = "Submit";
     submit.addEventListener('click', function(){
         
-        if(type === 'to-do') {(0,_todo_submit__WEBPACK_IMPORTED_MODULE_0__.toDoSubmit)(index)
+        if(type === 'to-do') {(0,_edit_todo__WEBPACK_IMPORTED_MODULE_0__.editToDo)(index, toDo);
         } else if(type === 'project'){
             (0,_edit_project__WEBPACK_IMPORTED_MODULE_1__.editProject)(index);
             return
@@ -965,8 +1045,6 @@ function edit(type, index, currentTitle, currentDescription, currentDueDate, cur
     cancel.classList.add('cancel');
     cancel.innerText = 'cancel';
     cancel.addEventListener('click', function(){
-        const formContainer = document.querySelector('.form-container');
-        formContainer.removeChild(form);
         window.location.reload();
     })
     
