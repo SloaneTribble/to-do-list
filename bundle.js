@@ -563,7 +563,7 @@ function displayProjects(){
 
     const projectContainer = document.querySelector(".project-container");
 
-    // Clear the current display to prevent repetition (?)
+    // Clear the current display to prevent repetition
     projectContainer.innerHTML = '';
 
 
@@ -618,20 +618,26 @@ function displayProjects(){
         const toDoList = displayToDos(i);
 
         toDos.addEventListener('click', function(){
+            currentProjects[i].isActive = true;
+            localStorage.setObj(key, currentProjects);
             project.appendChild(toDoList);
             toDoButtonContainer.removeChild(toDos);
             toDoButtonContainer.appendChild(hideToDos);
         });
+        
 
         const hideToDos = document.createElement('button');
         hideToDos.innerText = "Hide To-dos";
         hideToDos.classList.add('to-do-display');
         hideToDos.addEventListener('click', function(){
+            currentProjects[i].isActive = false;
+            localStorage.setObj(key, currentProjects);
             project.removeChild(toDoList);
             toDoButtonContainer.removeChild(hideToDos);
             toDoButtonContainer.appendChild(toDos);
         });
 
+        
 
         const addToDo = document.createElement('button');
         addToDo.classList.add('add-to-do-button');
@@ -667,6 +673,10 @@ function displayProjects(){
         
 
         projectContainer.appendChild(project);
+
+        if(currentProjects[i].isActive){
+            toDos.click();
+        }
     }
 }
 
@@ -1218,7 +1228,7 @@ function projectSubmit(){
     const dueDate = document.getElementById("due-date").value;
     const priority = document.getElementById("priority").value;
 
-    const newProject = new _project__WEBPACK_IMPORTED_MODULE_0__["default"](title, description, dueDate, priority);
+    const newProject = new _project__WEBPACK_IMPORTED_MODULE_0__["default"](title, description, dueDate, priority, false);
     currentProjects.push(newProject);
 
     localStorage.setObj(key, currentProjects);  
@@ -1243,12 +1253,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Project)
 /* harmony export */ });
 class Project{
-    constructor(title, description, dueDate, priority){
+    constructor(title, description, dueDate, priority, isActive){
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
         this.toDos = [];
+        this.isActive = false;
     }
 
     addToDo(toDo){
