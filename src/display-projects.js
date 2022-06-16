@@ -19,7 +19,7 @@ function displayProjects(){
 
     const projectContainer = document.querySelector(".project-container");
 
-    // Clear the current display to prevent repetition (?)
+    // Clear the current display to prevent repetition
     projectContainer.innerHTML = '';
 
 
@@ -74,20 +74,26 @@ function displayProjects(){
         const toDoList = displayToDos(i);
 
         toDos.addEventListener('click', function(){
+            currentProjects[i].isActive = true;
+            localStorage.setObj(key, currentProjects);
             project.appendChild(toDoList);
             toDoButtonContainer.removeChild(toDos);
             toDoButtonContainer.appendChild(hideToDos);
         });
+        
 
         const hideToDos = document.createElement('button');
         hideToDos.innerText = "Hide To-dos";
         hideToDos.classList.add('to-do-display');
         hideToDos.addEventListener('click', function(){
+            currentProjects[i].isActive = false;
+            localStorage.setObj(key, currentProjects);
             project.removeChild(toDoList);
             toDoButtonContainer.removeChild(hideToDos);
             toDoButtonContainer.appendChild(toDos);
         });
 
+        
 
         const addToDo = document.createElement('button');
         addToDo.classList.add('add-to-do-button');
@@ -123,6 +129,10 @@ function displayProjects(){
         
 
         projectContainer.appendChild(project);
+
+        if(currentProjects[i].isActive){
+            toDos.click();
+        }
     }
 }
 

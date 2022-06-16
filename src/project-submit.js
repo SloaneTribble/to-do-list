@@ -49,7 +49,7 @@ function projectSubmit(){
     const dueDate = document.getElementById("due-date").value;
     const priority = document.getElementById("priority").value;
 
-    const newProject = new Project(title, description, dueDate, priority);
+    const newProject = new Project(title, description, dueDate, priority, false);
     currentProjects.push(newProject);
 
     localStorage.setObj(key, currentProjects);  
