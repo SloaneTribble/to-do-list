@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "html,\nbody{\n    box-sizing: border-box;\n    position: relative;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.page-container{\n    height: 100%;\n    width: 100%;\n}\n\n.header{\n    border: 2px solid black;\n    background-color: aqua;\n}\n\n.project-form{\n    position: absolute;\n    background-color: white;\n    top: 32px;\n    left: 50%;\n    display: grid;\n}\n\n.project-details{\n    border: 1px solid black;\n    border-bottom-width: 3px;\n    display: grid;\n    grid-template-columns: repeat(7, 1fr);\n    grid-template-rows: 1fr 1fr;\n}\n\n.project-description{\n    grid-row: 2;\n    grid-column: 1 / 8;\n    display: flex;\n    align-items: center;\n}\n\n.project-details > * {\n    border: 1px solid black;\n}\n\n.project-details > button{\n    align-self: center;\n    justify-self: center;\n    height: 50%;\n    width: 80%;\n}\n\n.to-do-button-container{\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    border: none;\n}\n\n.to-do-button-container > button{\n    height: 50%;\n    width: 80%;\n}\n\n.project-cell{\n    border: 3px solid black;\n    font-size: 1.1rem;\n}\n\n.to-do-list{\n    font-size: 1rem;\n}\n\n\n.to-do{\n    border: 1px solid black;\n}\n\n.to-do-header{\n    display: grid;\n    grid-template-columns: repeat(5, 1fr);\n}\n\n.high-priority{\n    background: linear-gradient(45deg,  white, rgba(255, 99, 71, 0.4));\n}\n\n.medium-priority{\n    background: linear-gradient(45deg,  white, rgba(106, 90, 205, .4));\n\n\n}\n\n.low-priority{\n    background: linear-gradient(45deg,  white, rgba(60, 179, 113, 0.4));\n\n\n}", "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;;IAEI,sBAAsB;IACtB,kBAAkB;AACtB;;AAEA;IACI,iBAAiB;IACjB,aAAa;IACb,OAAO;AACX;AACA;;;IAGI,mBAAmB;IACnB,eAAe;IACf,SAAS;AACb;;AAEA;IACI,YAAY;IACZ,WAAW;AACf;;AAEA;IACI,uBAAuB;IACvB,sBAAsB;AAC1B;;AAEA;IACI,kBAAkB;IAClB,uBAAuB;IACvB,SAAS;IACT,SAAS;IACT,aAAa;AACjB;;AAEA;IACI,uBAAuB;IACvB,wBAAwB;IACxB,aAAa;IACb,qCAAqC;IACrC,2BAA2B;AAC/B;;AAEA;IACI,WAAW;IACX,kBAAkB;IAClB,aAAa;IACb,mBAAmB;AACvB;;AAEA;IACI,uBAAuB;AAC3B;;AAEA;IACI,kBAAkB;IAClB,oBAAoB;IACpB,WAAW;IACX,UAAU;AACd;;AAEA;IACI,aAAa;IACb,mBAAmB;IACnB,uBAAuB;IACvB,YAAY;AAChB;;AAEA;IACI,WAAW;IACX,UAAU;AACd;;AAEA;IACI,uBAAuB;IACvB,iBAAiB;AACrB;;AAEA;IACI,eAAe;AACnB;;;AAGA;IACI,uBAAuB;AAC3B;;AAEA;IACI,aAAa;IACb,qCAAqC;AACzC;;AAEA;IACI,kEAAkE;AACtE;;AAEA;IACI,kEAAkE;;;AAGtE;;AAEA;IACI,mEAAmE;;;AAGvE","sourcesContent":["html,\nbody{\n    box-sizing: border-box;\n    position: relative;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.page-container{\n    height: 100%;\n    width: 100%;\n}\n\n.header{\n    border: 2px solid black;\n    background-color: aqua;\n}\n\n.project-form{\n    position: absolute;\n    background-color: white;\n    top: 32px;\n    left: 50%;\n    display: grid;\n}\n\n.project-details{\n    border: 1px solid black;\n    border-bottom-width: 3px;\n    display: grid;\n    grid-template-columns: repeat(7, 1fr);\n    grid-template-rows: 1fr 1fr;\n}\n\n.project-description{\n    grid-row: 2;\n    grid-column: 1 / 8;\n    display: flex;\n    align-items: center;\n}\n\n.project-details > * {\n    border: 1px solid black;\n}\n\n.project-details > button{\n    align-self: center;\n    justify-self: center;\n    height: 50%;\n    width: 80%;\n}\n\n.to-do-button-container{\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    border: none;\n}\n\n.to-do-button-container > button{\n    height: 50%;\n    width: 80%;\n}\n\n.project-cell{\n    border: 3px solid black;\n    font-size: 1.1rem;\n}\n\n.to-do-list{\n    font-size: 1rem;\n}\n\n\n.to-do{\n    border: 1px solid black;\n}\n\n.to-do-header{\n    display: grid;\n    grid-template-columns: repeat(5, 1fr);\n}\n\n.high-priority{\n    background: linear-gradient(45deg,  white, rgba(255, 99, 71, 0.4));\n}\n\n.medium-priority{\n    background: linear-gradient(45deg,  white, rgba(106, 90, 205, .4));\n\n\n}\n\n.low-priority{\n    background: linear-gradient(45deg,  white, rgba(60, 179, 113, 0.4));\n\n\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "html,\nbody{\n    box-sizing: border-box;\n    position: relative;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.page-container{\n    height: 100%;\n    width: 100%;\n}\n\n.header{\n    border: 2px solid black;\n    background-color: aqua;\n}\n\n.project-form{\n    position: absolute;\n    background-color: white;\n    top: 32px;\n    left: 50%;\n    display: grid;\n}\n\n.project-details{\n    border: 1px solid black;\n    border-bottom-width: 3px;\n    display: grid;\n    grid-template-columns: repeat(7, 1fr);\n    grid-template-rows: 1fr 1fr;\n}\n\n.project-description{\n    grid-row: 2;\n    grid-column: 1 / 8;\n    display: flex;\n    align-items: center;\n}\n\n.project-details > * {\n    border: 1px solid black;\n}\n\n.project-details > button{\n    align-self: center;\n    justify-self: center;\n    height: 50%;\n    width: 80%;\n}\n\n.to-do-button-container{\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    border: none;\n}\n\n.to-do-button-container > button{\n    height: 50%;\n    width: 80%;\n}\n\n.project-cell{\n    border: 3px solid black;\n    font-size: 1.1rem;\n}\n\n.to-do-list{\n    font-size: 1rem;\n}\n\n\n.to-do{\n    border: 1px solid black;\n}\n\n.to-do-header{\n    display: grid;\n    grid-template-columns: repeat(5, 1fr);\n}\n\n.high-priority{\n    background: linear-gradient(45deg,  white, rgba(255, 99, 71, 0.4));\n}\n\n.medium-priority{\n    background: linear-gradient(45deg,  white, rgba(106, 90, 205, .4));\n}\n\n.low-priority{\n    background: linear-gradient(45deg,  white, rgba(60, 179, 113, 0.4));\n}\n\n.form-container{\n    position: absolute;\n    top: 0;\n    z-index: 10;\n    height: 100vh;\n    width: 100vw;\n    background-color:rgba(0, 0, 0, 0.4);\n}\n", "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;;IAEI,sBAAsB;IACtB,kBAAkB;AACtB;;AAEA;IACI,iBAAiB;IACjB,aAAa;IACb,OAAO;AACX;AACA;;;IAGI,mBAAmB;IACnB,eAAe;IACf,SAAS;AACb;;AAEA;IACI,YAAY;IACZ,WAAW;AACf;;AAEA;IACI,uBAAuB;IACvB,sBAAsB;AAC1B;;AAEA;IACI,kBAAkB;IAClB,uBAAuB;IACvB,SAAS;IACT,SAAS;IACT,aAAa;AACjB;;AAEA;IACI,uBAAuB;IACvB,wBAAwB;IACxB,aAAa;IACb,qCAAqC;IACrC,2BAA2B;AAC/B;;AAEA;IACI,WAAW;IACX,kBAAkB;IAClB,aAAa;IACb,mBAAmB;AACvB;;AAEA;IACI,uBAAuB;AAC3B;;AAEA;IACI,kBAAkB;IAClB,oBAAoB;IACpB,WAAW;IACX,UAAU;AACd;;AAEA;IACI,aAAa;IACb,mBAAmB;IACnB,uBAAuB;IACvB,YAAY;AAChB;;AAEA;IACI,WAAW;IACX,UAAU;AACd;;AAEA;IACI,uBAAuB;IACvB,iBAAiB;AACrB;;AAEA;IACI,eAAe;AACnB;;;AAGA;IACI,uBAAuB;AAC3B;;AAEA;IACI,aAAa;IACb,qCAAqC;AACzC;;AAEA;IACI,kEAAkE;AACtE;;AAEA;IACI,kEAAkE;AACtE;;AAEA;IACI,mEAAmE;AACvE;;AAEA;IACI,kBAAkB;IAClB,MAAM;IACN,WAAW;IACX,aAAa;IACb,YAAY;IACZ,mCAAmC;AACvC","sourcesContent":["html,\nbody{\n    box-sizing: border-box;\n    position: relative;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.page-container{\n    height: 100%;\n    width: 100%;\n}\n\n.header{\n    border: 2px solid black;\n    background-color: aqua;\n}\n\n.project-form{\n    position: absolute;\n    background-color: white;\n    top: 32px;\n    left: 50%;\n    display: grid;\n}\n\n.project-details{\n    border: 1px solid black;\n    border-bottom-width: 3px;\n    display: grid;\n    grid-template-columns: repeat(7, 1fr);\n    grid-template-rows: 1fr 1fr;\n}\n\n.project-description{\n    grid-row: 2;\n    grid-column: 1 / 8;\n    display: flex;\n    align-items: center;\n}\n\n.project-details > * {\n    border: 1px solid black;\n}\n\n.project-details > button{\n    align-self: center;\n    justify-self: center;\n    height: 50%;\n    width: 80%;\n}\n\n.to-do-button-container{\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    border: none;\n}\n\n.to-do-button-container > button{\n    height: 50%;\n    width: 80%;\n}\n\n.project-cell{\n    border: 3px solid black;\n    font-size: 1.1rem;\n}\n\n.to-do-list{\n    font-size: 1rem;\n}\n\n\n.to-do{\n    border: 1px solid black;\n}\n\n.to-do-header{\n    display: grid;\n    grid-template-columns: repeat(5, 1fr);\n}\n\n.high-priority{\n    background: linear-gradient(45deg,  white, rgba(255, 99, 71, 0.4));\n}\n\n.medium-priority{\n    background: linear-gradient(45deg,  white, rgba(106, 90, 205, .4));\n}\n\n.low-priority{\n    background: linear-gradient(45deg,  white, rgba(60, 179, 113, 0.4));\n}\n\n.form-container{\n    position: absolute;\n    top: 0;\n    z-index: 10;\n    height: 100vh;\n    width: 100vw;\n    background-color:rgba(0, 0, 0, 0.4);\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -538,10 +538,16 @@ module.exports = styleTagTransform;
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "displayProjects": () => (/* binding */ displayProjects)
+/* harmony export */   "displayProjects": () => (/* binding */ displayProjects),
+/* harmony export */   "removeIndividual": () => (/* binding */ removeIndividual)
 /* harmony export */ });
 /* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./form */ "./src/form.js");
 /* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
+
+
+// This module displays what projects are kept in local storage.
+// displayProjects() is frequently called to ensure that the user 
+// is only able to see data that is currently being stored
 
 
 
@@ -588,7 +594,7 @@ function displayProjects(){
         const dueDate = document.createElement('div');
         dueDate.innerText = "Due date: " + currentProjects[i].dueDate;
 
-        // Priority should affect border color
+        // Priority should affect div color
 
         const priority = document.createElement('div');
         priority.innerText = "Priority: " + currentProjects[i].priority;
@@ -618,8 +624,11 @@ function displayProjects(){
         const toDoList = displayToDos(i);
 
         toDos.addEventListener('click', function(){
+
+        // Keep track of which tabs are open/closed on refresh
             currentProjects[i].isActive = true;
             localStorage.setObj(key, currentProjects);
+
             project.appendChild(toDoList);
             toDoButtonContainer.removeChild(toDos);
             toDoButtonContainer.appendChild(hideToDos);
@@ -630,8 +639,11 @@ function displayProjects(){
         hideToDos.innerText = "Hide To-dos";
         hideToDos.classList.add('to-do-display');
         hideToDos.addEventListener('click', function(){
+        
+        // Keep track of which tabs are open/closed on refresh
             currentProjects[i].isActive = false;
             localStorage.setObj(key, currentProjects);
+
             project.removeChild(toDoList);
             toDoButtonContainer.removeChild(hideToDos);
             toDoButtonContainer.appendChild(toDos);
@@ -711,8 +723,8 @@ function displayToDos(index){
         const removeToDo = document.createElement('button');
         removeToDo.classList.add("remove-to-do-button");
         removeToDo.innerText = "Remove";
-        removeToDo.addEventListener('click', function(e){
-            removeIndividual(e, projectToDos, currentProjects);
+        removeToDo.addEventListener('click', function(){
+            removeIndividual(toDo, projectToDos, currentProjects);
             window.location.reload();
         }, false);
 
@@ -720,7 +732,7 @@ function displayToDos(index){
         editToDo.classList.add('edit-to-do-button');
         editToDo.innerText = "Edit";
         editToDo.addEventListener('click', function(e){
-            toDoList.appendChild((0,_edit__WEBPACK_IMPORTED_MODULE_1__.edit)(
+            document.body.appendChild((0,_edit__WEBPACK_IMPORTED_MODULE_1__.edit)(
                 "to-do",
                 index,
                 projectToDos[toDo].title,
@@ -728,7 +740,7 @@ function displayToDos(index){
                 projectToDos[toDo].dueDate,
                 projectToDos[toDo].priority
                 ));
-            removeIndividual(e, projectToDos, currentProjects);
+                removeIndividual(toDo, projectToDos, currentProjects)
         });
 
         const toDoHeader = document.createElement('div');
@@ -751,8 +763,8 @@ function displayToDos(index){
 }
 
 function removeIndividual(e, projectToDos, currentProjects){
-    console.log(e.currentTarget.parentNode.id);
-    projectToDos.splice(e.currentTarget.parentNode.id, 1);
+    console.log(e);
+    projectToDos.splice(e, 1);
     localStorage.setObj(key, currentProjects);
 }
 
@@ -874,6 +886,9 @@ let currentProjects = localStorage.getObj(key) || [];
 
 function edit(type, index, currentTitle, currentDescription, currentDueDate, currentPriority){
 
+    const formContainer = document.createElement('div');
+    formContainer.classList.add('form-container');
+
     const form = document.createElement("form");
     form.classList.add('project-form');
 
@@ -936,7 +951,7 @@ function edit(type, index, currentTitle, currentDescription, currentDueDate, cur
     submit.classList.add('submit');
     submit.type = 'submit';
     submit.innerText = "Submit";
-    form.addEventListener('submit', function(){
+    submit.addEventListener('click', function(){
         
         if(type === 'to-do') {(0,_todo_submit__WEBPACK_IMPORTED_MODULE_0__.toDoSubmit)(index)
         } else if(type === 'project'){
@@ -945,6 +960,15 @@ function edit(type, index, currentTitle, currentDescription, currentDueDate, cur
         };
         form.reset();
     });
+
+    const cancel = document.createElement('button');
+    cancel.classList.add('cancel');
+    cancel.innerText = 'cancel';
+    cancel.addEventListener('click', function(){
+        const formContainer = document.querySelector('.form-container');
+        formContainer.removeChild(form);
+        window.location.reload();
+    })
     
     
     form.appendChild(titleLabel);
@@ -961,11 +985,15 @@ function edit(type, index, currentTitle, currentDescription, currentDueDate, cur
 
     form.appendChild(submit);
 
+    form.appendChild(cancel);
+
+    formContainer.appendChild(form);
+
     function handleForm(event) {event.preventDefault();}
     form.addEventListener('submit', handleForm);
     
 
-    return form;
+    return formContainer;
 }
 
 
@@ -991,6 +1019,9 @@ __webpack_require__.r(__webpack_exports__);
 
 function form(input, index){
 
+    const formContainer = document.createElement('div');
+    formContainer.classList.add('form-container');
+
     let type = input;
 
     const form = document.createElement("form");
@@ -1013,6 +1044,7 @@ function form(input, index){
     const description = document.createElement('input');
     description.type = 'text';
     description.name = 'description';
+
     let placeHolder = (type === 'project')? "50" : "500";
     description.placeholder = `Description (<${placeHolder} characters)`;
     description.maxLength = placeHolder - 1;
@@ -1051,7 +1083,8 @@ function form(input, index){
     submit.classList.add('submit');
     submit.type = 'submit';
     submit.innerText = "Submit";
-    form.addEventListener('submit', function(){
+
+    submit.addEventListener('click', function(){
         if (title.value === ""){
             alert("Please include a title.");
             return;
@@ -1063,6 +1096,17 @@ function form(input, index){
         }
         form.reset();
     });
+
+    const cancel = document.createElement('button');
+    cancel.classList.add('cancel');
+    cancel.innerText = 'cancel';
+    cancel.addEventListener('click', function(){
+        const pageContainer = document.querySelector('.page-container');
+        const formContainer =document.querySelector('.form-container');
+        pageContainer.removeChild(formContainer);
+        window.location.reload();
+    })
+
     
     
     form.appendChild(titleLabel);
@@ -1079,11 +1123,15 @@ function form(input, index){
 
     form.appendChild(submit);
 
+    form.appendChild(cancel);
+
     function handleForm(event) {event.preventDefault();}
     form.addEventListener('submit', handleForm);
+
+    formContainer.appendChild(form);
     
 
-    return form;
+    return formContainer;
 }
 
 
@@ -1157,8 +1205,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function newProject(){
-    const pageContainer = document.querySelector('.page-container');
-    pageContainer.appendChild((0,_form__WEBPACK_IMPORTED_MODULE_0__.form)('project', "N/A"));
+    document.body.appendChild((0,_form__WEBPACK_IMPORTED_MODULE_0__.form)('project', "N/A"));
 }
 
 
@@ -1332,6 +1379,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 Storage.prototype.setObj = function(key, obj) {
     return this.setItem(key, JSON.stringify(obj))
 }
@@ -1351,6 +1399,7 @@ function toDoSubmit(index){
     let currentProjects = localStorage.getObj(key) || [];
 
     let project = currentProjects[index];
+    let projectToDos = project.toDos;
 
     const title = document.getElementById("title").value;
     const description = document.getElementById("description").value;
@@ -1358,9 +1407,21 @@ function toDoSubmit(index){
     const priority = document.getElementById("priority").value;
 
     const toDo = new _todo__WEBPACK_IMPORTED_MODULE_0__["default"](title, description, dueDate, priority);
+
+    
     project.toDos.push(toDo);
 
+
+    
+
     localStorage.setObj(key, currentProjects);  
+
+    currentProjects = localStorage.getObj(key) || [];
+
+
+
+
+
     (0,_display_projects__WEBPACK_IMPORTED_MODULE_1__.displayProjects)();
 
     window.location.reload();
@@ -1550,8 +1611,12 @@ newProjectButton.addEventListener('click', function(){
 
 const editProjectButtons = document.querySelectorAll('.edit-project-button');
 
+
 editProjectButtons.forEach((button) => {
     button.addEventListener('click', ()=> {
+
+        localStorage.setObj(key, currentProjects);
+
 
         let type = "project";
         let index = button.id;
