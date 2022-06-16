@@ -572,9 +572,11 @@ function displayProjects(){
 
         const project = document.createElement('div');
         project.classList.add('project-cell');
+        project.id = i;
 
         const projectDetails = document.createElement('div');
         projectDetails.classList.add('project-details');
+        projectDetails.id = i;
 
         const title = document.createElement('div');
         title.innerText = "Title: " + currentProjects[i].title;
@@ -609,7 +611,7 @@ function displayProjects(){
 
         const toDos = document.createElement('button');
         toDos.classList.add('to-do-display');
-        toDos.innerText = "View to-dos";
+        toDos.innerText = "View To-dos";
 
         toDoButtonContainer.appendChild(toDos);
 
@@ -622,7 +624,7 @@ function displayProjects(){
         });
 
         const hideToDos = document.createElement('button');
-        hideToDos.innerText = "Hide to-dos";
+        hideToDos.innerText = "Hide To-dos";
         hideToDos.classList.add('to-do-display');
         hideToDos.addEventListener('click', function(){
             project.removeChild(toDoList);
@@ -633,15 +635,20 @@ function displayProjects(){
 
         const addToDo = document.createElement('button');
         addToDo.classList.add('add-to-do-button');
-        addToDo.innerText = 'Add to-do';
+        addToDo.innerText = 'Add To-do';
         addToDo.addEventListener('click', function(){
             project.appendChild((0,_form__WEBPACK_IMPORTED_MODULE_0__.form)('todo', i));
         });
 
+        const editProject = document.createElement('button');
+        editProject.classList.add('edit-project-button');
+        editProject.innerText = 'Edit Project';
+        editProject.id = i;
+
 
         const removeProject = document.createElement('button');
         removeProject.classList.add('remove-project-button');
-        removeProject.innerText = 'Remove project';
+        removeProject.innerText = 'Remove Project';
         removeProject.addEventListener('click', function(){
             remove(i);
         });
@@ -653,6 +660,7 @@ function displayProjects(){
         projectDetails.appendChild(priority);
         projectDetails.appendChild(toDoButtonContainer);
         projectDetails.appendChild(addToDo);
+        projectDetails.appendChild(editProject);
         projectDetails.appendChild(removeProject);
 
         project.appendChild(projectDetails);
@@ -1418,6 +1426,16 @@ const newProjectButton = document.querySelector('.new-project-button');
 newProjectButton.addEventListener('click', function(){
     (0,_project_form__WEBPACK_IMPORTED_MODULE_3__.newProject)();
     newProjectButton.disabled = true;});
+
+const editProjectButtons = document.querySelectorAll('.edit-project-button');
+
+editProjectButtons.forEach((button) => {
+    button.addEventListener('click', ()=> {
+        console.log(button.id);
+    });
+});
+
+
 
 
 

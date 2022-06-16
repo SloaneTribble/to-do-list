@@ -22,6 +22,16 @@ newProjectButton.addEventListener('click', function(){
     newProject();
     newProjectButton.disabled = true;});
 
+const editProjectButtons = document.querySelectorAll('.edit-project-button');
+
+editProjectButtons.forEach((button) => {
+    button.addEventListener('click', ()=> {
+        console.log(button.id);
+    });
+});
+
+
+
 
 
 
