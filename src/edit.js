@@ -38,8 +38,9 @@ function edit(type, index, currentTitle, currentDescription, currentDueDate, cur
     descriptionLabel.for = 'description';
     descriptionLabel.innerText = "Description: ";
 
-    const description = document.createElement('input');
-    description.type = 'text';
+    const description = document.createElement('textarea');
+    description.classList.add('form-description');
+    // description.type = 'text';
     description.name = 'description';
     description.placeholder = 'Description (<200 characters)';
     description.maxlength = '199';

@@ -112,3 +112,13 @@ body{
     width: 100vw;
     background-color:rgba(0, 0, 0, 0.4);
 }
+
+.project-form{
+    height: fit-content;
+    width: 300px;
+}
+
+.form-description{
+    height: 300px;
+    text-align:start;
+}
