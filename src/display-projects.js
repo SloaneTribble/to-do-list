@@ -171,7 +171,8 @@ function displayToDos(index){
                 index,
                 projectToDos[toDo].title,
                 projectToDos[toDo].description,
-                projectToDos[toDo].dueDate
+                projectToDos[toDo].dueDate,
+                projectToDos[toDo].priority
                 ));
             removeIndividual(e, projectToDos, currentProjects);
         });

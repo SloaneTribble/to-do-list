@@ -715,7 +715,8 @@ function displayToDos(index){
                 index,
                 projectToDos[toDo].title,
                 projectToDos[toDo].description,
-                projectToDos[toDo].dueDate
+                projectToDos[toDo].dueDate,
+                projectToDos[toDo].priority
                 ));
             removeIndividual(e, projectToDos, currentProjects);
         });
@@ -861,7 +862,7 @@ const key = "projects";
 
 let currentProjects = localStorage.getObj(key) || [];
 
-function edit(type, index, currentTitle, currentDescription, currentDueDate){
+function edit(type, index, currentTitle, currentDescription, currentDueDate, currentPriority){
 
     const form = document.createElement("form");
     form.classList.add('project-form');
@@ -915,6 +916,8 @@ function edit(type, index, currentTitle, currentDescription, currentDueDate){
         option.text = priority.charAt(0).toUpperCase() + priority.slice(1);
         select.appendChild(option);
     }
+
+    select.value = currentPriority;
 
     function handleForm(event) { event.preventDefault(); } 
     form.addEventListener('submit', handleForm);
