@@ -4,6 +4,9 @@ import {toDoSubmit} from './todo-submit';
 
 function form(input, index){
 
+    const formContainer = document.createElement('div');
+    formContainer.classList.add('form-container');
+
     let type = input;
 
     const form = document.createElement("form");
@@ -26,6 +29,7 @@ function form(input, index){
     const description = document.createElement('input');
     description.type = 'text';
     description.name = 'description';
+
     let placeHolder = (type === 'project')? "50" : "500";
     description.placeholder = `Description (<${placeHolder} characters)`;
     description.maxLength = placeHolder - 1;
@@ -64,7 +68,8 @@ function form(input, index){
     submit.classList.add('submit');
     submit.type = 'submit';
     submit.innerText = "Submit";
-    form.addEventListener('submit', function(){
+
+    submit.addEventListener('click', function(){
         if (title.value === ""){
             alert("Please include a title.");
             return;
@@ -76,6 +81,17 @@ function form(input, index){
         }
         form.reset();
     });
+
+    const cancel = document.createElement('button');
+    cancel.classList.add('cancel');
+    cancel.innerText = 'cancel';
+    cancel.addEventListener('click', function(){
+        const pageContainer = document.querySelector('.page-container');
+        const formContainer =document.querySelector('.form-container');
+        pageContainer.removeChild(formContainer);
+        window.location.reload();
+    })
+
     
     
     form.appendChild(titleLabel);
@@ -92,11 +108,15 @@ function form(input, index){
 
     form.appendChild(submit);
 
+    form.appendChild(cancel);
+
     function handleForm(event) {event.preventDefault();}
     form.addEventListener('submit', handleForm);
+
+    formContainer.appendChild(form);
     
 
-    return form;
+    return formContainer;
 }
 
 

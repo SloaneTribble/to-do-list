@@ -5,7 +5,8 @@
 // to ensure that the user sees all of the projects in storage
 
 import ToDo from './todo';
-import {displayProjects} from './display-projects';
+import { removeIndividual } from './display-projects';
+import { displayProjects } from './display-projects';
 
 Storage.prototype.setObj = function(key, obj) {
     return this.setItem(key, JSON.stringify(obj))
@@ -26,6 +27,7 @@ function toDoSubmit(index){
     let currentProjects = localStorage.getObj(key) || [];
 
     let project = currentProjects[index];
+    let projectToDos = project.toDos;
 
     const title = document.getElementById("title").value;
     const description = document.getElementById("description").value;
@@ -33,9 +35,21 @@ function toDoSubmit(index){
     const priority = document.getElementById("priority").value;
 
     const toDo = new ToDo(title, description, dueDate, priority);
+
+    
     project.toDos.push(toDo);
 
+
+    
+
     localStorage.setObj(key, currentProjects);  
+
+    currentProjects = localStorage.getObj(key) || [];
+
+
+
+
+
     displayProjects();
 
     window.location.reload();

@@ -1,4 +1,9 @@
 import { add, hoursToSeconds } from "date-fns";
+
+// This module displays what projects are kept in local storage.
+// displayProjects() is frequently called to ensure that the user 
+// is only able to see data that is currently being stored
+
 import {form} from './form';
 import {edit} from './edit';
 
@@ -44,7 +49,7 @@ function displayProjects(){
         const dueDate = document.createElement('div');
         dueDate.innerText = "Due date: " + currentProjects[i].dueDate;
 
-        // Priority should affect border color
+        // Priority should affect div color
 
         const priority = document.createElement('div');
         priority.innerText = "Priority: " + currentProjects[i].priority;
@@ -74,8 +79,11 @@ function displayProjects(){
         const toDoList = displayToDos(i);
 
         toDos.addEventListener('click', function(){
+
+        // Keep track of which tabs are open/closed on refresh
             currentProjects[i].isActive = true;
             localStorage.setObj(key, currentProjects);
+
             project.appendChild(toDoList);
             toDoButtonContainer.removeChild(toDos);
             toDoButtonContainer.appendChild(hideToDos);
@@ -86,8 +94,11 @@ function displayProjects(){
         hideToDos.innerText = "Hide To-dos";
         hideToDos.classList.add('to-do-display');
         hideToDos.addEventListener('click', function(){
+        
+        // Keep track of which tabs are open/closed on refresh
             currentProjects[i].isActive = false;
             localStorage.setObj(key, currentProjects);
+
             project.removeChild(toDoList);
             toDoButtonContainer.removeChild(hideToDos);
             toDoButtonContainer.appendChild(toDos);
@@ -167,8 +178,8 @@ function displayToDos(index){
         const removeToDo = document.createElement('button');
         removeToDo.classList.add("remove-to-do-button");
         removeToDo.innerText = "Remove";
-        removeToDo.addEventListener('click', function(e){
-            removeIndividual(e, projectToDos, currentProjects);
+        removeToDo.addEventListener('click', function(){
+            removeIndividual(toDo, projectToDos, currentProjects);
             window.location.reload();
         }, false);
 
@@ -176,7 +187,7 @@ function displayToDos(index){
         editToDo.classList.add('edit-to-do-button');
         editToDo.innerText = "Edit";
         editToDo.addEventListener('click', function(e){
-            toDoList.appendChild(edit(
+            document.body.appendChild(edit(
                 "to-do",
                 index,
                 projectToDos[toDo].title,
@@ -184,7 +195,7 @@ function displayToDos(index){
                 projectToDos[toDo].dueDate,
                 projectToDos[toDo].priority
                 ));
-            removeIndividual(e, projectToDos, currentProjects);
+                removeIndividual(toDo, projectToDos, currentProjects)
         });
 
         const toDoHeader = document.createElement('div');
@@ -207,8 +218,8 @@ function displayToDos(index){
 }
 
 function removeIndividual(e, projectToDos, currentProjects){
-    console.log(e.currentTarget.parentNode.id);
-    projectToDos.splice(e.currentTarget.parentNode.id, 1);
+    console.log(e);
+    projectToDos.splice(e, 1);
     localStorage.setObj(key, currentProjects);
 }
 
@@ -221,4 +232,4 @@ function remove(index){
 }
 
 
-export {displayProjects};
+export {displayProjects, removeIndividual};

@@ -17,6 +17,9 @@ let currentProjects = localStorage.getObj(key) || [];
 
 function edit(type, index, currentTitle, currentDescription, currentDueDate, currentPriority){
 
+    const formContainer = document.createElement('div');
+    formContainer.classList.add('form-container');
+
     const form = document.createElement("form");
     form.classList.add('project-form');
 
@@ -79,7 +82,7 @@ function edit(type, index, currentTitle, currentDescription, currentDueDate, cur
     submit.classList.add('submit');
     submit.type = 'submit';
     submit.innerText = "Submit";
-    form.addEventListener('submit', function(){
+    submit.addEventListener('click', function(){
         
         if(type === 'to-do') {toDoSubmit(index)
         } else if(type === 'project'){
@@ -88,6 +91,15 @@ function edit(type, index, currentTitle, currentDescription, currentDueDate, cur
         };
         form.reset();
     });
+
+    const cancel = document.createElement('button');
+    cancel.classList.add('cancel');
+    cancel.innerText = 'cancel';
+    cancel.addEventListener('click', function(){
+        const formContainer = document.querySelector('.form-container');
+        formContainer.removeChild(form);
+        window.location.reload();
+    })
     
     
     form.appendChild(titleLabel);
@@ -104,11 +116,15 @@ function edit(type, index, currentTitle, currentDescription, currentDueDate, cur
 
     form.appendChild(submit);
 
+    form.appendChild(cancel);
+
+    formContainer.appendChild(form);
+
     function handleForm(event) {event.preventDefault();}
     form.addEventListener('submit', handleForm);
     
 
-    return form;
+    return formContainer;
 }
 
 

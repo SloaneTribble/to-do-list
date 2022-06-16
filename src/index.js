@@ -37,8 +37,12 @@ newProjectButton.addEventListener('click', function(){
 
 const editProjectButtons = document.querySelectorAll('.edit-project-button');
 
+
 editProjectButtons.forEach((button) => {
     button.addEventListener('click', ()=> {
+
+        localStorage.setObj(key, currentProjects);
+
 
         let type = "project";
         let index = button.id;
