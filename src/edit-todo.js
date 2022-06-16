@@ -32,21 +32,25 @@ for (let project in currentProjects){
 
 localStorage.setObj(key, currentProjects); 
 
-function editProject(index){
+function editToDo(index, toDo){
 
     // If currentProjects is null, assign an empty array
     let currentProjects = localStorage.getObj(key) || [];
+    let projectToDos = currentProjects[index].toDos;
+
+
     
     const title = document.getElementById("title").value;
     const description = document.getElementById("description").value;
     const dueDate = document.getElementById("due-date").value;
     const priority = document.getElementById("priority").value;
 
-    
-    currentProjects[index].title = title;
-    currentProjects[index].description = description;
-    currentProjects[index].dueDate = dueDate;
-    currentProjects[index].priority = priority;
+    console.log(toDo);
+
+    projectToDos[toDo].title = title;
+    projectToDos[toDo].description = description;
+    projectToDos[toDo].dueDate = dueDate;
+    projectToDos[toDo].priority = priority;
 
     
 
@@ -57,4 +61,4 @@ function editProject(index){
     return;
 }
 
-export {editProject};
+export {editToDo};

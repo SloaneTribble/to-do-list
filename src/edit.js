@@ -1,7 +1,7 @@
 // This file contains very similar code to form.js except that it takes
 // different arguments and performs some different activities
 
-import {toDoSubmit} from './todo-submit';
+import {editToDo} from './edit-todo';
 import {editProject} from './edit-project';
 
 Storage.prototype.setObj = function(key, obj) {
@@ -15,7 +15,7 @@ const key = "projects";
 
 let currentProjects = localStorage.getObj(key) || [];
 
-function edit(type, index, currentTitle, currentDescription, currentDueDate, currentPriority){
+function edit(type, index, currentTitle, currentDescription, currentDueDate, currentPriority, toDo = 0){
 
     const formContainer = document.createElement('div');
     formContainer.classList.add('form-container');
@@ -84,7 +84,7 @@ function edit(type, index, currentTitle, currentDescription, currentDueDate, cur
     submit.innerText = "Submit";
     submit.addEventListener('click', function(){
         
-        if(type === 'to-do') {toDoSubmit(index)
+        if(type === 'to-do') {editToDo(index, toDo);
         } else if(type === 'project'){
             editProject(index);
             return
@@ -96,8 +96,6 @@ function edit(type, index, currentTitle, currentDescription, currentDueDate, cur
     cancel.classList.add('cancel');
     cancel.innerText = 'cancel';
     cancel.addEventListener('click', function(){
-        const formContainer = document.querySelector('.form-container');
-        formContainer.removeChild(form);
         window.location.reload();
     })
     

@@ -163,6 +163,8 @@ function displayToDos(index){
         singleToDo.classList.add('to-do');
         singleToDo.id = toDo;
 
+        let toDoIndex = toDo;
+
         const title = document.createElement('div');
         title.innerText = "Task: " + projectToDos[toDo].title;
 
@@ -193,9 +195,9 @@ function displayToDos(index){
                 projectToDos[toDo].title,
                 projectToDos[toDo].description,
                 projectToDos[toDo].dueDate,
-                projectToDos[toDo].priority
+                projectToDos[toDo].priority,
+                toDoIndex
                 ));
-                removeIndividual(toDo, projectToDos, currentProjects)
         });
 
         const toDoHeader = document.createElement('div');
