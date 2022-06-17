@@ -4,16 +4,16 @@
 import {editToDo} from './edit-todo';
 import {editProject} from './edit-project';
 
-Storage.prototype.setObj = function(key, obj) {
-    return this.setItem(key, JSON.stringify(obj))
-}
-Storage.prototype.getObj = function(key) {
-    return JSON.parse(this.getItem(key))
-}
+// Storage.prototype.setObj = function(key, obj) {
+//     return this.setItem(key, JSON.stringify(obj))
+// }
+// Storage.prototype.getObj = function(key) {
+//     return JSON.parse(this.getItem(key))
+// }
 
-const key = "projects";
+// const key = "projects";
 
-let currentProjects = localStorage.getObj(key) || [];
+// let currentProjects = localStorage.getObj(key) || [];
 
 function edit(type, index, currentTitle, currentDescription, currentDueDate, currentPriority, toDo = 0){
 

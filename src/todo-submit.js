@@ -27,7 +27,6 @@ function toDoSubmit(index){
     let currentProjects = localStorage.getObj(key) || [];
 
     let project = currentProjects[index];
-    let projectToDos = project.toDos;
 
     const title = document.getElementById("title").value;
     const description = document.getElementById("description").value;
@@ -40,14 +39,9 @@ function toDoSubmit(index){
     project.toDos.push(toDo);
 
 
-    
-
     localStorage.setObj(key, currentProjects);  
 
     currentProjects = localStorage.getObj(key) || [];
-
-
-
 
 
     displayProjects();

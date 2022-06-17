@@ -37,10 +37,15 @@ let currentProjects = localStorage.getObj(key) || [];
 
 const newProjectButton = document.querySelector('.new-project-button');
 newProjectButton.addEventListener('click', function(){
+
+    // Prevents user from opening multiple forms 
     const formContainer = document.querySelector('.form-container');
     if(document.body.contains(formContainer)){return;}
+
     newProject();
     newProjectButton.disabled = true;});
+
+
 
 const editProjectButtons = document.querySelectorAll('.edit-project-button');
 
@@ -72,7 +77,6 @@ editProjectButtons.forEach((button) => {
 
 
 document.querySelector('.theme-toggle').addEventListener('click', setTheme);
-
 
 
 

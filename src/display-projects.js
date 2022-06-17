@@ -1,4 +1,4 @@
-import { add, hoursToSeconds } from "date-fns";
+import { add, hoursToSeconds, roundToNearestMinutes } from "date-fns";
 
 // This module displays what projects are kept in local storage.
 // displayProjects() is frequently called to ensure that the user 
@@ -16,12 +16,20 @@ Storage.prototype.getObj = function(key) {
 
 const key = "projects";
 
+const theme = "theme";
+
 // If currentProjects is null, assign an empty array
 
 function displayProjects(){
 
 
     let currentProjects = localStorage.getObj(key) || [];
+
+    let currentTheme = localStorage.getObj(theme);
+
+    const root = document.documentElement;
+
+    root.className = currentTheme;
 
     const projectContainer = document.querySelector(".project-container");
 
@@ -192,6 +200,10 @@ function displayToDos(index){
         editToDo.classList.add('edit-to-do-button');
         editToDo.innerText = "Edit";
         editToDo.addEventListener('click', function(e){
+
+            const formContainer = document.querySelector('.form-container');
+             if(document.body.contains(formContainer)){return;}
+             
             document.body.appendChild(edit(
                 "to-do",
                 index,
