@@ -86,11 +86,8 @@ function form(input, index){
     cancel.classList.add('cancel');
     cancel.innerText = 'cancel';
     cancel.addEventListener('click', function(){
-        const pageContainer = document.querySelector('.page-container');
-        const formContainer =document.querySelector('.form-container');
-        pageContainer.removeChild(formContainer);
         window.location.reload();
-    })
+    });
 
     
     
