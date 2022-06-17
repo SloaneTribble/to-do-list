@@ -1,6 +1,9 @@
 import './style.css';
 
-// Initial page load function
+// Initial page load functions
+
+import {setTheme} from './theme';
+
 import {homeMaker} from './home';
 
 import {displayProjects} from './display-projects';
@@ -57,6 +60,10 @@ editProjectButtons.forEach((button) => {
     
     });
 });
+
+
+
+document.querySelector('.theme-toggle').addEventListener('click', setTheme);
 
 
 

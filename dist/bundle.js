@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "html,\nbody{\n    box-sizing: border-box;\n    position: relative;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.page-container{\n    height: 100%;\n    width: 100%;\n}\n\n.header{\n    border: 2px solid black;\n    background-color: aqua;\n}\n\n.project-form{\n    position: absolute;\n    background-color: white;\n    top: 32px;\n    left: 50%;\n    display: grid;\n}\n\n.project-details{\n    border: 1px solid black;\n    border-bottom-width: 3px;\n    display: grid;\n    grid-template-columns: repeat(7, 1fr);\n    grid-template-rows: 1fr 1fr;\n}\n\n.project-description{\n    grid-row: 2;\n    grid-column: 1 / 8;\n    display: flex;\n    align-items: center;\n}\n\n.project-details > * {\n    border: 1px solid black;\n}\n\n.project-details > button{\n    align-self: center;\n    justify-self: center;\n    height: 50%;\n    width: 80%;\n}\n\n.to-do-button-container{\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    border: none;\n}\n\n.to-do-button-container > button{\n    height: 50%;\n    width: 80%;\n}\n\n.project-cell{\n    border: 3px solid black;\n    font-size: 1.1rem;\n}\n\n.to-do-list{\n    font-size: 1rem;\n}\n\n\n.to-do{\n    border: 1px solid black;\n}\n\n.to-do-header{\n    display: grid;\n    grid-template-columns: repeat(5, 1fr);\n}\n\n.high-priority{\n    background: linear-gradient(45deg,  white, rgba(255, 99, 71, 0.4));\n}\n\n.medium-priority{\n    background: linear-gradient(45deg,  white, rgba(106, 90, 205, .4));\n}\n\n.low-priority{\n    background: linear-gradient(45deg,  white, rgba(60, 179, 113, 0.4));\n}\n\n.form-container{\n    position: absolute;\n    top: 0;\n    z-index: 10;\n    height: 100vh;\n    width: 100vw;\n    background-color:rgba(0, 0, 0, 0.4);\n}\n\n.project-form{\n    height: fit-content;\n    width: 300px;\n}\n\n.form-description{\n    height: 300px;\n    text-align:start;\n}\n", "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;;IAEI,sBAAsB;IACtB,kBAAkB;AACtB;;AAEA;IACI,iBAAiB;IACjB,aAAa;IACb,OAAO;AACX;AACA;;;IAGI,mBAAmB;IACnB,eAAe;IACf,SAAS;AACb;;AAEA;IACI,YAAY;IACZ,WAAW;AACf;;AAEA;IACI,uBAAuB;IACvB,sBAAsB;AAC1B;;AAEA;IACI,kBAAkB;IAClB,uBAAuB;IACvB,SAAS;IACT,SAAS;IACT,aAAa;AACjB;;AAEA;IACI,uBAAuB;IACvB,wBAAwB;IACxB,aAAa;IACb,qCAAqC;IACrC,2BAA2B;AAC/B;;AAEA;IACI,WAAW;IACX,kBAAkB;IAClB,aAAa;IACb,mBAAmB;AACvB;;AAEA;IACI,uBAAuB;AAC3B;;AAEA;IACI,kBAAkB;IAClB,oBAAoB;IACpB,WAAW;IACX,UAAU;AACd;;AAEA;IACI,aAAa;IACb,mBAAmB;IACnB,uBAAuB;IACvB,YAAY;AAChB;;AAEA;IACI,WAAW;IACX,UAAU;AACd;;AAEA;IACI,uBAAuB;IACvB,iBAAiB;AACrB;;AAEA;IACI,eAAe;AACnB;;;AAGA;IACI,uBAAuB;AAC3B;;AAEA;IACI,aAAa;IACb,qCAAqC;AACzC;;AAEA;IACI,kEAAkE;AACtE;;AAEA;IACI,kEAAkE;AACtE;;AAEA;IACI,mEAAmE;AACvE;;AAEA;IACI,kBAAkB;IAClB,MAAM;IACN,WAAW;IACX,aAAa;IACb,YAAY;IACZ,mCAAmC;AACvC;;AAEA;IACI,mBAAmB;IACnB,YAAY;AAChB;;AAEA;IACI,aAAa;IACb,gBAAgB;AACpB","sourcesContent":["html,\nbody{\n    box-sizing: border-box;\n    position: relative;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.page-container{\n    height: 100%;\n    width: 100%;\n}\n\n.header{\n    border: 2px solid black;\n    background-color: aqua;\n}\n\n.project-form{\n    position: absolute;\n    background-color: white;\n    top: 32px;\n    left: 50%;\n    display: grid;\n}\n\n.project-details{\n    border: 1px solid black;\n    border-bottom-width: 3px;\n    display: grid;\n    grid-template-columns: repeat(7, 1fr);\n    grid-template-rows: 1fr 1fr;\n}\n\n.project-description{\n    grid-row: 2;\n    grid-column: 1 / 8;\n    display: flex;\n    align-items: center;\n}\n\n.project-details > * {\n    border: 1px solid black;\n}\n\n.project-details > button{\n    align-self: center;\n    justify-self: center;\n    height: 50%;\n    width: 80%;\n}\n\n.to-do-button-container{\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    border: none;\n}\n\n.to-do-button-container > button{\n    height: 50%;\n    width: 80%;\n}\n\n.project-cell{\n    border: 3px solid black;\n    font-size: 1.1rem;\n}\n\n.to-do-list{\n    font-size: 1rem;\n}\n\n\n.to-do{\n    border: 1px solid black;\n}\n\n.to-do-header{\n    display: grid;\n    grid-template-columns: repeat(5, 1fr);\n}\n\n.high-priority{\n    background: linear-gradient(45deg,  white, rgba(255, 99, 71, 0.4));\n}\n\n.medium-priority{\n    background: linear-gradient(45deg,  white, rgba(106, 90, 205, .4));\n}\n\n.low-priority{\n    background: linear-gradient(45deg,  white, rgba(60, 179, 113, 0.4));\n}\n\n.form-container{\n    position: absolute;\n    top: 0;\n    z-index: 10;\n    height: 100vh;\n    width: 100vw;\n    background-color:rgba(0, 0, 0, 0.4);\n}\n\n.project-form{\n    height: fit-content;\n    width: 300px;\n}\n\n.form-description{\n    height: 300px;\n    text-align:start;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ":root.light{\n    --page-background: white;\n}\n\n:root.dark{\n    --page-background: black;\n}\n\nhtml,\nbody{\n    box-sizing: border-box;\n    position: relative;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.page-container{\n    min-height: 100vh;\n    min-width: 100vw;\n    background-color: var(--page-background);\n}\n\n.header{\n    border: 2px solid black;\n    background-color: aqua;\n}\n\n.project-form{\n    position: absolute;\n    background-color: white;\n    top: 32px;\n    left: 50%;\n    display: grid;\n}\n\n.project-details{\n    border: 1px solid black;\n    border-bottom-width: 3px;\n    display: grid;\n    grid-template-columns: repeat(7, 1fr);\n    grid-template-rows: 1fr 1fr;\n}\n\n.project-description{\n    grid-row: 2;\n    grid-column: 1 / 8;\n    display: flex;\n    align-items: center;\n}\n\n.project-details > * {\n    border: 1px solid black;\n}\n\n.project-details > button{\n    align-self: center;\n    justify-self: center;\n    height: 50%;\n    width: 80%;\n}\n\n.to-do-button-container{\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    border: none;\n}\n\n.to-do-button-container > button{\n    height: 50%;\n    width: 80%;\n}\n\n.project-cell{\n    border: 3px solid black;\n    font-size: 1.1rem;\n}\n\n.to-do-list{\n    font-size: 1rem;\n}\n\n\n.to-do{\n    border: 1px solid black;\n}\n\n.to-do-header{\n    display: grid;\n    grid-template-columns: repeat(5, 1fr);\n}\n\n.high-priority{\n    background: linear-gradient(45deg,  white, rgba(255, 99, 71, 0.4));\n}\n\n.medium-priority{\n    background: linear-gradient(45deg,  white, rgba(106, 90, 205, .4));\n}\n\n.low-priority{\n    background: linear-gradient(45deg,  white, rgba(60, 179, 113, 0.4));\n}\n\n.form-container{\n    position: absolute;\n    top: 0;\n    z-index: 10;\n    height: 100vh;\n    width: 100vw;\n    background-color:rgba(0, 0, 0, 0.4);\n}\n\n.project-form{\n    height: fit-content;\n    width: 300px;\n}\n\n\n", "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;IACI,wBAAwB;AAC5B;;AAEA;IACI,wBAAwB;AAC5B;;AAEA;;IAEI,sBAAsB;IACtB,kBAAkB;AACtB;;AAEA;IACI,iBAAiB;IACjB,aAAa;IACb,OAAO;AACX;AACA;;;IAGI,mBAAmB;IACnB,eAAe;IACf,SAAS;AACb;;AAEA;IACI,iBAAiB;IACjB,gBAAgB;IAChB,wCAAwC;AAC5C;;AAEA;IACI,uBAAuB;IACvB,sBAAsB;AAC1B;;AAEA;IACI,kBAAkB;IAClB,uBAAuB;IACvB,SAAS;IACT,SAAS;IACT,aAAa;AACjB;;AAEA;IACI,uBAAuB;IACvB,wBAAwB;IACxB,aAAa;IACb,qCAAqC;IACrC,2BAA2B;AAC/B;;AAEA;IACI,WAAW;IACX,kBAAkB;IAClB,aAAa;IACb,mBAAmB;AACvB;;AAEA;IACI,uBAAuB;AAC3B;;AAEA;IACI,kBAAkB;IAClB,oBAAoB;IACpB,WAAW;IACX,UAAU;AACd;;AAEA;IACI,aAAa;IACb,mBAAmB;IACnB,uBAAuB;IACvB,YAAY;AAChB;;AAEA;IACI,WAAW;IACX,UAAU;AACd;;AAEA;IACI,uBAAuB;IACvB,iBAAiB;AACrB;;AAEA;IACI,eAAe;AACnB;;;AAGA;IACI,uBAAuB;AAC3B;;AAEA;IACI,aAAa;IACb,qCAAqC;AACzC;;AAEA;IACI,kEAAkE;AACtE;;AAEA;IACI,kEAAkE;AACtE;;AAEA;IACI,mEAAmE;AACvE;;AAEA;IACI,kBAAkB;IAClB,MAAM;IACN,WAAW;IACX,aAAa;IACb,YAAY;IACZ,mCAAmC;AACvC;;AAEA;IACI,mBAAmB;IACnB,YAAY;AAChB","sourcesContent":[":root.light{\n    --page-background: white;\n}\n\n:root.dark{\n    --page-background: black;\n}\n\nhtml,\nbody{\n    box-sizing: border-box;\n    position: relative;\n}\n\nbody{\n    min-height: 100vh;\n    display: flex;\n    flex: 1;\n}\n*,\n*:before,\n*:after{\n    box-sizing: inherit;\n    max-width: 100%;\n    margin: 0;\n}\n\n.page-container{\n    min-height: 100vh;\n    min-width: 100vw;\n    background-color: var(--page-background);\n}\n\n.header{\n    border: 2px solid black;\n    background-color: aqua;\n}\n\n.project-form{\n    position: absolute;\n    background-color: white;\n    top: 32px;\n    left: 50%;\n    display: grid;\n}\n\n.project-details{\n    border: 1px solid black;\n    border-bottom-width: 3px;\n    display: grid;\n    grid-template-columns: repeat(7, 1fr);\n    grid-template-rows: 1fr 1fr;\n}\n\n.project-description{\n    grid-row: 2;\n    grid-column: 1 / 8;\n    display: flex;\n    align-items: center;\n}\n\n.project-details > * {\n    border: 1px solid black;\n}\n\n.project-details > button{\n    align-self: center;\n    justify-self: center;\n    height: 50%;\n    width: 80%;\n}\n\n.to-do-button-container{\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    border: none;\n}\n\n.to-do-button-container > button{\n    height: 50%;\n    width: 80%;\n}\n\n.project-cell{\n    border: 3px solid black;\n    font-size: 1.1rem;\n}\n\n.to-do-list{\n    font-size: 1rem;\n}\n\n\n.to-do{\n    border: 1px solid black;\n}\n\n.to-do-header{\n    display: grid;\n    grid-template-columns: repeat(5, 1fr);\n}\n\n.high-priority{\n    background: linear-gradient(45deg,  white, rgba(255, 99, 71, 0.4));\n}\n\n.medium-priority{\n    background: linear-gradient(45deg,  white, rgba(106, 90, 205, .4));\n}\n\n.low-priority{\n    background: linear-gradient(45deg,  white, rgba(60, 179, 113, 0.4));\n}\n\n.form-container{\n    position: absolute;\n    top: 0;\n    z-index: 10;\n    height: 100vh;\n    width: 100vw;\n    background-color:rgba(0, 0, 0, 0.4);\n}\n\n.project-form{\n    height: fit-content;\n    width: 300px;\n}\n\n\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1256,6 +1256,12 @@ function headerMaker(){
 
     header.appendChild(newProjectButton);
 
+    const toggleThemeButton = document.createElement('button');
+    toggleThemeButton.className = 'theme-toggle';
+    toggleThemeButton.innerText = 'Toggle Theme';
+
+    header.appendChild(toggleThemeButton);
+
     return header;
 }
 
@@ -1434,6 +1440,27 @@ class Project{
 
 
 }
+
+/***/ }),
+
+/***/ "./src/theme.js":
+/*!**********************!*\
+  !*** ./src/theme.js ***!
+  \**********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "setTheme": () => (/* binding */ setTheme)
+/* harmony export */ });
+function setTheme(){
+    const root = document.documentElement;
+    const newTheme = root.className === 'dark' ? 'light' : 'dark';
+
+    root.className = newTheme;
+}
+
+
 
 /***/ }),
 
@@ -1647,26 +1674,30 @@ var __webpack_exports__ = {};
   \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ "./src/style.css");
-/* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./home */ "./src/home.js");
-/* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
-/* harmony import */ var _project_form__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./project-form */ "./src/project-form.js");
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
+/* harmony import */ var _theme__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./theme */ "./src/theme.js");
+/* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./home */ "./src/home.js");
+/* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
+/* harmony import */ var _project_form__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./project-form */ "./src/project-form.js");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
 
 
-// Initial page load function
-
-
-
-
+// Initial page load functions
 
 
 
 
 
 
-document.body.appendChild((0,_home__WEBPACK_IMPORTED_MODULE_1__.homeMaker)());
 
-(0,_display_projects__WEBPACK_IMPORTED_MODULE_2__.displayProjects)();
+
+
+
+
+
+
+document.body.appendChild((0,_home__WEBPACK_IMPORTED_MODULE_2__.homeMaker)());
+
+(0,_display_projects__WEBPACK_IMPORTED_MODULE_3__.displayProjects)();
 
 Storage.prototype.setObj = function(key, obj) {
     return this.setItem(key, JSON.stringify(obj))
@@ -1685,7 +1716,7 @@ let currentProjects = localStorage.getObj(key) || [];
 
 const newProjectButton = document.querySelector('.new-project-button');
 newProjectButton.addEventListener('click', function(){
-    (0,_project_form__WEBPACK_IMPORTED_MODULE_3__.newProject)();
+    (0,_project_form__WEBPACK_IMPORTED_MODULE_4__.newProject)();
     newProjectButton.disabled = true;});
 
 const editProjectButtons = document.querySelectorAll('.edit-project-button');
@@ -1704,12 +1735,16 @@ editProjectButtons.forEach((button) => {
         let dueDate = currentProjects[index].dueDate;
         let priority = currentProjects[index].priority;
 
-        document.body.appendChild((0,_edit__WEBPACK_IMPORTED_MODULE_4__.edit)(type, index, title, description, dueDate, priority));
+        document.body.appendChild((0,_edit__WEBPACK_IMPORTED_MODULE_5__.edit)(type, index, title, description, dueDate, priority));
 
         
     
     });
 });
+
+
+
+document.querySelector('.theme-toggle').addEventListener('click', _theme__WEBPACK_IMPORTED_MODULE_1__.setTheme);
 
 
 

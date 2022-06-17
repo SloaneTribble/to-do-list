@@ -24,6 +24,12 @@ function headerMaker(){
 
     header.appendChild(newProjectButton);
 
+    const toggleThemeButton = document.createElement('button');
+    toggleThemeButton.className = 'theme-toggle';
+    toggleThemeButton.innerText = 'Toggle Theme';
+
+    header.appendChild(toggleThemeButton);
+
     return header;
 }
 
