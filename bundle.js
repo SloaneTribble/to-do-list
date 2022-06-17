@@ -561,12 +561,20 @@ Storage.prototype.getObj = function(key) {
 
 const key = "projects";
 
+const theme = "theme";
+
 // If currentProjects is null, assign an empty array
 
 function displayProjects(){
 
 
     let currentProjects = localStorage.getObj(key) || [];
+
+    let currentTheme = localStorage.getObj(theme);
+
+    const root = document.documentElement;
+
+    root.className = currentTheme;
 
     const projectContainer = document.querySelector(".project-container");
 
@@ -737,6 +745,10 @@ function displayToDos(index){
         editToDo.classList.add('edit-to-do-button');
         editToDo.innerText = "Edit";
         editToDo.addEventListener('click', function(e){
+
+            const formContainer = document.querySelector('.form-container');
+             if(document.body.contains(formContainer)){return;}
+             
             document.body.appendChild((0,_edit__WEBPACK_IMPORTED_MODULE_1__.edit)(
                 "to-do",
                 index,
@@ -956,16 +968,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-Storage.prototype.setObj = function(key, obj) {
-    return this.setItem(key, JSON.stringify(obj))
-}
-Storage.prototype.getObj = function(key) {
-    return JSON.parse(this.getItem(key))
-}
+// Storage.prototype.setObj = function(key, obj) {
+//     return this.setItem(key, JSON.stringify(obj))
+// }
+// Storage.prototype.getObj = function(key) {
+//     return JSON.parse(this.getItem(key))
+// }
 
-const key = "projects";
+// const key = "projects";
 
-let currentProjects = localStorage.getObj(key) || [];
+// let currentProjects = localStorage.getObj(key) || [];
 
 function edit(type, index, currentTitle, currentDescription, currentDueDate, currentPriority, toDo = 0){
 
@@ -1454,11 +1466,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "setTheme": () => (/* binding */ setTheme)
 /* harmony export */ });
+Storage.prototype.setObj = function(key, obj) {
+    return this.setItem(key, JSON.stringify(obj))
+}
+Storage.prototype.getObj = function(key) {
+    return JSON.parse(this.getItem(key))
+}
+
+const theme = "theme";
+
+
+
 function setTheme(){
     const root = document.documentElement;
     const newTheme = root.className === 'dark' ? 'light' : 'dark';
 
     root.className = newTheme;
+
+    localStorage.setObj(theme, newTheme);
 }
 
 
@@ -1506,7 +1531,6 @@ function toDoSubmit(index){
     let currentProjects = localStorage.getObj(key) || [];
 
     let project = currentProjects[index];
-    let projectToDos = project.toDos;
 
     const title = document.getElementById("title").value;
     const description = document.getElementById("description").value;
@@ -1519,14 +1543,9 @@ function toDoSubmit(index){
     project.toDos.push(toDo);
 
 
-    
-
     localStorage.setObj(key, currentProjects);  
 
     currentProjects = localStorage.getObj(key) || [];
-
-
-
 
 
     (0,_display_projects__WEBPACK_IMPORTED_MODULE_1__.displayProjects)();
@@ -1719,10 +1738,15 @@ let currentProjects = localStorage.getObj(key) || [];
 
 const newProjectButton = document.querySelector('.new-project-button');
 newProjectButton.addEventListener('click', function(){
+
+    // Prevents user from opening multiple forms 
     const formContainer = document.querySelector('.form-container');
     if(document.body.contains(formContainer)){return;}
+
     (0,_project_form__WEBPACK_IMPORTED_MODULE_4__.newProject)();
     newProjectButton.disabled = true;});
+
+
 
 const editProjectButtons = document.querySelectorAll('.edit-project-button');
 
@@ -1754,7 +1778,6 @@ editProjectButtons.forEach((button) => {
 
 
 document.querySelector('.theme-toggle').addEventListener('click', _theme__WEBPACK_IMPORTED_MODULE_1__.setTheme);
-
 
 
 
