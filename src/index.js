@@ -16,6 +16,8 @@ import {edit} from './edit';
 
 document.body.appendChild(homeMaker());
 
+
+
 displayProjects();
 
 Storage.prototype.setObj = function(key, obj) {
@@ -35,6 +37,8 @@ let currentProjects = localStorage.getObj(key) || [];
 
 const newProjectButton = document.querySelector('.new-project-button');
 newProjectButton.addEventListener('click', function(){
+    const formContainer = document.querySelector('.form-container');
+    if(document.body.contains(formContainer)){return;}
     newProject();
     newProjectButton.disabled = true;});
 
@@ -45,6 +49,10 @@ editProjectButtons.forEach((button) => {
     button.addEventListener('click', ()=> {
 
         localStorage.setObj(key, currentProjects);
+
+        const formContainer = document.querySelector('.form-container');
+
+        if(document.body.contains(formContainer)){return;}
 
 
         let type = "project";

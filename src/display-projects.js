@@ -20,6 +20,7 @@ const key = "projects";
 
 function displayProjects(){
 
+
     let currentProjects = localStorage.getObj(key) || [];
 
     const projectContainer = document.querySelector(".project-container");
@@ -110,6 +111,8 @@ function displayProjects(){
         addToDo.classList.add('add-to-do-button');
         addToDo.innerText = 'Add To-do';
         addToDo.addEventListener('click', function(){
+            const formContainer = document.querySelector('.form-container');
+            if(document.body.contains(formContainer)){return;}
             project.appendChild(form('todo', i));
         });
 

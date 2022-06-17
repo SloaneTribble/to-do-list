@@ -565,6 +565,7 @@ const key = "projects";
 
 function displayProjects(){
 
+
     let currentProjects = localStorage.getObj(key) || [];
 
     const projectContainer = document.querySelector(".project-container");
@@ -655,6 +656,8 @@ function displayProjects(){
         addToDo.classList.add('add-to-do-button');
         addToDo.innerText = 'Add To-do';
         addToDo.addEventListener('click', function(){
+            const formContainer = document.querySelector('.form-container');
+            if(document.body.contains(formContainer)){return;}
             project.appendChild((0,_form__WEBPACK_IMPORTED_MODULE_0__.form)('todo', i));
         });
 
@@ -1097,6 +1100,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function form(input, index){
+
 
     const formContainer = document.createElement('div');
     formContainer.classList.add('form-container');
@@ -1694,6 +1698,8 @@ __webpack_require__.r(__webpack_exports__);
 
 document.body.appendChild((0,_home__WEBPACK_IMPORTED_MODULE_2__.homeMaker)());
 
+
+
 (0,_display_projects__WEBPACK_IMPORTED_MODULE_3__.displayProjects)();
 
 Storage.prototype.setObj = function(key, obj) {
@@ -1713,6 +1719,8 @@ let currentProjects = localStorage.getObj(key) || [];
 
 const newProjectButton = document.querySelector('.new-project-button');
 newProjectButton.addEventListener('click', function(){
+    const formContainer = document.querySelector('.form-container');
+    if(document.body.contains(formContainer)){return;}
     (0,_project_form__WEBPACK_IMPORTED_MODULE_4__.newProject)();
     newProjectButton.disabled = true;});
 
@@ -1723,6 +1731,10 @@ editProjectButtons.forEach((button) => {
     button.addEventListener('click', ()=> {
 
         localStorage.setObj(key, currentProjects);
+
+        const formContainer = document.querySelector('.form-container');
+
+        if(document.body.contains(formContainer)){return;}
 
 
         let type = "project";
