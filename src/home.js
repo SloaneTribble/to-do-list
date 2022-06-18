@@ -5,6 +5,8 @@ function homeMaker(){
     pageContainer.appendChild(headerMaker());
     pageContainer.appendChild(projectContainerMaker());
 
+    pageContainer.appendChild(footerMaker());
+
     return pageContainer;
 }
 
@@ -38,6 +40,24 @@ function projectContainerMaker(){
     projectContainer.classList.add('project-container');
 
     return projectContainer;
+}
+
+function footerMaker(){
+    const footer = document.createElement('div');
+    footer.classList.add('footer');
+    let a = document.createElement('a');
+
+    let link = document.createTextNode('Sloane Tribble');
+
+    a.appendChild(link);
+
+    a.title = 'Sloane Tribble';
+
+    a.href = 'https://github.com/SloaneTribble';
+
+    footer.appendChild(a);
+
+    return footer;
 }
 
 export {homeMaker};

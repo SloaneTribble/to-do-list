@@ -34,6 +34,7 @@ function form(input, index){
     description.placeholder = `Description (<${placeHolder} characters)`;
     description.maxLength = placeHolder - 1;
     description.id = 'description';
+    description.style.rows = '2';
 
     const dueDateLabel = document.createElement('label');
     dueDateLabel.for= 'due-date';
