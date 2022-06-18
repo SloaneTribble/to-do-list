@@ -8,7 +8,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'To-do List',
-      
+      favicon: './src/favicon.ico',
     })
   ],
   entry: './src/index.js',
