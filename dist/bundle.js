@@ -1005,7 +1005,7 @@ function edit(type, index, currentTitle, currentDescription, currentDueDate, cur
 
     const titleLabel = document.createElement('label');
     titleLabel.setAttribute('for', 'title');
-    titleLabel.innerText = type === 'to-do' ? 'To-do' : 'Project';
+    titleLabel.innerText = type === 'to-do' ? 'To-do:' : 'Project:';
 
     const title = document.createElement('input');
     title.type = 'text';
