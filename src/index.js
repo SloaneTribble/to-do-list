@@ -13,6 +13,16 @@ import {newProject} from './project-form';
 import {edit} from './edit';
 
 
+// Before loading page, check to see if user has set a theme
+
+let currentTheme = localStorage.getObj('theme');
+
+console.log(currentTheme);
+
+if (currentTheme === null){
+    localStorage.setObj('theme', 'light');
+}
+
 
 document.body.appendChild(homeMaker());
 
@@ -30,6 +40,8 @@ Storage.prototype.getObj = function(key) {
 const key = "projects";
 
 let currentProjects = localStorage.getObj(key) || [];
+
+
 
 
 // Button for creating a new project
@@ -75,8 +87,4 @@ editProjectButtons.forEach((button) => {
 
 
 document.querySelector('.theme-toggle').addEventListener('click', setTheme);
-
-
-
-
 

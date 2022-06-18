@@ -1,5 +1,5 @@
 :root.light{
-    --page-background: rgb(213, 211, 211);
+    --page-background: rgb(229, 229, 229);
     --form-background: var(--page-background);
     --font-color: black;
     --border-color: black;
@@ -227,7 +227,8 @@ button:active {
     top: 0;
     z-index: 10;
     height: 100vh;
-    width: 100vw;
+    min-width: 100vw;
+    width: 100%;
     background-color:rgba(0, 0, 0, 0.4);
     display: flex;
 }

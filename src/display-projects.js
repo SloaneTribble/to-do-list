@@ -121,7 +121,7 @@ function displayProjects(){
         addToDo.addEventListener('click', function(){
             const formContainer = document.querySelector('.form-container');
             if(document.body.contains(formContainer)){return;}
-            project.appendChild(form('todo', i));
+            document.body.appendChild(form('todo', i));
         });
 
         const editProject = document.createElement('button');
