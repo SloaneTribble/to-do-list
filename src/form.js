@@ -84,7 +84,7 @@ function form(input, index){
 
     const cancel = document.createElement('button');
     cancel.classList.add('cancel');
-    cancel.innerText = 'cancel';
+    cancel.innerText = 'Cancel';
     cancel.addEventListener('click', function(){
         window.location.reload();
     });
