@@ -188,6 +188,22 @@ function displayToDos(index){
         const priority = document.createElement('div');
         priority.innerText = "Priority: " + projectToDos[toDo].priority;
 
+        let priorityColor;
+
+        switch(projectToDos[toDo].priority){
+            case 'high': priorityColor = 'high-priority';
+            priority.style.fontWeight = "bold";
+            break;
+
+            case 'medium': priorityColor = 'medium-priority';
+            break;
+
+            case 'low': priorityColor = 'low-priority';
+            break;
+        }
+
+        singleToDo.classList.add(priorityColor);
+
         const removeToDo = document.createElement('button');
         removeToDo.classList.add("remove-to-do-button");
         removeToDo.innerText = "Remove";

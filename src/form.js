@@ -15,7 +15,7 @@ function form(input, index){
 
     const titleLabel = document.createElement('label');
     titleLabel.setAttribute('for', 'title');
-    titleLabel.innerText = (type === 'project')? "Project Title: " : "To-do";
+    titleLabel.innerText = (type === 'project')? "Project Title: " : "To-do: ";
 
     const title = document.createElement('input');
     title.type = 'text';
@@ -27,11 +27,10 @@ function form(input, index){
     descriptionLabel.for = 'description';
     descriptionLabel.innerText = "Description: ";
 
-    const description = document.createElement('input');
-    description.type = 'text';
+    const description = document.createElement('textarea');
     description.name = 'description';
 
-    let placeHolder = (type === 'project')? "50" : "500";
+    let placeHolder = (type === 'project')? "100" : "500";
     description.placeholder = `Description (<${placeHolder} characters)`;
     description.maxLength = placeHolder - 1;
     description.id = 'description';

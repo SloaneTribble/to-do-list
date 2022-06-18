@@ -25,7 +25,7 @@ function edit(type, index, currentTitle, currentDescription, currentDueDate, cur
 
     const titleLabel = document.createElement('label');
     titleLabel.setAttribute('for', 'title');
-    titleLabel.innerText = "To-do";
+    titleLabel.innerText = type === 'to-do' ? 'To-do' : 'Project';
 
     const title = document.createElement('input');
     title.type = 'text';
@@ -40,10 +40,12 @@ function edit(type, index, currentTitle, currentDescription, currentDueDate, cur
 
     const description = document.createElement('textarea');
     description.classList.add('form-description');
-    // description.type = 'text';
     description.name = 'description';
-    description.placeholder = 'Description (<200 characters)';
-    description.maxlength = '199';
+
+    let placeHolder = (type === 'project')? "100" : "500";
+    description.placeholder = `Description (<${placeHolder} characters)`;
+    description.maxLength = placeHolder - 1;
+
     description.id = 'description';
     description.defaultValue = currentDescription;
 

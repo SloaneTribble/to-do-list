@@ -67,9 +67,7 @@ editProjectButtons.forEach((button) => {
         let dueDate = currentProjects[index].dueDate;
         let priority = currentProjects[index].priority;
 
-        document.body.appendChild(edit(type, index, title, description, dueDate, priority));
-
-        
+        document.body.appendChild(edit(type, index, title, description, dueDate, priority));  
     
     });
 });
