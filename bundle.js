@@ -1754,6 +1754,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// Before loading page, check to see if user has set a theme
+
+let currentTheme = localStorage.getObj('theme');
+
+console.log(currentTheme);
+
+if (currentTheme === null){
+    localStorage.setObj('theme', 'light');
+}
+
 
 document.body.appendChild((0,_home__WEBPACK_IMPORTED_MODULE_2__.homeMaker)());
 
@@ -1771,6 +1781,8 @@ Storage.prototype.getObj = function(key) {
 const key = "projects";
 
 let currentProjects = localStorage.getObj(key) || [];
+
+
 
 
 // Button for creating a new project
@@ -1816,10 +1828,6 @@ editProjectButtons.forEach((button) => {
 
 
 document.querySelector('.theme-toggle').addEventListener('click', _theme__WEBPACK_IMPORTED_MODULE_1__.setTheme);
-
-
-
-
 
 
 })();
