@@ -16,6 +16,8 @@ function setTheme(){
     root.className = newTheme;
 
     localStorage.setObj(theme, newTheme);
+
+    window.location.reload();
 }
 
 export {setTheme};
