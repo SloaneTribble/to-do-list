@@ -2,8 +2,6 @@
 
 This assignment from The Odin Project is designed to offer a bit more practice with Javascript fundamentals, along with modules and Webpack, before moving on to more advanced topics.  
 
-Live Preview: https://sloanetribble.github.io/to-do-list/
-
 Notable features of this app:
 
 - Create projects and assign tasks to those projects
