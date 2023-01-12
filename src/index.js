@@ -128,6 +128,17 @@ async function signIn() {
 
 const signInButton = document.querySelector(".sign-in-button");
 
-signInButton.addEventListener("click", signIn());
+signInButton.addEventListener("click", signIn);
+
+// Signs-out of Friendly Chat.
+function signOutUser() {
+  // Sign out of Firebase.
+
+  console.log("sign");
+  signOut(getAuth());
+}
+
+const signOutButton = document.querySelector(".sign-out-button");
+signOutButton.addEventListener("click", signOutUser);
 
 // END Firebase related

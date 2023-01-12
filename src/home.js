@@ -38,6 +38,12 @@ function headerMaker() {
 
   header.appendChild(signInButton);
 
+  const signOutButton = document.createElement("button");
+  signOutButton.className = "sign-out-button";
+  signOutButton.innerText = "Sign Out";
+
+  header.appendChild(signOutButton);
+
   return header;
 }
 

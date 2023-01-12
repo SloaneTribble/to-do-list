@@ -34242,6 +34242,12 @@ function headerMaker() {
 
   header.appendChild(signInButton);
 
+  const signOutButton = document.createElement("button");
+  signOutButton.className = "sign-out-button";
+  signOutButton.innerText = "Sign Out";
+
+  header.appendChild(signOutButton);
+
   return header;
 }
 
@@ -37013,7 +37019,18 @@ async function signIn() {
 
 const signInButton = document.querySelector(".sign-in-button");
 
-signInButton.addEventListener("click", signIn());
+signInButton.addEventListener("click", signIn);
+
+// Signs-out of Friendly Chat.
+function signOutUser() {
+  // Sign out of Firebase.
+
+  console.log("sign");
+  (0,firebase_auth__WEBPACK_IMPORTED_MODULE_7__.signOut)((0,firebase_auth__WEBPACK_IMPORTED_MODULE_7__.getAuth)());
+}
+
+const signOutButton = document.querySelector(".sign-out-button");
+signOutButton.addEventListener("click", signOutUser);
 
 // END Firebase related
 
