@@ -1,63 +1,69 @@
-function homeMaker(){
-    const pageContainer = document.createElement('div');
-    pageContainer.classList.add('page-container');
+function homeMaker() {
+  const pageContainer = document.createElement("div");
+  pageContainer.classList.add("page-container");
 
-    pageContainer.appendChild(headerMaker());
-    pageContainer.appendChild(projectContainerMaker());
+  pageContainer.appendChild(headerMaker());
+  pageContainer.appendChild(projectContainerMaker());
 
-    pageContainer.appendChild(footerMaker());
+  pageContainer.appendChild(footerMaker());
 
-    return pageContainer;
+  return pageContainer;
 }
 
-function headerMaker(){
-    const header = document.createElement('div');
-    header.classList.add('header');
+function headerMaker() {
+  const header = document.createElement("div");
+  header.classList.add("header");
 
-    const title = document.createElement('div');
-    title.classList.add('title');
-    title.innerText = 'To-do List';
+  const title = document.createElement("div");
+  title.classList.add("title");
+  title.innerText = "To-do List";
 
-    header.appendChild(title);
+  header.appendChild(title);
 
-    const newProjectButton = document.createElement('button');
-    newProjectButton.classList.add('new-project-button');
-    newProjectButton.innerText = "New Project";
+  const newProjectButton = document.createElement("button");
+  newProjectButton.classList.add("new-project-button");
+  newProjectButton.innerText = "New Project";
 
-    header.appendChild(newProjectButton);
+  header.appendChild(newProjectButton);
 
-    const toggleThemeButton = document.createElement('button');
-    toggleThemeButton.className = 'theme-toggle';
-    toggleThemeButton.innerText = 'Toggle Theme';
+  const toggleThemeButton = document.createElement("button");
+  toggleThemeButton.className = "theme-toggle";
+  toggleThemeButton.innerText = "Toggle Theme";
 
-    header.appendChild(toggleThemeButton);
+  header.appendChild(toggleThemeButton);
 
-    return header;
+  const signInButton = document.createElement("button");
+  signInButton.className = "sign-in-button";
+  signInButton.innerText = "Sign In";
+
+  header.appendChild(signInButton);
+
+  return header;
 }
 
-function projectContainerMaker(){
-    const projectContainer = document.createElement('div');
-    projectContainer.classList.add('project-container');
+function projectContainerMaker() {
+  const projectContainer = document.createElement("div");
+  projectContainer.classList.add("project-container");
 
-    return projectContainer;
+  return projectContainer;
 }
 
-function footerMaker(){
-    const footer = document.createElement('div');
-    footer.classList.add('footer');
-    let a = document.createElement('a');
+function footerMaker() {
+  const footer = document.createElement("div");
+  footer.classList.add("footer");
+  let a = document.createElement("a");
 
-    let link = document.createTextNode('Sloane Tribble');
+  let link = document.createTextNode("Sloane Tribble");
 
-    a.appendChild(link);
+  a.appendChild(link);
 
-    a.title = 'Sloane Tribble';
+  a.title = "Sloane Tribble";
 
-    a.href = 'https://github.com/SloaneTribble';
+  a.href = "https://github.com/SloaneTribble";
 
-    footer.appendChild(a);
+  footer.appendChild(a);
 
-    return footer;
+  return footer;
 }
 
-export {homeMaker};
+export { homeMaker };
