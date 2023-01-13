@@ -281,3 +281,8 @@ a:visited {
   border: solid 2px purple;
   background-color: white;
 }
+
+.user-pic {
+  height: 50px;
+  width: 50px;
+}
