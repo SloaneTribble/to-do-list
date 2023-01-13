@@ -44,6 +44,17 @@ function headerMaker() {
 
   header.appendChild(signOutButton);
 
+  const userNameElement = document.createElement("div");
+  userNameElement.className = "user-name";
+  userNameElement.textContent = "You";
+
+  header.appendChild(userNameElement);
+
+  const userPicElement = document.createElement("img");
+  userPicElement.className = "user-pic";
+
+  header.appendChild(userPicElement);
+
   return header;
 }
 
