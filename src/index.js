@@ -97,6 +97,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 import {
   getAuth,
@@ -117,6 +118,7 @@ import {
   updateDoc,
   doc,
   serverTimestamp,
+  set,
 } from "firebase/firestore";
 
 // Signs-in User.
@@ -202,5 +204,18 @@ function initFirebaseAuth() {
 }
 
 initFirebaseAuth();
+
+const test = currentProjects;
+
+try {
+  const docRef = await addDoc(collection(db, "users"), {
+    first: "Ada",
+    last: "Lovelace",
+    born: 1815,
+  });
+  console.log("Document written with ID: ", docRef.id);
+} catch (e) {
+  console.error("Error adding document: ", e);
+}
 
 // END Firebase related

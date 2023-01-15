@@ -32657,6 +32657,1171 @@ var FetchXmlHttpFactory = esm.FetchXmlHttpFactory=ed;var WebChannel = esm.WebCha
 
 /***/ }),
 
+/***/ "./src/display-projects.js":
+/*!*********************************!*\
+  !*** ./src/display-projects.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "displayProjects": () => (/* binding */ displayProjects),
+/* harmony export */   "removeIndividual": () => (/* binding */ removeIndividual)
+/* harmony export */ });
+/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./form */ "./src/form.js");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
+
+
+// This module displays what projects are kept in local storage.
+// displayProjects() is frequently called to ensure that the user 
+// is only able to see data that is currently being stored
+
+
+
+Storage.prototype.setObj = function (key, obj) {
+  return this.setItem(key, JSON.stringify(obj));
+};
+Storage.prototype.getObj = function (key) {
+  return JSON.parse(this.getItem(key));
+};
+var key = "projects";
+var theme = "theme";
+
+// If currentProjects is null, assign an empty array
+
+function displayProjects() {
+  var currentProjects = localStorage.getObj(key) || [];
+  var currentTheme = localStorage.getObj(theme);
+  var root = document.documentElement;
+  root.className = currentTheme;
+  var projectContainer = document.querySelector(".project-container");
+
+  // Clear the current display to prevent repetition
+  projectContainer.innerHTML = '';
+  var _loop = function _loop(i) {
+    var project = document.createElement('div');
+    project.classList.add('project-cell');
+    project.id = i;
+    var projectDetails = document.createElement('div');
+    projectDetails.classList.add('project-details');
+    projectDetails.id = i;
+    var title = document.createElement('div');
+    title.innerText = "Title: " + currentProjects[i].title;
+    var description = document.createElement('div');
+    description.classList.add('project-description');
+    description.innerText = "Description: " + currentProjects[i].description;
+    var dueDate = document.createElement('div');
+    dueDate.innerText = "Due date: " + currentProjects[i].dueDate;
+
+    // Priority should affect div color
+
+    var priority = document.createElement('div');
+    priority.innerText = "Priority: " + currentProjects[i].priority;
+    var priorityColor;
+    switch (currentProjects[i].priority) {
+      case 'high':
+        priorityColor = 'high-priority';
+        priority.style.fontWeight = "bold";
+        break;
+      case 'medium':
+        priorityColor = 'medium-priority';
+        break;
+      case 'low':
+        priorityColor = 'low-priority';
+        break;
+    }
+    project.classList.add(priorityColor);
+    var toDoButtonContainer = document.createElement('div');
+    toDoButtonContainer.classList.add('to-do-button-container');
+    var toDos = document.createElement('button');
+    toDos.classList.add('to-do-display');
+    toDos.innerText = "View To-dos";
+    toDoButtonContainer.appendChild(toDos);
+    var toDoList = displayToDos(i);
+    toDos.addEventListener('click', function () {
+      // Keep track of which tabs are open/closed on refresh
+      currentProjects[i].isActive = true;
+      localStorage.setObj(key, currentProjects);
+      project.appendChild(toDoList);
+      toDoButtonContainer.removeChild(toDos);
+      toDoButtonContainer.appendChild(hideToDos);
+    });
+    var hideToDos = document.createElement('button');
+    hideToDos.innerText = "Hide To-dos";
+    hideToDos.classList.add('to-do-display');
+    hideToDos.addEventListener('click', function () {
+      // Keep track of which tabs are open/closed on refresh
+      currentProjects[i].isActive = false;
+      localStorage.setObj(key, currentProjects);
+      project.removeChild(toDoList);
+      toDoButtonContainer.removeChild(hideToDos);
+      toDoButtonContainer.appendChild(toDos);
+    });
+    var addToDo = document.createElement('button');
+    addToDo.classList.add('add-to-do-button');
+    addToDo.innerText = 'Add To-do';
+    addToDo.addEventListener('click', function () {
+      var formContainer = document.querySelector('.form-container');
+      if (document.body.contains(formContainer)) {
+        return;
+      }
+      document.body.appendChild((0,_form__WEBPACK_IMPORTED_MODULE_0__.form)('todo', i));
+    });
+    var editProject = document.createElement('button');
+    editProject.classList.add('edit-project-button');
+    editProject.innerText = 'Edit Project';
+    editProject.id = i;
+    var removeProject = document.createElement('button');
+    removeProject.classList.add('remove-project-button');
+    removeProject.innerText = 'Remove Project';
+    removeProject.addEventListener('click', function () {
+      remove(i);
+    });
+    projectDetails.appendChild(title);
+    projectDetails.appendChild(description);
+    projectDetails.appendChild(dueDate);
+    projectDetails.appendChild(priority);
+    projectDetails.appendChild(toDoButtonContainer);
+    projectDetails.appendChild(addToDo);
+    projectDetails.appendChild(editProject);
+    projectDetails.appendChild(removeProject);
+    project.appendChild(projectDetails);
+    projectContainer.appendChild(project);
+    if (currentProjects[i].isActive) {
+      toDos.click();
+    }
+  };
+  for (var i = 0; i < currentProjects.length; i++) {
+    _loop(i);
+  }
+}
+function displayToDos(index) {
+  var currentProjects = localStorage.getObj(key) || [];
+  var project = currentProjects[index];
+  var projectToDos = project.toDos;
+  var toDoList = document.createElement('div');
+  toDoList.classList.add('to-do-list');
+  var _loop2 = function _loop2(toDo) {
+    var singleToDo = document.createElement('div');
+    singleToDo.classList.add('to-do');
+    singleToDo.id = toDo;
+    var toDoIndex = toDo;
+    var title = document.createElement('div');
+    title.innerText = "Task: " + projectToDos[toDo].title;
+    var description = document.createElement('div');
+    description.innerText = "Description: " + projectToDos[toDo].description;
+    var dueDate = document.createElement('div');
+    dueDate.innerText = "Due date: " + projectToDos[toDo].dueDate;
+    var priority = document.createElement('div');
+    priority.innerText = "Priority: " + projectToDos[toDo].priority;
+    var priorityColor;
+    switch (projectToDos[toDo].priority) {
+      case 'high':
+        priorityColor = 'high-priority';
+        priority.style.fontWeight = "bold";
+        break;
+      case 'medium':
+        priorityColor = 'medium-priority';
+        break;
+      case 'low':
+        priorityColor = 'low-priority';
+        break;
+    }
+    singleToDo.classList.add(priorityColor);
+    var removeToDo = document.createElement('button');
+    removeToDo.classList.add("remove-to-do-button");
+    removeToDo.innerText = "Remove";
+    removeToDo.addEventListener('click', function () {
+      removeIndividual(toDo, projectToDos, currentProjects);
+      window.location.reload();
+    }, false);
+    var editToDo = document.createElement('button');
+    editToDo.classList.add('edit-to-do-button');
+    editToDo.innerText = "Edit";
+    editToDo.addEventListener('click', function (e) {
+      var formContainer = document.querySelector('.form-container');
+      if (document.body.contains(formContainer)) {
+        return;
+      }
+      document.body.appendChild((0,_edit__WEBPACK_IMPORTED_MODULE_1__.edit)("to-do", index, projectToDos[toDo].title, projectToDos[toDo].description, projectToDos[toDo].dueDate, projectToDos[toDo].priority, toDoIndex));
+    });
+    var toDoHeader = document.createElement('div');
+    toDoHeader.classList.add('to-do-header');
+    toDoHeader.appendChild(title);
+    toDoHeader.appendChild(dueDate);
+    toDoHeader.appendChild(priority);
+    toDoHeader.appendChild(editToDo);
+    toDoHeader.appendChild(removeToDo);
+    singleToDo.appendChild(toDoHeader);
+    singleToDo.appendChild(description);
+    toDoList.appendChild(singleToDo);
+  };
+  for (var toDo in projectToDos) {
+    _loop2(toDo);
+  }
+  return toDoList;
+}
+function removeIndividual(e, projectToDos, currentProjects) {
+  console.log(e);
+  projectToDos.splice(e, 1);
+  localStorage.setObj(key, currentProjects);
+}
+function remove(index) {
+  var currentProjects = localStorage.getObj(key) || [];
+  currentProjects.splice(index, 1);
+  localStorage.setObj(key, currentProjects);
+  window.location.reload();
+}
+
+
+/***/ }),
+
+/***/ "./src/edit-project.js":
+/*!*****************************!*\
+  !*** ./src/edit-project.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "editProject": () => (/* binding */ editProject)
+/* harmony export */ });
+/* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
+
+Storage.prototype.setObj = function (key, obj) {
+  return this.setItem(key, JSON.stringify(obj));
+};
+Storage.prototype.getObj = function (key) {
+  return JSON.parse(this.getItem(key));
+};
+var key = "projects";
+
+// Sort projects based on date
+
+var currentProjects = localStorage.getObj(key) || [];
+currentProjects.sort(function compare(a, b) {
+  var dateA = new Date(a.dueDate);
+  var dateB = new Date(b.dueDate);
+  return dateA - dateB;
+});
+for (var project in currentProjects) {
+  var currentToDos = currentProjects[project].toDos;
+  currentToDos.sort(function compare(a, b) {
+    var dateA = new Date(a.dueDate);
+    var dateB = new Date(b.dueDate);
+    return dateA - dateB;
+  });
+}
+localStorage.setObj(key, currentProjects);
+function editProject(index) {
+  // If currentProjects is null, assign an empty array
+  var currentProjects = localStorage.getObj(key) || [];
+  var title = document.getElementById("title").value;
+  var description = document.getElementById("description").value;
+  var dueDate = document.getElementById("due-date").value;
+  var priority = document.getElementById("priority").value;
+  currentProjects[index].title = title;
+  currentProjects[index].description = description;
+  currentProjects[index].dueDate = dueDate;
+  currentProjects[index].priority = priority;
+  localStorage.setObj(key, currentProjects);
+  (0,_display_projects__WEBPACK_IMPORTED_MODULE_0__.displayProjects)();
+  window.location.reload();
+  return;
+}
+
+
+/***/ }),
+
+/***/ "./src/edit-todo.js":
+/*!**************************!*\
+  !*** ./src/edit-todo.js ***!
+  \**************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "editToDo": () => (/* binding */ editToDo)
+/* harmony export */ });
+/* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
+
+Storage.prototype.setObj = function (key, obj) {
+  return this.setItem(key, JSON.stringify(obj));
+};
+Storage.prototype.getObj = function (key) {
+  return JSON.parse(this.getItem(key));
+};
+var key = "projects";
+
+// Sort projects based on date
+
+var currentProjects = localStorage.getObj(key) || [];
+currentProjects.sort(function compare(a, b) {
+  var dateA = new Date(a.dueDate);
+  var dateB = new Date(b.dueDate);
+  return dateA - dateB;
+});
+for (var project in currentProjects) {
+  var currentToDos = currentProjects[project].toDos;
+  currentToDos.sort(function compare(a, b) {
+    var dateA = new Date(a.dueDate);
+    var dateB = new Date(b.dueDate);
+    return dateA - dateB;
+  });
+}
+localStorage.setObj(key, currentProjects);
+function editToDo(index, toDo) {
+  // If currentProjects is null, assign an empty array
+  var currentProjects = localStorage.getObj(key) || [];
+  var projectToDos = currentProjects[index].toDos;
+  var title = document.getElementById("title").value;
+  var description = document.getElementById("description").value;
+  var dueDate = document.getElementById("due-date").value;
+  var priority = document.getElementById("priority").value;
+  console.log(toDo);
+  projectToDos[toDo].title = title;
+  projectToDos[toDo].description = description;
+  projectToDos[toDo].dueDate = dueDate;
+  projectToDos[toDo].priority = priority;
+  localStorage.setObj(key, currentProjects);
+  (0,_display_projects__WEBPACK_IMPORTED_MODULE_0__.displayProjects)();
+  window.location.reload();
+  return;
+}
+
+
+/***/ }),
+
+/***/ "./src/edit.js":
+/*!*********************!*\
+  !*** ./src/edit.js ***!
+  \*********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "edit": () => (/* binding */ edit)
+/* harmony export */ });
+/* harmony import */ var _edit_todo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edit-todo */ "./src/edit-todo.js");
+/* harmony import */ var _edit_project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit-project */ "./src/edit-project.js");
+// This file contains very similar code to form.js except that it takes
+// different arguments and performs some different activities
+
+
+
+
+// Storage.prototype.setObj = function(key, obj) {
+//     return this.setItem(key, JSON.stringify(obj))
+// }
+// Storage.prototype.getObj = function(key) {
+//     return JSON.parse(this.getItem(key))
+// }
+
+// const key = "projects";
+
+// let currentProjects = localStorage.getObj(key) || [];
+
+function edit(type, index, currentTitle, currentDescription, currentDueDate, currentPriority) {
+  var toDo = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : 0;
+  var formContainer = document.createElement('div');
+  formContainer.classList.add('form-container');
+  var form = document.createElement("form");
+  form.classList.add('project-form');
+  var titleLabel = document.createElement('label');
+  titleLabel.setAttribute('for', 'title');
+  titleLabel.innerText = type === 'to-do' ? 'To-do:' : 'Project:';
+  var title = document.createElement('input');
+  title.type = 'text';
+  title.name = 'title';
+  title.placeholder = 'Title';
+  title.id = 'title';
+  title.defaultValue = currentTitle;
+  var descriptionLabel = document.createElement('label');
+  descriptionLabel["for"] = 'description';
+  descriptionLabel.innerText = "Description: ";
+  var description = document.createElement('textarea');
+  description.classList.add('form-description');
+  description.name = 'description';
+  var placeHolder = type === 'project' ? "100" : "500";
+  description.placeholder = "Description (<".concat(placeHolder, " characters)");
+  description.maxLength = placeHolder - 1;
+  description.id = 'description';
+  description.defaultValue = currentDescription;
+  var dueDateLabel = document.createElement('label');
+  dueDateLabel["for"] = 'due-date';
+  dueDateLabel.innerText = "Due date: ";
+  var dueDate = document.createElement('input');
+  dueDate.type = 'date';
+  dueDate.name = 'due-date';
+  dueDate.id = 'due-date';
+  dueDate.defaultValue = currentDueDate;
+  var priorityLabel = document.createElement('label');
+  priorityLabel.innerText = 'Priority: ';
+  priorityLabel.htmlFor = 'priority';
+  var priorities = ['low', 'medium', 'high'];
+  var select = document.createElement('select');
+  select.name = 'priority';
+  select.id = 'priority';
+  for (var _i = 0, _priorities = priorities; _i < _priorities.length; _i++) {
+    var priority = _priorities[_i];
+    var option = document.createElement('option');
+    option.value = priority;
+    option.text = priority.charAt(0).toUpperCase() + priority.slice(1);
+    select.appendChild(option);
+  }
+  select.value = currentPriority;
+  function handleForm(event) {
+    event.preventDefault();
+  }
+  form.addEventListener('submit', handleForm);
+  var submit = document.createElement('button');
+  submit.classList.add('submit');
+  submit.type = 'submit';
+  submit.innerText = "Submit";
+  submit.addEventListener('click', function () {
+    if (type === 'to-do') {
+      (0,_edit_todo__WEBPACK_IMPORTED_MODULE_0__.editToDo)(index, toDo);
+    } else if (type === 'project') {
+      (0,_edit_project__WEBPACK_IMPORTED_MODULE_1__.editProject)(index);
+      return;
+    }
+    ;
+    form.reset();
+  });
+  var cancel = document.createElement('button');
+  cancel.classList.add('cancel');
+  cancel.innerText = 'Cancel';
+  cancel.addEventListener('click', function () {
+    window.location.reload();
+  });
+  form.appendChild(titleLabel);
+  form.appendChild(title);
+  form.appendChild(descriptionLabel);
+  form.appendChild(description);
+  form.appendChild(dueDateLabel);
+  form.appendChild(dueDate);
+  form.appendChild(priorityLabel);
+  form.appendChild(select);
+  form.appendChild(submit);
+  form.appendChild(cancel);
+  formContainer.appendChild(form);
+  function handleForm(event) {
+    event.preventDefault();
+  }
+  form.addEventListener('submit', handleForm);
+  return formContainer;
+}
+
+
+/***/ }),
+
+/***/ "./src/form.js":
+/*!*********************!*\
+  !*** ./src/form.js ***!
+  \*********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "form": () => (/* binding */ form)
+/* harmony export */ });
+/* harmony import */ var _project_submit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./project-submit */ "./src/project-submit.js");
+/* harmony import */ var _todo_submit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./todo-submit */ "./src/todo-submit.js");
+
+
+function form(input, index) {
+  var formContainer = document.createElement('div');
+  formContainer.classList.add('form-container');
+  var type = input;
+  var form = document.createElement("form");
+  form.classList.add('project-form');
+  var titleLabel = document.createElement('label');
+  titleLabel.setAttribute('for', 'title');
+  titleLabel.innerText = type === 'project' ? "Project Title: " : "To-do: ";
+  var title = document.createElement('input');
+  title.type = 'text';
+  title.name = 'title';
+  title.placeholder = 'Title';
+  title.id = 'title';
+  var descriptionLabel = document.createElement('label');
+  descriptionLabel["for"] = 'description';
+  descriptionLabel.innerText = "Description: ";
+  var description = document.createElement('textarea');
+  description.name = 'description';
+  var placeHolder = type === 'project' ? "100" : "500";
+  description.placeholder = "Description (<".concat(placeHolder, " characters)");
+  description.maxLength = placeHolder - 1;
+  description.id = 'description';
+  description.style.rows = '2';
+  var dueDateLabel = document.createElement('label');
+  dueDateLabel["for"] = 'due-date';
+  dueDateLabel.innerText = "Due date: ";
+  var dueDate = document.createElement('input');
+  dueDate.type = 'date';
+  dueDate.name = 'due-date';
+  dueDate.id = 'due-date';
+  var priorityLabel = document.createElement('label');
+  priorityLabel.innerText = 'Priority: ';
+  priorityLabel.htmlFor = 'priority';
+  var priorities = ['low', 'medium', 'high'];
+  var select = document.createElement('select');
+  select.name = 'priority';
+  select.id = 'priority';
+  for (var _i = 0, _priorities = priorities; _i < _priorities.length; _i++) {
+    var priority = _priorities[_i];
+    var option = document.createElement('option');
+    option.value = priority;
+    option.text = priority.charAt(0).toUpperCase() + priority.slice(1);
+    select.appendChild(option);
+  }
+  function handleForm(event) {
+    event.preventDefault();
+  }
+  form.addEventListener('submit', handleForm);
+  var submit = document.createElement('button');
+  submit.classList.add('submit');
+  submit.type = 'submit';
+  submit.innerText = "Submit";
+  submit.addEventListener('click', function () {
+    if (title.value === "") {
+      alert("Please include a title.");
+      return;
+    }
+    if (type === 'project') {
+      (0,_project_submit__WEBPACK_IMPORTED_MODULE_0__.projectSubmit)();
+    } else if (type === 'todo') {
+      (0,_todo_submit__WEBPACK_IMPORTED_MODULE_1__.toDoSubmit)(index);
+    }
+    form.reset();
+  });
+  var cancel = document.createElement('button');
+  cancel.classList.add('cancel');
+  cancel.innerText = 'Cancel';
+  cancel.addEventListener('click', function () {
+    window.location.reload();
+  });
+  form.appendChild(titleLabel);
+  form.appendChild(title);
+  form.appendChild(descriptionLabel);
+  form.appendChild(description);
+  form.appendChild(dueDateLabel);
+  form.appendChild(dueDate);
+  form.appendChild(priorityLabel);
+  form.appendChild(select);
+  form.appendChild(submit);
+  form.appendChild(cancel);
+  function handleForm(event) {
+    event.preventDefault();
+  }
+  form.addEventListener('submit', handleForm);
+  formContainer.appendChild(form);
+  return formContainer;
+}
+
+
+/***/ }),
+
+/***/ "./src/home.js":
+/*!*********************!*\
+  !*** ./src/home.js ***!
+  \*********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "homeMaker": () => (/* binding */ homeMaker)
+/* harmony export */ });
+function homeMaker() {
+  var pageContainer = document.createElement("div");
+  pageContainer.classList.add("page-container");
+  pageContainer.appendChild(headerMaker());
+  pageContainer.appendChild(projectContainerMaker());
+  pageContainer.appendChild(footerMaker());
+  return pageContainer;
+}
+function headerMaker() {
+  var header = document.createElement("div");
+  header.classList.add("header");
+  var title = document.createElement("div");
+  title.classList.add("title");
+  title.innerText = "To-do List";
+  header.appendChild(title);
+  var newProjectButton = document.createElement("button");
+  newProjectButton.classList.add("new-project-button");
+  newProjectButton.innerText = "New Project";
+  header.appendChild(newProjectButton);
+  var toggleThemeButton = document.createElement("button");
+  toggleThemeButton.className = "theme-toggle";
+  toggleThemeButton.innerText = "Toggle Theme";
+  header.appendChild(toggleThemeButton);
+  var signInButton = document.createElement("button");
+  signInButton.className = "sign-in-button";
+  signInButton.innerText = "Sign In";
+  header.appendChild(signInButton);
+  var signOutButton = document.createElement("button");
+  signOutButton.className = "sign-out-button";
+  signOutButton.innerText = "Sign Out";
+  header.appendChild(signOutButton);
+  var userNameElement = document.createElement("div");
+  userNameElement.className = "user-name";
+  userNameElement.textContent = "You";
+  header.appendChild(userNameElement);
+  var userPicElement = document.createElement("img");
+  userPicElement.className = "user-pic";
+  header.appendChild(userPicElement);
+  return header;
+}
+function projectContainerMaker() {
+  var projectContainer = document.createElement("div");
+  projectContainer.classList.add("project-container");
+  return projectContainer;
+}
+function footerMaker() {
+  var footer = document.createElement("div");
+  footer.classList.add("footer");
+  var a = document.createElement("a");
+  var link = document.createTextNode("Sloane Tribble");
+  a.appendChild(link);
+  a.title = "Sloane Tribble";
+  a.href = "https://github.com/SloaneTribble";
+  footer.appendChild(a);
+  return footer;
+}
+
+
+/***/ }),
+
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ "./src/style.css");
+/* harmony import */ var _theme__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./theme */ "./src/theme.js");
+/* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./home */ "./src/home.js");
+/* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
+/* harmony import */ var _project_form__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./project-form */ "./src/project-form.js");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
+/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/esm/index.esm.js");
+/* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/esm/index.esm.js");
+/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/esm/index.esm.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+// Initial page load functions
+
+
+
+
+
+
+
+// Before loading page, check to see if user has set a theme
+
+var currentTheme = localStorage.getObj("theme");
+console.log(currentTheme);
+if (currentTheme === null) {
+  localStorage.setObj("theme", "light");
+}
+document.body.appendChild((0,_home__WEBPACK_IMPORTED_MODULE_2__.homeMaker)());
+(0,_display_projects__WEBPACK_IMPORTED_MODULE_3__.displayProjects)();
+Storage.prototype.setObj = function (key, obj) {
+  return this.setItem(key, JSON.stringify(obj));
+};
+Storage.prototype.getObj = function (key) {
+  return JSON.parse(this.getItem(key));
+};
+var key = "projects";
+var currentProjects = localStorage.getObj(key) || [];
+
+// Button for creating a new project
+
+var newProjectButton = document.querySelector(".new-project-button");
+newProjectButton.addEventListener("click", function () {
+  // Prevents user from opening multiple forms
+  var formContainer = document.querySelector(".form-container");
+  if (document.body.contains(formContainer)) {
+    return;
+  }
+  (0,_project_form__WEBPACK_IMPORTED_MODULE_4__.newProject)();
+  newProjectButton.disabled = true;
+});
+var editProjectButtons = document.querySelectorAll(".edit-project-button");
+editProjectButtons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    localStorage.setObj(key, currentProjects);
+    var formContainer = document.querySelector(".form-container");
+    if (document.body.contains(formContainer)) {
+      return;
+    }
+    var type = "project";
+    var index = button.id;
+    var title = currentProjects[index].title;
+    var description = currentProjects[index].description;
+    var dueDate = currentProjects[index].dueDate;
+    var priority = currentProjects[index].priority;
+    document.body.appendChild((0,_edit__WEBPACK_IMPORTED_MODULE_5__.edit)(type, index, title, description, dueDate, priority));
+  });
+});
+document.querySelector(".theme-toggle").addEventListener("click", _theme__WEBPACK_IMPORTED_MODULE_1__.setTheme);
+
+// Firebase related
+
+// Import the functions you need from the SDKs you need
+
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+var firebaseConfig = {
+  apiKey: "AIzaSyA7V9tyZYedQU-BPuAI7n0tOvmT9y49KWU",
+  authDomain: "to-do-list-bdf1f.firebaseapp.com",
+  projectId: "to-do-list-bdf1f",
+  storageBucket: "to-do-list-bdf1f.appspot.com",
+  messagingSenderId: "524590508156",
+  appId: "1:524590508156:web:cd061bad4a570a6bb1c1f9"
+};
+
+// Initialize Firebase
+var app = (0,firebase_app__WEBPACK_IMPORTED_MODULE_6__.initializeApp)(firebaseConfig);
+var db = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_7__.getFirestore)(app);
+
+
+
+// Signs-in User.
+function signIn() {
+  return _signIn.apply(this, arguments);
+}
+function _signIn() {
+  _signIn = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+    var provider;
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          // Sign in Firebase using popup auth and Google as the identity provider.
+          provider = new firebase_auth__WEBPACK_IMPORTED_MODULE_8__.GoogleAuthProvider();
+          _context.next = 3;
+          return (0,firebase_auth__WEBPACK_IMPORTED_MODULE_8__.signInWithPopup)((0,firebase_auth__WEBPACK_IMPORTED_MODULE_8__.getAuth)(), provider);
+        case 3:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee);
+  }));
+  return _signIn.apply(this, arguments);
+}
+var signInButton = document.querySelector(".sign-in-button");
+signInButton.addEventListener("click", signIn);
+
+// Signs-out of Friendly Chat.
+function signOutUser() {
+  // Sign out of Firebase.
+
+  console.log("sign");
+  (0,firebase_auth__WEBPACK_IMPORTED_MODULE_8__.signOut)((0,firebase_auth__WEBPACK_IMPORTED_MODULE_8__.getAuth)());
+}
+var signOutButton = document.querySelector(".sign-out-button");
+signOutButton.addEventListener("click", signOutUser);
+
+// Returns the signed-in user's profile Pic URL.
+function getProfilePicUrl() {
+  return (0,firebase_auth__WEBPACK_IMPORTED_MODULE_8__.getAuth)().currentUser.photoURL || "/images/profile_placeholder.png";
+}
+
+// Returns the signed-in user's display name.
+function getUserName() {
+  return (0,firebase_auth__WEBPACK_IMPORTED_MODULE_8__.getAuth)().currentUser.displayName;
+}
+var userNameElement = document.querySelector(".user-name");
+var userPicElement = document.querySelector(".user-pic");
+
+// Adds a size to Google Profile pics URLs.
+function addSizeToGoogleProfilePic(url) {
+  if (url.indexOf("googleusercontent.com") !== -1 && url.indexOf("?") === -1) {
+    return url + "?sz=150";
+  }
+  return url;
+}
+
+// Triggers when the auth state change for instance when the user signs-in or signs-out.
+function authStateObserver(user) {
+  if (user) {
+    console.log("User");
+    // User is signed in!
+    // Get the signed-in user's profile pic and name.
+    var profilePicUrl = getProfilePicUrl();
+    var userName = getUserName();
+
+    // Set the user's profile pic and name.
+    userPicElement.style.backgroundImage = "url(" + addSizeToGoogleProfilePic(profilePicUrl) + ")";
+    userNameElement.textContent = userName;
+
+    // Show user's profile and sign-out button.
+    userNameElement.removeAttribute("hidden");
+    userPicElement.removeAttribute("hidden");
+    signOutButton.removeAttribute("hidden");
+
+    // Hide sign-in button.
+    signInButton.setAttribute("hidden", "true");
+  } else {
+    // User is signed out!
+    // Hide user's profile and sign-out button.
+    userNameElement.setAttribute("hidden", "true");
+    userPicElement.setAttribute("hidden", "true");
+    signOutButton.setAttribute("hidden", "true");
+
+    // Show sign-in button.
+    signInButton.removeAttribute("hidden");
+  }
+}
+
+// Initialize firebase auth
+function initFirebaseAuth() {
+  // Listen to auth state changes.  onAuthStateChanged and getAuth are library functions
+  (0,firebase_auth__WEBPACK_IMPORTED_MODULE_8__.onAuthStateChanged)((0,firebase_auth__WEBPACK_IMPORTED_MODULE_8__.getAuth)(), authStateObserver);
+}
+initFirebaseAuth();
+var test = currentProjects;
+try {
+  var docRef = await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_7__.addDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_7__.collection)(db, "users"), {
+    first: "Ada",
+    last: "Lovelace",
+    born: 1815
+  });
+  console.log("Document written with ID: ", docRef.id);
+} catch (e) {
+  console.error("Error adding document: ", e);
+}
+
+// END Firebase related
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } }, 1);
+
+/***/ }),
+
+/***/ "./src/project-form.js":
+/*!*****************************!*\
+  !*** ./src/project-form.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "newProject": () => (/* binding */ newProject)
+/* harmony export */ });
+/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./form */ "./src/form.js");
+
+function newProject() {
+  document.body.appendChild((0,_form__WEBPACK_IMPORTED_MODULE_0__.form)('project', "N/A"));
+}
+
+
+/***/ }),
+
+/***/ "./src/project-submit.js":
+/*!*******************************!*\
+  !*** ./src/project-submit.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "projectSubmit": () => (/* binding */ projectSubmit)
+/* harmony export */ });
+/* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./project */ "./src/project.js");
+/* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
+// This module contains a function for pushing a new project to the 
+// currentProjects array and locally storing that array
+
+// Each time currentProjects is updated, displayProjects() is called
+// to ensure that the user sees all of the projects in storage
+
+
+
+Storage.prototype.setObj = function (key, obj) {
+  return this.setItem(key, JSON.stringify(obj));
+};
+Storage.prototype.getObj = function (key) {
+  return JSON.parse(this.getItem(key));
+};
+var key = "projects";
+
+// Sort projects based on date
+
+var currentProjects = localStorage.getObj(key) || [];
+currentProjects.sort(function compare(a, b) {
+  var dateA = new Date(a.dueDate);
+  var dateB = new Date(b.dueDate);
+  return dateA - dateB;
+});
+for (var project in currentProjects) {
+  var currentToDos = currentProjects[project].toDos;
+  currentToDos.sort(function compare(a, b) {
+    var dateA = new Date(a.dueDate);
+    var dateB = new Date(b.dueDate);
+    return dateA - dateB;
+  });
+}
+localStorage.setObj(key, currentProjects);
+function projectSubmit() {
+  // If currentProjects is null, assign an empty array
+  var currentProjects = localStorage.getObj(key) || [];
+  var title = document.getElementById("title").value;
+  var description = document.getElementById("description").value;
+  var dueDate = document.getElementById("due-date").value;
+  var priority = document.getElementById("priority").value;
+  var newProject = new _project__WEBPACK_IMPORTED_MODULE_0__["default"](title, description, dueDate, priority, false);
+  currentProjects.push(newProject);
+  localStorage.setObj(key, currentProjects);
+  (0,_display_projects__WEBPACK_IMPORTED_MODULE_1__.displayProjects)();
+  window.location.reload();
+  return newProject;
+}
+
+
+/***/ }),
+
+/***/ "./src/project.js":
+/*!************************!*\
+  !*** ./src/project.js ***!
+  \************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Project)
+/* harmony export */ });
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+var Project = /*#__PURE__*/function () {
+  function Project(title, description, dueDate, priority, isActive) {
+    _classCallCheck(this, Project);
+    this.title = title;
+    this.description = description;
+    this.dueDate = dueDate;
+    this.priority = priority;
+    this.toDos = [];
+    this.isActive = false;
+  }
+  _createClass(Project, [{
+    key: "addToDo",
+    value: function addToDo(toDo) {
+      this.toDos.push(toDo);
+    }
+  }, {
+    key: "getToDos",
+    value: function getToDos() {
+      var toDos = [];
+      for (var i = 0; i < this.toDos.length; i++) {
+        toDos.push(this.toDos[i]);
+      }
+      return toDos;
+    }
+  }, {
+    key: "setTitle",
+    value: function setTitle(title) {
+      this.title = title;
+    }
+  }, {
+    key: "setDescription",
+    value: function setDescription(description) {
+      this.description = description;
+    }
+  }, {
+    key: "setDueDate",
+    value: function setDueDate(dueDate) {
+      this.dueDate = dueDate;
+    }
+  }, {
+    key: "setPriority",
+    value: function setPriority(priority) {
+      this.priority = priority;
+    }
+  }, {
+    key: "getTitle",
+    value: function getTitle() {
+      return this.title;
+    }
+  }, {
+    key: "getDescription",
+    value: function getDescription() {
+      return this.description;
+    }
+  }, {
+    key: "getDueDate",
+    value: function getDueDate() {
+      return this.dueDate;
+    }
+  }, {
+    key: "getPriority",
+    value: function getPriority() {
+      return this.priority;
+    }
+  }]);
+  return Project;
+}();
+
+
+/***/ }),
+
+/***/ "./src/theme.js":
+/*!**********************!*\
+  !*** ./src/theme.js ***!
+  \**********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "setTheme": () => (/* binding */ setTheme)
+/* harmony export */ });
+Storage.prototype.setObj = function (key, obj) {
+  return this.setItem(key, JSON.stringify(obj));
+};
+Storage.prototype.getObj = function (key) {
+  return JSON.parse(this.getItem(key));
+};
+var theme = "theme";
+function setTheme() {
+  var root = document.documentElement;
+  var newTheme = root.classList.contains('dark') ? 'light' : 'dark';
+  root.className = newTheme;
+  localStorage.setObj(theme, newTheme);
+  window.location.reload();
+}
+
+
+/***/ }),
+
+/***/ "./src/todo-submit.js":
+/*!****************************!*\
+  !*** ./src/todo-submit.js ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "toDoSubmit": () => (/* binding */ toDoSubmit)
+/* harmony export */ });
+/* harmony import */ var _todo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo */ "./src/todo.js");
+/* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
+// This module contains a function for pushing a new todo to the 
+// a given project in the currentProjects array and then locally storing that array
+
+// Each time currentProjects is updated, displayProjects() is called
+// to ensure that the user sees all of the projects in storage
+
+
+
+
+Storage.prototype.setObj = function (key, obj) {
+  return this.setItem(key, JSON.stringify(obj));
+};
+Storage.prototype.getObj = function (key) {
+  return JSON.parse(this.getItem(key));
+};
+var key = "projects";
+function toDoSubmit(index) {
+  // If currentProjects is null, assign an empty array
+  // Check for the latest info whenever this function is called
+  var currentProjects = localStorage.getObj(key) || [];
+  var project = currentProjects[index];
+  var title = document.getElementById("title").value;
+  var description = document.getElementById("description").value;
+  var dueDate = document.getElementById("due-date").value;
+  var priority = document.getElementById("priority").value;
+  var toDo = new _todo__WEBPACK_IMPORTED_MODULE_0__["default"](title, description, dueDate, priority);
+  project.toDos.push(toDo);
+  localStorage.setObj(key, currentProjects);
+  currentProjects = localStorage.getObj(key) || [];
+  (0,_display_projects__WEBPACK_IMPORTED_MODULE_1__.displayProjects)();
+  window.location.reload();
+  return toDo;
+}
+
+
+/***/ }),
+
+/***/ "./src/todo.js":
+/*!*********************!*\
+  !*** ./src/todo.js ***!
+  \*********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ToDo)
+/* harmony export */ });
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+var ToDo = /*#__PURE__*/function () {
+  function ToDo(title, description, dueDate, priority) {
+    _classCallCheck(this, ToDo);
+    this.title = title;
+    this.description = description;
+    this.dueDate = dueDate;
+    this.priority = priority;
+  }
+  _createClass(ToDo, [{
+    key: "setTitle",
+    value: function setTitle(title) {
+      this.title = title;
+    }
+  }, {
+    key: "setDescription",
+    value: function setDescription(description) {
+      this.description = description;
+    }
+  }, {
+    key: "setDueDate",
+    value: function setDueDate(dueDate) {
+      this.dueDate = dueDate;
+    }
+  }, {
+    key: "setPriority",
+    value: function setPriority(priority) {
+      this.priority = priority;
+    }
+  }, {
+    key: "getTitle",
+    value: function getTitle() {
+      return this.title;
+    }
+  }, {
+    key: "getDescription",
+    value: function getDescription() {
+      return this.description;
+    }
+  }, {
+    key: "getDueDate",
+    value: function getDueDate() {
+      return this.dueDate;
+    }
+  }, {
+    key: "getPriority",
+    value: function getPriority() {
+      return this.priority;
+    }
+  }]);
+  return ToDo;
+}();
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./src/style.css":
 /*!*************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./src/style.css ***!
@@ -33468,1153 +34633,6 @@ function __classPrivateFieldIn(state, receiver) {
     return typeof state === "function" ? receiver === state : state.has(receiver);
 }
 
-
-/***/ }),
-
-/***/ "./src/display-projects.js":
-/*!*********************************!*\
-  !*** ./src/display-projects.js ***!
-  \*********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "displayProjects": () => (/* binding */ displayProjects),
-/* harmony export */   "removeIndividual": () => (/* binding */ removeIndividual)
-/* harmony export */ });
-/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./form */ "./src/form.js");
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
-
-
-// This module displays what projects are kept in local storage.
-// displayProjects() is frequently called to ensure that the user 
-// is only able to see data that is currently being stored
-
-
-
-
-Storage.prototype.setObj = function(key, obj) {
-    return this.setItem(key, JSON.stringify(obj))
-}
-Storage.prototype.getObj = function(key) {
-    return JSON.parse(this.getItem(key))
-}
-
-const key = "projects";
-
-const theme = "theme";
-
-// If currentProjects is null, assign an empty array
-
-function displayProjects(){
-
-
-    let currentProjects = localStorage.getObj(key) || [];
-
-    let currentTheme = localStorage.getObj(theme);
-
-    const root = document.documentElement;
-
-    root.className = currentTheme;
-
-    const projectContainer = document.querySelector(".project-container");
-
-    // Clear the current display to prevent repetition
-    projectContainer.innerHTML = '';
-
-
-    for(let i = 0; i < currentProjects.length; i++) {
-
-
-        const project = document.createElement('div');
-        project.classList.add('project-cell');
-        project.id = i;
-
-        const projectDetails = document.createElement('div');
-        projectDetails.classList.add('project-details');
-        projectDetails.id = i;
-
-        const title = document.createElement('div');
-        title.innerText = "Title: " + currentProjects[i].title;
-
-        const description = document.createElement('div');
-        description.classList.add('project-description');
-        description.innerText = "Description: " + currentProjects[i].description;
-
-        const dueDate = document.createElement('div');
-        dueDate.innerText = "Due date: " + currentProjects[i].dueDate;
-
-        // Priority should affect div color
-
-        const priority = document.createElement('div');
-        priority.innerText = "Priority: " + currentProjects[i].priority;
-        let priorityColor;
-        switch(currentProjects[i].priority){
-            case 'high': priorityColor = 'high-priority';
-            priority.style.fontWeight = "bold";
-            break;
-
-            case 'medium': priorityColor = 'medium-priority';
-            break;
-
-            case 'low': priorityColor = 'low-priority';
-            break;
-        }
-        project.classList.add(priorityColor);
-
-        const toDoButtonContainer = document.createElement('div');
-        toDoButtonContainer.classList.add('to-do-button-container');
-
-        const toDos = document.createElement('button');
-        toDos.classList.add('to-do-display');
-        toDos.innerText = "View To-dos";
-
-        toDoButtonContainer.appendChild(toDos);
-
-        const toDoList = displayToDos(i);
-
-        toDos.addEventListener('click', function(){
-
-        // Keep track of which tabs are open/closed on refresh
-            currentProjects[i].isActive = true;
-            localStorage.setObj(key, currentProjects);
-
-            project.appendChild(toDoList);
-            toDoButtonContainer.removeChild(toDos);
-            toDoButtonContainer.appendChild(hideToDos);
-        });
-        
-
-        const hideToDos = document.createElement('button');
-        hideToDos.innerText = "Hide To-dos";
-        hideToDos.classList.add('to-do-display');
-        hideToDos.addEventListener('click', function(){
-        
-        // Keep track of which tabs are open/closed on refresh
-            currentProjects[i].isActive = false;
-            localStorage.setObj(key, currentProjects);
-
-            project.removeChild(toDoList);
-            toDoButtonContainer.removeChild(hideToDos);
-            toDoButtonContainer.appendChild(toDos);
-        });
-
-        
-
-        const addToDo = document.createElement('button');
-        addToDo.classList.add('add-to-do-button');
-        addToDo.innerText = 'Add To-do';
-        addToDo.addEventListener('click', function(){
-            const formContainer = document.querySelector('.form-container');
-            if(document.body.contains(formContainer)){return;}
-            document.body.appendChild((0,_form__WEBPACK_IMPORTED_MODULE_0__.form)('todo', i));
-        });
-
-        const editProject = document.createElement('button');
-        editProject.classList.add('edit-project-button');
-        editProject.innerText = 'Edit Project';
-        editProject.id = i;
-
-
-        const removeProject = document.createElement('button');
-        removeProject.classList.add('remove-project-button');
-        removeProject.innerText = 'Remove Project';
-        removeProject.addEventListener('click', function(){
-            remove(i);
-        });
-
-
-        projectDetails.appendChild(title);
-        projectDetails.appendChild(description);
-        projectDetails.appendChild(dueDate);
-        projectDetails.appendChild(priority);
-        projectDetails.appendChild(toDoButtonContainer);
-        projectDetails.appendChild(addToDo);
-        projectDetails.appendChild(editProject);
-        projectDetails.appendChild(removeProject);
-
-        project.appendChild(projectDetails);
-        
-
-        projectContainer.appendChild(project);
-
-        if(currentProjects[i].isActive){
-            toDos.click();
-        }
-    }
-}
-
-function displayToDos(index){
-
-    let currentProjects = localStorage.getObj(key) || [];
-
-    let project = currentProjects[index];
-    let projectToDos = project.toDos;
-    
-    const toDoList = document.createElement('div');
-    toDoList.classList.add('to-do-list');
-
-    for (const toDo in projectToDos){
-
-        const singleToDo = document.createElement('div');
-        singleToDo.classList.add('to-do');
-        singleToDo.id = toDo;
-
-        let toDoIndex = toDo;
-
-        const title = document.createElement('div');
-        title.innerText = "Task: " + projectToDos[toDo].title;
-
-        const description = document.createElement('div');
-        description.innerText = "Description: " + projectToDos[toDo].description;
-
-        const dueDate = document.createElement('div');
-        dueDate.innerText = "Due date: " + projectToDos[toDo].dueDate;
-
-        const priority = document.createElement('div');
-        priority.innerText = "Priority: " + projectToDos[toDo].priority;
-
-        let priorityColor;
-
-        switch(projectToDos[toDo].priority){
-            case 'high': priorityColor = 'high-priority';
-            priority.style.fontWeight = "bold";
-            break;
-
-            case 'medium': priorityColor = 'medium-priority';
-            break;
-
-            case 'low': priorityColor = 'low-priority';
-            break;
-        }
-
-        singleToDo.classList.add(priorityColor);
-
-        const removeToDo = document.createElement('button');
-        removeToDo.classList.add("remove-to-do-button");
-        removeToDo.innerText = "Remove";
-        removeToDo.addEventListener('click', function(){
-            removeIndividual(toDo, projectToDos, currentProjects);
-            window.location.reload();
-        }, false);
-
-        const editToDo = document.createElement('button');
-        editToDo.classList.add('edit-to-do-button');
-        editToDo.innerText = "Edit";
-        editToDo.addEventListener('click', function(e){
-
-            const formContainer = document.querySelector('.form-container');
-             if(document.body.contains(formContainer)){return;}
-             
-            document.body.appendChild((0,_edit__WEBPACK_IMPORTED_MODULE_1__.edit)(
-                "to-do",
-                index,
-                projectToDos[toDo].title,
-                projectToDos[toDo].description,
-                projectToDos[toDo].dueDate,
-                projectToDos[toDo].priority,
-                toDoIndex
-                ));
-        });
-
-        const toDoHeader = document.createElement('div');
-        toDoHeader.classList.add('to-do-header');
-
-        
-
-        toDoHeader.appendChild(title);
-        toDoHeader.appendChild(dueDate);
-        toDoHeader.appendChild(priority);
-        toDoHeader.appendChild(editToDo);
-        toDoHeader.appendChild(removeToDo);
-        singleToDo.appendChild(toDoHeader);
-        singleToDo.appendChild(description);
-        
-        toDoList.appendChild(singleToDo);
-    }
-
-    return toDoList;
-}
-
-function removeIndividual(e, projectToDos, currentProjects){
-    console.log(e);
-    projectToDos.splice(e, 1);
-    localStorage.setObj(key, currentProjects);
-}
-
-function remove(index){
-    let currentProjects = localStorage.getObj(key) || [];
-
-    currentProjects.splice(index, 1);
-    localStorage.setObj(key, currentProjects);
-    window.location.reload();
-}
-
-
-
-
-/***/ }),
-
-/***/ "./src/edit-project.js":
-/*!*****************************!*\
-  !*** ./src/edit-project.js ***!
-  \*****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "editProject": () => (/* binding */ editProject)
-/* harmony export */ });
-/* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
-
-
-Storage.prototype.setObj = function(key, obj) {
-    return this.setItem(key, JSON.stringify(obj))
-}
-Storage.prototype.getObj = function(key) {
-    return JSON.parse(this.getItem(key))
-}
-
-const key = "projects";
-
-// Sort projects based on date
-
-let currentProjects = localStorage.getObj(key) || [];
-currentProjects.sort(function compare(a, b) {
-        let dateA = new Date(a.dueDate);
-        let dateB = new Date(b.dueDate);
-        return dateA - dateB;
-    });
-
-for (let project in currentProjects){
-    let currentToDos = currentProjects[project].toDos;
-    currentToDos.sort(function compare(a, b){
-        let dateA = new Date(a.dueDate);
-        let dateB = new Date(b.dueDate);
-        return dateA - dateB;
-    });
-}
-    
-
-
-
-localStorage.setObj(key, currentProjects); 
-
-function editProject(index){
-
-    // If currentProjects is null, assign an empty array
-    let currentProjects = localStorage.getObj(key) || [];
-    
-    const title = document.getElementById("title").value;
-    const description = document.getElementById("description").value;
-    const dueDate = document.getElementById("due-date").value;
-    const priority = document.getElementById("priority").value;
-
-    
-    currentProjects[index].title = title;
-    currentProjects[index].description = description;
-    currentProjects[index].dueDate = dueDate;
-    currentProjects[index].priority = priority;
-
-    
-
-    localStorage.setObj(key, currentProjects);  
-    (0,_display_projects__WEBPACK_IMPORTED_MODULE_0__.displayProjects)();
-    window.location.reload();
-
-    return;
-}
-
-
-
-/***/ }),
-
-/***/ "./src/edit-todo.js":
-/*!**************************!*\
-  !*** ./src/edit-todo.js ***!
-  \**************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "editToDo": () => (/* binding */ editToDo)
-/* harmony export */ });
-/* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
-
-
-Storage.prototype.setObj = function(key, obj) {
-    return this.setItem(key, JSON.stringify(obj))
-}
-Storage.prototype.getObj = function(key) {
-    return JSON.parse(this.getItem(key))
-}
-
-const key = "projects";
-
-// Sort projects based on date
-
-let currentProjects = localStorage.getObj(key) || [];
-currentProjects.sort(function compare(a, b) {
-        let dateA = new Date(a.dueDate);
-        let dateB = new Date(b.dueDate);
-        return dateA - dateB;
-    });
-
-for (let project in currentProjects){
-    let currentToDos = currentProjects[project].toDos;
-    currentToDos.sort(function compare(a, b){
-        let dateA = new Date(a.dueDate);
-        let dateB = new Date(b.dueDate);
-        return dateA - dateB;
-    });
-}
-    
-
-
-
-localStorage.setObj(key, currentProjects); 
-
-function editToDo(index, toDo){
-
-    // If currentProjects is null, assign an empty array
-    let currentProjects = localStorage.getObj(key) || [];
-    let projectToDos = currentProjects[index].toDos;
-
-
-    
-    const title = document.getElementById("title").value;
-    const description = document.getElementById("description").value;
-    const dueDate = document.getElementById("due-date").value;
-    const priority = document.getElementById("priority").value;
-
-    console.log(toDo);
-
-    projectToDos[toDo].title = title;
-    projectToDos[toDo].description = description;
-    projectToDos[toDo].dueDate = dueDate;
-    projectToDos[toDo].priority = priority;
-
-    
-
-    localStorage.setObj(key, currentProjects);  
-    (0,_display_projects__WEBPACK_IMPORTED_MODULE_0__.displayProjects)();
-    window.location.reload();
-
-    return;
-}
-
-
-
-/***/ }),
-
-/***/ "./src/edit.js":
-/*!*********************!*\
-  !*** ./src/edit.js ***!
-  \*********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "edit": () => (/* binding */ edit)
-/* harmony export */ });
-/* harmony import */ var _edit_todo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edit-todo */ "./src/edit-todo.js");
-/* harmony import */ var _edit_project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit-project */ "./src/edit-project.js");
-// This file contains very similar code to form.js except that it takes
-// different arguments and performs some different activities
-
-
-
-
-// Storage.prototype.setObj = function(key, obj) {
-//     return this.setItem(key, JSON.stringify(obj))
-// }
-// Storage.prototype.getObj = function(key) {
-//     return JSON.parse(this.getItem(key))
-// }
-
-// const key = "projects";
-
-// let currentProjects = localStorage.getObj(key) || [];
-
-function edit(type, index, currentTitle, currentDescription, currentDueDate, currentPriority, toDo = 0){
-
-    const formContainer = document.createElement('div');
-    formContainer.classList.add('form-container');
-
-    const form = document.createElement("form");
-    form.classList.add('project-form');
-
-    const titleLabel = document.createElement('label');
-    titleLabel.setAttribute('for', 'title');
-    titleLabel.innerText = type === 'to-do' ? 'To-do:' : 'Project:';
-
-    const title = document.createElement('input');
-    title.type = 'text';
-    title.name = 'title';
-    title.placeholder = 'Title';
-    title.id = 'title';
-    title.defaultValue = currentTitle;
-
-    const descriptionLabel = document.createElement('label');
-    descriptionLabel.for = 'description';
-    descriptionLabel.innerText = "Description: ";
-
-    const description = document.createElement('textarea');
-    description.classList.add('form-description');
-    description.name = 'description';
-
-    let placeHolder = (type === 'project')? "100" : "500";
-    description.placeholder = `Description (<${placeHolder} characters)`;
-    description.maxLength = placeHolder - 1;
-
-    description.id = 'description';
-    description.defaultValue = currentDescription;
-
-    const dueDateLabel = document.createElement('label');
-    dueDateLabel.for= 'due-date';
-    dueDateLabel.innerText = "Due date: ";
-
-    const dueDate = document.createElement('input');
-    dueDate.type = 'date';
-    dueDate.name = 'due-date';
-    dueDate.id = 'due-date';
-    dueDate.defaultValue = currentDueDate;
-
-    const priorityLabel = document.createElement('label');
-    priorityLabel.innerText = 'Priority: ';
-    priorityLabel.htmlFor = 'priority';
-
-    let priorities = ['low', 'medium', 'high'];
-
-    const select = document.createElement('select');
-    select.name = 'priority';
-    select.id = 'priority';
-
-    for (const priority of priorities){
-        let option = document.createElement('option');
-        option.value = priority;
-        option.text = priority.charAt(0).toUpperCase() + priority.slice(1);
-        select.appendChild(option);
-    }
-
-    select.value = currentPriority;
-
-    function handleForm(event) { event.preventDefault(); } 
-    form.addEventListener('submit', handleForm);
-
-    const submit = document.createElement('button');
-    submit.classList.add('submit');
-    submit.type = 'submit';
-    submit.innerText = "Submit";
-    submit.addEventListener('click', function(){
-        
-        if(type === 'to-do') {(0,_edit_todo__WEBPACK_IMPORTED_MODULE_0__.editToDo)(index, toDo);
-        } else if(type === 'project'){
-            (0,_edit_project__WEBPACK_IMPORTED_MODULE_1__.editProject)(index);
-            return
-        };
-        form.reset();
-    });
-
-    const cancel = document.createElement('button');
-    cancel.classList.add('cancel');
-    cancel.innerText = 'Cancel';
-    cancel.addEventListener('click', function(){
-        window.location.reload();
-    })
-    
-    
-    form.appendChild(titleLabel);
-    form.appendChild(title);
-
-    form.appendChild(descriptionLabel);
-    form.appendChild(description);
-
-    form.appendChild(dueDateLabel);
-    form.appendChild(dueDate);
-
-    form.appendChild(priorityLabel);
-    form.appendChild(select);
-
-    form.appendChild(submit);
-
-    form.appendChild(cancel);
-
-    formContainer.appendChild(form);
-
-    function handleForm(event) {event.preventDefault();}
-    form.addEventListener('submit', handleForm);
-    
-
-    return formContainer;
-}
-
-
-
-
-/***/ }),
-
-/***/ "./src/form.js":
-/*!*********************!*\
-  !*** ./src/form.js ***!
-  \*********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "form": () => (/* binding */ form)
-/* harmony export */ });
-/* harmony import */ var _project_submit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./project-submit */ "./src/project-submit.js");
-/* harmony import */ var _todo_submit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./todo-submit */ "./src/todo-submit.js");
-
-
-
-
-function form(input, index){
-
-
-    const formContainer = document.createElement('div');
-    formContainer.classList.add('form-container');
-
-    let type = input;
-
-    const form = document.createElement("form");
-    form.classList.add('project-form');
-
-    const titleLabel = document.createElement('label');
-    titleLabel.setAttribute('for', 'title');
-    titleLabel.innerText = (type === 'project')? "Project Title: " : "To-do: ";
-
-    const title = document.createElement('input');
-    title.type = 'text';
-    title.name = 'title';
-    title.placeholder = 'Title';
-    title.id = 'title';
-
-    const descriptionLabel = document.createElement('label');
-    descriptionLabel.for = 'description';
-    descriptionLabel.innerText = "Description: ";
-
-    const description = document.createElement('textarea');
-    description.name = 'description';
-
-    let placeHolder = (type === 'project')? "100" : "500";
-    description.placeholder = `Description (<${placeHolder} characters)`;
-    description.maxLength = placeHolder - 1;
-    description.id = 'description';
-    description.style.rows = '2';
-
-    const dueDateLabel = document.createElement('label');
-    dueDateLabel.for= 'due-date';
-    dueDateLabel.innerText = "Due date: ";
-
-    const dueDate = document.createElement('input');
-    dueDate.type = 'date';
-    dueDate.name = 'due-date';
-    dueDate.id = 'due-date';
-
-    const priorityLabel = document.createElement('label');
-    priorityLabel.innerText = 'Priority: ';
-    priorityLabel.htmlFor = 'priority';
-
-    let priorities = ['low', 'medium', 'high'];
-
-    const select = document.createElement('select');
-    select.name = 'priority';
-    select.id = 'priority';
-
-    for (const priority of priorities){
-        let option = document.createElement('option');
-        option.value = priority;
-        option.text = priority.charAt(0).toUpperCase() + priority.slice(1);
-        select.appendChild(option);
-    }
-
-    function handleForm(event) { event.preventDefault(); } 
-    form.addEventListener('submit', handleForm);
-
-    const submit = document.createElement('button');
-    submit.classList.add('submit');
-    submit.type = 'submit';
-    submit.innerText = "Submit";
-
-    submit.addEventListener('click', function(){
-        if (title.value === ""){
-            alert("Please include a title.");
-            return;
-        }
-        if(type === 'project'){
-            (0,_project_submit__WEBPACK_IMPORTED_MODULE_0__.projectSubmit)();
-        } else if (type === 'todo'){
-            (0,_todo_submit__WEBPACK_IMPORTED_MODULE_1__.toDoSubmit)(index);
-        }
-        form.reset();
-    });
-
-    const cancel = document.createElement('button');
-    cancel.classList.add('cancel');
-    cancel.innerText = 'Cancel';
-    cancel.addEventListener('click', function(){
-        window.location.reload();
-    });
-
-    
-    
-    form.appendChild(titleLabel);
-    form.appendChild(title);
-
-    form.appendChild(descriptionLabel);
-    form.appendChild(description);
-
-    form.appendChild(dueDateLabel);
-    form.appendChild(dueDate);
-
-    form.appendChild(priorityLabel);
-    form.appendChild(select);
-
-    form.appendChild(submit);
-
-    form.appendChild(cancel);
-
-    function handleForm(event) {event.preventDefault();}
-    form.addEventListener('submit', handleForm);
-
-    formContainer.appendChild(form);
-    
-
-    return formContainer;
-}
-
-
-
-
-
-
-/***/ }),
-
-/***/ "./src/home.js":
-/*!*********************!*\
-  !*** ./src/home.js ***!
-  \*********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "homeMaker": () => (/* binding */ homeMaker)
-/* harmony export */ });
-function homeMaker() {
-  const pageContainer = document.createElement("div");
-  pageContainer.classList.add("page-container");
-
-  pageContainer.appendChild(headerMaker());
-  pageContainer.appendChild(projectContainerMaker());
-
-  pageContainer.appendChild(footerMaker());
-
-  return pageContainer;
-}
-
-function headerMaker() {
-  const header = document.createElement("div");
-  header.classList.add("header");
-
-  const title = document.createElement("div");
-  title.classList.add("title");
-  title.innerText = "To-do List";
-
-  header.appendChild(title);
-
-  const newProjectButton = document.createElement("button");
-  newProjectButton.classList.add("new-project-button");
-  newProjectButton.innerText = "New Project";
-
-  header.appendChild(newProjectButton);
-
-  const toggleThemeButton = document.createElement("button");
-  toggleThemeButton.className = "theme-toggle";
-  toggleThemeButton.innerText = "Toggle Theme";
-
-  header.appendChild(toggleThemeButton);
-
-  const signInButton = document.createElement("button");
-  signInButton.className = "sign-in-button";
-  signInButton.innerText = "Sign In";
-
-  header.appendChild(signInButton);
-
-  const signOutButton = document.createElement("button");
-  signOutButton.className = "sign-out-button";
-  signOutButton.innerText = "Sign Out";
-
-  header.appendChild(signOutButton);
-
-  const userNameElement = document.createElement("div");
-  userNameElement.className = "user-name";
-  userNameElement.textContent = "You";
-
-  header.appendChild(userNameElement);
-
-  const userPicElement = document.createElement("img");
-  userPicElement.className = "user-pic";
-
-  header.appendChild(userPicElement);
-
-  return header;
-}
-
-function projectContainerMaker() {
-  const projectContainer = document.createElement("div");
-  projectContainer.classList.add("project-container");
-
-  return projectContainer;
-}
-
-function footerMaker() {
-  const footer = document.createElement("div");
-  footer.classList.add("footer");
-  let a = document.createElement("a");
-
-  let link = document.createTextNode("Sloane Tribble");
-
-  a.appendChild(link);
-
-  a.title = "Sloane Tribble";
-
-  a.href = "https://github.com/SloaneTribble";
-
-  footer.appendChild(a);
-
-  return footer;
-}
-
-
-
-
-/***/ }),
-
-/***/ "./src/project-form.js":
-/*!*****************************!*\
-  !*** ./src/project-form.js ***!
-  \*****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "newProject": () => (/* binding */ newProject)
-/* harmony export */ });
-/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./form */ "./src/form.js");
-
-
-function newProject(){
-    document.body.appendChild((0,_form__WEBPACK_IMPORTED_MODULE_0__.form)('project', "N/A"));
-}
-
-
-
-/***/ }),
-
-/***/ "./src/project-submit.js":
-/*!*******************************!*\
-  !*** ./src/project-submit.js ***!
-  \*******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "projectSubmit": () => (/* binding */ projectSubmit)
-/* harmony export */ });
-/* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./project */ "./src/project.js");
-/* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
-// This module contains a function for pushing a new project to the 
-// currentProjects array and locally storing that array
-
-// Each time currentProjects is updated, displayProjects() is called
-// to ensure that the user sees all of the projects in storage
-
-
-
-
-Storage.prototype.setObj = function(key, obj) {
-    return this.setItem(key, JSON.stringify(obj))
-}
-Storage.prototype.getObj = function(key) {
-    return JSON.parse(this.getItem(key))
-}
-
-const key = "projects";
-
-// Sort projects based on date
-
-let currentProjects = localStorage.getObj(key) || [];
-currentProjects.sort(function compare(a, b) {
-        let dateA = new Date(a.dueDate);
-        let dateB = new Date(b.dueDate);
-        return dateA - dateB;
-    });
-
-for (let project in currentProjects){
-    let currentToDos = currentProjects[project].toDos;
-    currentToDos.sort(function compare(a, b){
-        let dateA = new Date(a.dueDate);
-        let dateB = new Date(b.dueDate);
-        return dateA - dateB;
-    });
-}
-    
-
-
-
-localStorage.setObj(key, currentProjects); 
-
-function projectSubmit(){
-
-    // If currentProjects is null, assign an empty array
-    let currentProjects = localStorage.getObj(key) || [];
-    
-    const title = document.getElementById("title").value;
-    const description = document.getElementById("description").value;
-    const dueDate = document.getElementById("due-date").value;
-    const priority = document.getElementById("priority").value;
-
-    const newProject = new _project__WEBPACK_IMPORTED_MODULE_0__["default"](title, description, dueDate, priority, false);
-    currentProjects.push(newProject);
-
-    localStorage.setObj(key, currentProjects);  
-    (0,_display_projects__WEBPACK_IMPORTED_MODULE_1__.displayProjects)();
-    window.location.reload();
-
-    return newProject;
-}
-
-
-
-/***/ }),
-
-/***/ "./src/project.js":
-/*!************************!*\
-  !*** ./src/project.js ***!
-  \************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Project)
-/* harmony export */ });
-class Project{
-    constructor(title, description, dueDate, priority, isActive){
-        this.title = title;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.priority = priority;
-        this.toDos = [];
-        this.isActive = false;
-    }
-
-    addToDo(toDo){
-        this.toDos.push(toDo);
-    }
-
-    getToDos(){
-        let toDos = [];
-        for(let i = 0; i < this.toDos.length; i++){
-            toDos.push(this.toDos[i]);
-        }
-        return toDos;
-    }
-
-    setTitle(title){
-        this.title = title;
-    }
-
-    setDescription(description){
-        this.description = description;
-    }
-
-    setDueDate(dueDate){
-        this.dueDate = dueDate;
-    }
-
-    setPriority(priority){
-        this.priority = priority;
-    }
-
-    getTitle(){
-        return this.title;
-    }
-
-    getDescription(){
-        return this.description;
-    }
-
-    getDueDate(){
-        return this.dueDate
-    }
-
-    getPriority(){
-        return this.priority
-    }
-
-
-}
-
-/***/ }),
-
-/***/ "./src/theme.js":
-/*!**********************!*\
-  !*** ./src/theme.js ***!
-  \**********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "setTheme": () => (/* binding */ setTheme)
-/* harmony export */ });
-Storage.prototype.setObj = function(key, obj) {
-    return this.setItem(key, JSON.stringify(obj))
-}
-Storage.prototype.getObj = function(key) {
-    return JSON.parse(this.getItem(key))
-}
-
-const theme = "theme";
-
-
-
-function setTheme(){
-    const root = document.documentElement;
-    const newTheme = root.classList.contains('dark')? 'light' : 'dark';
-
-    root.className = newTheme;
-
-    localStorage.setObj(theme, newTheme);
-
-    window.location.reload();
-}
-
-
-
-/***/ }),
-
-/***/ "./src/todo-submit.js":
-/*!****************************!*\
-  !*** ./src/todo-submit.js ***!
-  \****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "toDoSubmit": () => (/* binding */ toDoSubmit)
-/* harmony export */ });
-/* harmony import */ var _todo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo */ "./src/todo.js");
-/* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
-// This module contains a function for pushing a new todo to the 
-// a given project in the currentProjects array and then locally storing that array
-
-// Each time currentProjects is updated, displayProjects() is called
-// to ensure that the user sees all of the projects in storage
-
-
-
-
-
-Storage.prototype.setObj = function(key, obj) {
-    return this.setItem(key, JSON.stringify(obj))
-}
-Storage.prototype.getObj = function(key) {
-    return JSON.parse(this.getItem(key))
-}
-
-const key = "projects";
-
-
-
-
-function toDoSubmit(index){
-
-    // If currentProjects is null, assign an empty array
-    // Check for the latest info whenever this function is called
-    let currentProjects = localStorage.getObj(key) || [];
-
-    let project = currentProjects[index];
-
-    const title = document.getElementById("title").value;
-    const description = document.getElementById("description").value;
-    const dueDate = document.getElementById("due-date").value;
-    const priority = document.getElementById("priority").value;
-
-    const toDo = new _todo__WEBPACK_IMPORTED_MODULE_0__["default"](title, description, dueDate, priority);
-
-    
-    project.toDos.push(toDo);
-
-
-    localStorage.setObj(key, currentProjects);  
-
-    currentProjects = localStorage.getObj(key) || [];
-
-
-    (0,_display_projects__WEBPACK_IMPORTED_MODULE_1__.displayProjects)();
-
-    window.location.reload();
-
-    return toDo;
-}
-
-
-
-/***/ }),
-
-/***/ "./src/todo.js":
-/*!*********************!*\
-  !*** ./src/todo.js ***!
-  \*********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ ToDo)
-/* harmony export */ });
-class ToDo{
-    constructor(title, description, dueDate, priority){
-        this.title = title;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.priority = priority;
-    }
-
-    setTitle(title){
-        this.title = title;
-    }
-
-    setDescription(description){
-        this.description = description;
-    }
-
-    setDueDate(dueDate){
-        this.dueDate = dueDate;
-    }
-
-    setPriority(priority){
-        this.priority = priority;
-    }
-
-    getTitle(){
-        return this.title;
-    }
-
-    getDescription(){
-        return this.description;
-    }
-
-    getDueDate(){
-        return this.dueDate
-    }
-
-    getPriority(){
-        return this.priority
-    }
-
-}
 
 /***/ }),
 
@@ -36844,6 +36862,77 @@ const unwrap = (value) => reverseTransformCache.get(value);
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/async module */
+/******/ 	(() => {
+/******/ 		var webpackQueues = typeof Symbol === "function" ? Symbol("webpack queues") : "__webpack_queues__";
+/******/ 		var webpackExports = typeof Symbol === "function" ? Symbol("webpack exports") : "__webpack_exports__";
+/******/ 		var webpackError = typeof Symbol === "function" ? Symbol("webpack error") : "__webpack_error__";
+/******/ 		var resolveQueue = (queue) => {
+/******/ 			if(queue && !queue.d) {
+/******/ 				queue.d = 1;
+/******/ 				queue.forEach((fn) => (fn.r--));
+/******/ 				queue.forEach((fn) => (fn.r-- ? fn.r++ : fn()));
+/******/ 			}
+/******/ 		}
+/******/ 		var wrapDeps = (deps) => (deps.map((dep) => {
+/******/ 			if(dep !== null && typeof dep === "object") {
+/******/ 				if(dep[webpackQueues]) return dep;
+/******/ 				if(dep.then) {
+/******/ 					var queue = [];
+/******/ 					queue.d = 0;
+/******/ 					dep.then((r) => {
+/******/ 						obj[webpackExports] = r;
+/******/ 						resolveQueue(queue);
+/******/ 					}, (e) => {
+/******/ 						obj[webpackError] = e;
+/******/ 						resolveQueue(queue);
+/******/ 					});
+/******/ 					var obj = {};
+/******/ 					obj[webpackQueues] = (fn) => (fn(queue));
+/******/ 					return obj;
+/******/ 				}
+/******/ 			}
+/******/ 			var ret = {};
+/******/ 			ret[webpackQueues] = x => {};
+/******/ 			ret[webpackExports] = dep;
+/******/ 			return ret;
+/******/ 		}));
+/******/ 		__webpack_require__.a = (module, body, hasAwait) => {
+/******/ 			var queue;
+/******/ 			hasAwait && ((queue = []).d = 1);
+/******/ 			if(queue) queue.moduleId = module.id;
+/******/ 			var depQueues = new Set();
+/******/ 			var exports = module.exports;
+/******/ 			var currentDeps;
+/******/ 			var outerResolve;
+/******/ 			var reject;
+/******/ 			var promise = new Promise((resolve, rej) => {
+/******/ 				reject = rej;
+/******/ 				outerResolve = resolve;
+/******/ 			});
+/******/ 			promise[webpackExports] = exports;
+/******/ 			promise[webpackQueues] = (fn) => (queue && fn(queue), depQueues.forEach(fn), promise["catch"](x => {}));
+/******/ 			promise.moduleId = module.id;
+/******/ 			module.exports = promise;
+/******/ 			body((deps) => {
+/******/ 				currentDeps = wrapDeps(deps);
+/******/ 				var fn;
+/******/ 				var getResult = () => (currentDeps.map((d) => {
+/******/ 					if(d[webpackError]) throw d[webpackError];
+/******/ 					return d[webpackExports];
+/******/ 				}))
+/******/ 				var promise = new Promise((resolve) => {
+/******/ 					fn = () => (resolve(getResult));
+/******/ 					fn.r = 0;
+/******/ 					var fnQueue = (q) => (q !== queue && !depQueues.has(q) && (depQueues.add(q), q && !q.d && (fn.r++, q.push(fn))));
+/******/ 					currentDeps.map((dep) => (dep[webpackQueues](fnQueue)));
+/******/ 				});
+/******/ 				return fn.r ? promise : getResult();
+/******/ 			}, (err) => ((err ? reject(promise[webpackError] = err) : outerResolve(exports)), resolveQueue(queue)));
+/******/ 			queue && (queue.d = 0);
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
@@ -36902,213 +36991,12 @@ const unwrap = (value) => reverseTransformCache.get(value);
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-(() => {
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ "./src/style.css");
-/* harmony import */ var _theme__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./theme */ "./src/theme.js");
-/* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./home */ "./src/home.js");
-/* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
-/* harmony import */ var _project_form__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./project-form */ "./src/project-form.js");
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
-/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/esm/index.esm.js");
-/* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/esm/index.esm.js");
-/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/esm/index.esm.js");
-
-
-// Initial page load functions
-
-
-
-
-
-
-
-
-
-
-
-// Before loading page, check to see if user has set a theme
-
-let currentTheme = localStorage.getObj("theme");
-
-console.log(currentTheme);
-
-if (currentTheme === null) {
-  localStorage.setObj("theme", "light");
-}
-
-document.body.appendChild((0,_home__WEBPACK_IMPORTED_MODULE_2__.homeMaker)());
-
-(0,_display_projects__WEBPACK_IMPORTED_MODULE_3__.displayProjects)();
-
-Storage.prototype.setObj = function (key, obj) {
-  return this.setItem(key, JSON.stringify(obj));
-};
-Storage.prototype.getObj = function (key) {
-  return JSON.parse(this.getItem(key));
-};
-
-const key = "projects";
-
-let currentProjects = localStorage.getObj(key) || [];
-
-// Button for creating a new project
-
-const newProjectButton = document.querySelector(".new-project-button");
-newProjectButton.addEventListener("click", function () {
-  // Prevents user from opening multiple forms
-  const formContainer = document.querySelector(".form-container");
-  if (document.body.contains(formContainer)) {
-    return;
-  }
-
-  (0,_project_form__WEBPACK_IMPORTED_MODULE_4__.newProject)();
-  newProjectButton.disabled = true;
-});
-
-const editProjectButtons = document.querySelectorAll(".edit-project-button");
-
-editProjectButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    localStorage.setObj(key, currentProjects);
-
-    const formContainer = document.querySelector(".form-container");
-
-    if (document.body.contains(formContainer)) {
-      return;
-    }
-
-    let type = "project";
-    let index = button.id;
-    let title = currentProjects[index].title;
-    let description = currentProjects[index].description;
-    let dueDate = currentProjects[index].dueDate;
-    let priority = currentProjects[index].priority;
-
-    document.body.appendChild(
-      (0,_edit__WEBPACK_IMPORTED_MODULE_5__.edit)(type, index, title, description, dueDate, priority)
-    );
-  });
-});
-
-document.querySelector(".theme-toggle").addEventListener("click", _theme__WEBPACK_IMPORTED_MODULE_1__.setTheme);
-
-// Firebase related
-
-// Import the functions you need from the SDKs you need
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyA7V9tyZYedQU-BPuAI7n0tOvmT9y49KWU",
-  authDomain: "to-do-list-bdf1f.firebaseapp.com",
-  projectId: "to-do-list-bdf1f",
-  storageBucket: "to-do-list-bdf1f.appspot.com",
-  messagingSenderId: "524590508156",
-  appId: "1:524590508156:web:cd061bad4a570a6bb1c1f9",
-};
-
-// Initialize Firebase
-const app = (0,firebase_app__WEBPACK_IMPORTED_MODULE_6__.initializeApp)(firebaseConfig);
-
-
-
-
-// Signs-in User.
-async function signIn() {
-  // Sign in Firebase using popup auth and Google as the identity provider.
-  var provider = new firebase_auth__WEBPACK_IMPORTED_MODULE_7__.GoogleAuthProvider();
-  await (0,firebase_auth__WEBPACK_IMPORTED_MODULE_7__.signInWithPopup)((0,firebase_auth__WEBPACK_IMPORTED_MODULE_7__.getAuth)(), provider);
-}
-
-const signInButton = document.querySelector(".sign-in-button");
-
-signInButton.addEventListener("click", signIn);
-
-// Signs-out of Friendly Chat.
-function signOutUser() {
-  // Sign out of Firebase.
-
-  console.log("sign");
-  (0,firebase_auth__WEBPACK_IMPORTED_MODULE_7__.signOut)((0,firebase_auth__WEBPACK_IMPORTED_MODULE_7__.getAuth)());
-}
-
-const signOutButton = document.querySelector(".sign-out-button");
-signOutButton.addEventListener("click", signOutUser);
-
-// Returns the signed-in user's profile Pic URL.
-function getProfilePicUrl() {
-  return (0,firebase_auth__WEBPACK_IMPORTED_MODULE_7__.getAuth)().currentUser.photoURL || "/images/profile_placeholder.png";
-}
-
-// Returns the signed-in user's display name.
-function getUserName() {
-  return (0,firebase_auth__WEBPACK_IMPORTED_MODULE_7__.getAuth)().currentUser.displayName;
-}
-
-const userNameElement = document.querySelector(".user-name");
-const userPicElement = document.querySelector(".user-pic");
-
-// Adds a size to Google Profile pics URLs.
-function addSizeToGoogleProfilePic(url) {
-  if (url.indexOf("googleusercontent.com") !== -1 && url.indexOf("?") === -1) {
-    return url + "?sz=150";
-  }
-  return url;
-}
-
-// Triggers when the auth state change for instance when the user signs-in or signs-out.
-function authStateObserver(user) {
-  if (user) {
-    console.log("User");
-    // User is signed in!
-    // Get the signed-in user's profile pic and name.
-    let profilePicUrl = getProfilePicUrl();
-    let userName = getUserName();
-
-    // Set the user's profile pic and name.
-    userPicElement.style.backgroundImage =
-      "url(" + addSizeToGoogleProfilePic(profilePicUrl) + ")";
-    userNameElement.textContent = userName;
-
-    // Show user's profile and sign-out button.
-    userNameElement.removeAttribute("hidden");
-    userPicElement.removeAttribute("hidden");
-    signOutButton.removeAttribute("hidden");
-
-    // Hide sign-in button.
-    signInButton.setAttribute("hidden", "true");
-  } else {
-    // User is signed out!
-    // Hide user's profile and sign-out button.
-    userNameElement.setAttribute("hidden", "true");
-    userPicElement.setAttribute("hidden", "true");
-    signOutButton.setAttribute("hidden", "true");
-
-    // Show sign-in button.
-    signInButton.removeAttribute("hidden");
-  }
-}
-
-// Initialize firebase auth
-function initFirebaseAuth() {
-  // Listen to auth state changes.  onAuthStateChanged and getAuth are library functions
-  (0,firebase_auth__WEBPACK_IMPORTED_MODULE_7__.onAuthStateChanged)((0,firebase_auth__WEBPACK_IMPORTED_MODULE_7__.getAuth)(), authStateObserver);
-}
-
-initFirebaseAuth();
-
-// END Firebase related
-
-})();
-
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module used 'module' so it can't be inlined
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/index.js");
+/******/ 	
 /******/ })()
 ;
 //# sourceMappingURL=bundle.js.map
