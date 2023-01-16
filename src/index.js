@@ -81,23 +81,7 @@ document.querySelector(".theme-toggle").addEventListener("click", setTheme);
 // Firebase related
 
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyA7V9tyZYedQU-BPuAI7n0tOvmT9y49KWU",
-  authDomain: "to-do-list-bdf1f.firebaseapp.com",
-  projectId: "to-do-list-bdf1f",
-  storageBucket: "to-do-list-bdf1f.appspot.com",
-  messagingSenderId: "524590508156",
-  appId: "1:524590508156:web:cd061bad4a570a6bb1c1f9",
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+import { app, db } from "./firebase-init.js";
 
 import {
   getAuth,
@@ -115,6 +99,7 @@ import {
   limit,
   onSnapshot,
   setDoc,
+  getDoc,
   updateDoc,
   doc,
   serverTimestamp,
@@ -207,15 +192,15 @@ initFirebaseAuth();
 
 const test = currentProjects;
 
-try {
-  const docRef = await addDoc(collection(db, "users"), {
-    first: "Ada",
-    last: "Lovelace",
-    born: 1815,
-  });
-  console.log("Document written with ID: ", docRef.id);
-} catch (e) {
-  console.error("Error adding document: ", e);
+await setDoc(doc(db, "projects", "all"), { test });
+
+const docRef = doc(db, "projects", "all");
+const docSnap = await getDoc(docRef);
+
+if (docSnap.exists()) {
+  console.log("Document data:", docSnap.data());
+} else {
+  console.log("Dangit");
 }
 
 // END Firebase related
