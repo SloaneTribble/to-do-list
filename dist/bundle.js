@@ -32661,8 +32661,9 @@ var FetchXmlHttpFactory = esm.FetchXmlHttpFactory=ed;var WebChannel = esm.WebCha
 /*!*********************************!*\
   !*** ./src/display-projects.js ***!
   \*********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "displayProjects": () => (/* binding */ displayProjects),
@@ -32670,14 +32671,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./form */ "./src/form.js");
 /* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
-
-
+/* harmony import */ var _firebase_init__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./firebase-init */ "./src/firebase-init.js");
+/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/esm/index.esm.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_form__WEBPACK_IMPORTED_MODULE_0__, _edit__WEBPACK_IMPORTED_MODULE_1__, _firebase_init__WEBPACK_IMPORTED_MODULE_2__]);
+([_form__WEBPACK_IMPORTED_MODULE_0__, _edit__WEBPACK_IMPORTED_MODULE_1__, _firebase_init__WEBPACK_IMPORTED_MODULE_2__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 // This module displays what projects are kept in local storage.
-// displayProjects() is frequently called to ensure that the user 
+// Also contains functions for removing and editing data
+// displayProjects() is frequently called to ensure that the user
 // is only able to see data that is currently being stored
 
 
 
+
+
+
+// retrieve data from firestore
+
+var docRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.doc)(_firebase_init__WEBPACK_IMPORTED_MODULE_2__.db, "projects", "all");
+var themeRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.doc)(_firebase_init__WEBPACK_IMPORTED_MODULE_2__.db, "theme", "theme");
+var themeSnap = await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.getDoc)(themeRef);
+var docSnap = await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.getDoc)(docRef);
+var currentProjects = docSnap.data().currentProjects;
+var fireTheme = themeSnap.data().theme;
 Storage.prototype.setObj = function (key, obj) {
   return this.setItem(key, JSON.stringify(obj));
 };
@@ -32690,55 +32705,57 @@ var theme = "theme";
 // If currentProjects is null, assign an empty array
 
 function displayProjects() {
-  var currentProjects = localStorage.getObj(key) || [];
+  // let currentProjects = localStorage.getObj(key) || [];
+
+  console.log("Data retrieved:", currentProjects, fireTheme);
   var currentTheme = localStorage.getObj(theme);
   var root = document.documentElement;
   root.className = currentTheme;
   var projectContainer = document.querySelector(".project-container");
 
   // Clear the current display to prevent repetition
-  projectContainer.innerHTML = '';
+  projectContainer.innerHTML = "";
   var _loop = function _loop(i) {
-    var project = document.createElement('div');
-    project.classList.add('project-cell');
+    var project = document.createElement("div");
+    project.classList.add("project-cell");
     project.id = i;
-    var projectDetails = document.createElement('div');
-    projectDetails.classList.add('project-details');
+    var projectDetails = document.createElement("div");
+    projectDetails.classList.add("project-details");
     projectDetails.id = i;
-    var title = document.createElement('div');
+    var title = document.createElement("div");
     title.innerText = "Title: " + currentProjects[i].title;
-    var description = document.createElement('div');
-    description.classList.add('project-description');
+    var description = document.createElement("div");
+    description.classList.add("project-description");
     description.innerText = "Description: " + currentProjects[i].description;
-    var dueDate = document.createElement('div');
+    var dueDate = document.createElement("div");
     dueDate.innerText = "Due date: " + currentProjects[i].dueDate;
 
     // Priority should affect div color
 
-    var priority = document.createElement('div');
+    var priority = document.createElement("div");
     priority.innerText = "Priority: " + currentProjects[i].priority;
     var priorityColor;
     switch (currentProjects[i].priority) {
-      case 'high':
-        priorityColor = 'high-priority';
+      case "high":
+        priorityColor = "high-priority";
         priority.style.fontWeight = "bold";
         break;
-      case 'medium':
-        priorityColor = 'medium-priority';
+      case "medium":
+        priorityColor = "medium-priority";
         break;
-      case 'low':
-        priorityColor = 'low-priority';
+      case "low":
+        priorityColor = "low-priority";
         break;
     }
     project.classList.add(priorityColor);
-    var toDoButtonContainer = document.createElement('div');
-    toDoButtonContainer.classList.add('to-do-button-container');
-    var toDos = document.createElement('button');
-    toDos.classList.add('to-do-display');
+    var toDoButtonContainer = document.createElement("div");
+    toDoButtonContainer.classList.add("to-do-button-container");
+    var toDos = document.createElement("button");
+    toDos.classList.add("to-do-display");
     toDos.innerText = "View To-dos";
     toDoButtonContainer.appendChild(toDos);
     var toDoList = displayToDos(i);
-    toDos.addEventListener('click', function () {
+    toDos.addEventListener("click", function () {
       // Keep track of which tabs are open/closed on refresh
       currentProjects[i].isActive = true;
       localStorage.setObj(key, currentProjects);
@@ -32746,10 +32763,10 @@ function displayProjects() {
       toDoButtonContainer.removeChild(toDos);
       toDoButtonContainer.appendChild(hideToDos);
     });
-    var hideToDos = document.createElement('button');
+    var hideToDos = document.createElement("button");
     hideToDos.innerText = "Hide To-dos";
-    hideToDos.classList.add('to-do-display');
-    hideToDos.addEventListener('click', function () {
+    hideToDos.classList.add("to-do-display");
+    hideToDos.addEventListener("click", function () {
       // Keep track of which tabs are open/closed on refresh
       currentProjects[i].isActive = false;
       localStorage.setObj(key, currentProjects);
@@ -32757,24 +32774,24 @@ function displayProjects() {
       toDoButtonContainer.removeChild(hideToDos);
       toDoButtonContainer.appendChild(toDos);
     });
-    var addToDo = document.createElement('button');
-    addToDo.classList.add('add-to-do-button');
-    addToDo.innerText = 'Add To-do';
-    addToDo.addEventListener('click', function () {
-      var formContainer = document.querySelector('.form-container');
+    var addToDo = document.createElement("button");
+    addToDo.classList.add("add-to-do-button");
+    addToDo.innerText = "Add To-do";
+    addToDo.addEventListener("click", function () {
+      var formContainer = document.querySelector(".form-container");
       if (document.body.contains(formContainer)) {
         return;
       }
-      document.body.appendChild((0,_form__WEBPACK_IMPORTED_MODULE_0__.form)('todo', i));
+      document.body.appendChild((0,_form__WEBPACK_IMPORTED_MODULE_0__.form)("todo", i));
     });
-    var editProject = document.createElement('button');
-    editProject.classList.add('edit-project-button');
-    editProject.innerText = 'Edit Project';
+    var editProject = document.createElement("button");
+    editProject.classList.add("edit-project-button");
+    editProject.innerText = "Edit Project";
     editProject.id = i;
-    var removeProject = document.createElement('button');
-    removeProject.classList.add('remove-project-button');
-    removeProject.innerText = 'Remove Project';
-    removeProject.addEventListener('click', function () {
+    var removeProject = document.createElement("button");
+    removeProject.classList.add("remove-project-button");
+    removeProject.innerText = "Remove Project";
+    removeProject.addEventListener("click", function () {
       remove(i);
     });
     projectDetails.appendChild(title);
@@ -32799,54 +32816,54 @@ function displayToDos(index) {
   var currentProjects = localStorage.getObj(key) || [];
   var project = currentProjects[index];
   var projectToDos = project.toDos;
-  var toDoList = document.createElement('div');
-  toDoList.classList.add('to-do-list');
+  var toDoList = document.createElement("div");
+  toDoList.classList.add("to-do-list");
   var _loop2 = function _loop2(toDo) {
-    var singleToDo = document.createElement('div');
-    singleToDo.classList.add('to-do');
+    var singleToDo = document.createElement("div");
+    singleToDo.classList.add("to-do");
     singleToDo.id = toDo;
     var toDoIndex = toDo;
-    var title = document.createElement('div');
+    var title = document.createElement("div");
     title.innerText = "Task: " + projectToDos[toDo].title;
-    var description = document.createElement('div');
+    var description = document.createElement("div");
     description.innerText = "Description: " + projectToDos[toDo].description;
-    var dueDate = document.createElement('div');
+    var dueDate = document.createElement("div");
     dueDate.innerText = "Due date: " + projectToDos[toDo].dueDate;
-    var priority = document.createElement('div');
+    var priority = document.createElement("div");
     priority.innerText = "Priority: " + projectToDos[toDo].priority;
     var priorityColor;
     switch (projectToDos[toDo].priority) {
-      case 'high':
-        priorityColor = 'high-priority';
+      case "high":
+        priorityColor = "high-priority";
         priority.style.fontWeight = "bold";
         break;
-      case 'medium':
-        priorityColor = 'medium-priority';
+      case "medium":
+        priorityColor = "medium-priority";
         break;
-      case 'low':
-        priorityColor = 'low-priority';
+      case "low":
+        priorityColor = "low-priority";
         break;
     }
     singleToDo.classList.add(priorityColor);
-    var removeToDo = document.createElement('button');
+    var removeToDo = document.createElement("button");
     removeToDo.classList.add("remove-to-do-button");
     removeToDo.innerText = "Remove";
-    removeToDo.addEventListener('click', function () {
+    removeToDo.addEventListener("click", function () {
       removeIndividual(toDo, projectToDos, currentProjects);
       window.location.reload();
     }, false);
-    var editToDo = document.createElement('button');
-    editToDo.classList.add('edit-to-do-button');
+    var editToDo = document.createElement("button");
+    editToDo.classList.add("edit-to-do-button");
     editToDo.innerText = "Edit";
-    editToDo.addEventListener('click', function (e) {
-      var formContainer = document.querySelector('.form-container');
+    editToDo.addEventListener("click", function (e) {
+      var formContainer = document.querySelector(".form-container");
       if (document.body.contains(formContainer)) {
         return;
       }
       document.body.appendChild((0,_edit__WEBPACK_IMPORTED_MODULE_1__.edit)("to-do", index, projectToDos[toDo].title, projectToDos[toDo].description, projectToDos[toDo].dueDate, projectToDos[toDo].priority, toDoIndex));
     });
-    var toDoHeader = document.createElement('div');
-    toDoHeader.classList.add('to-do-header');
+    var toDoHeader = document.createElement("div");
+    toDoHeader.classList.add("to-do-header");
     toDoHeader.appendChild(title);
     toDoHeader.appendChild(dueDate);
     toDoHeader.appendChild(priority);
@@ -32873,6 +32890,8 @@ function remove(index) {
   window.location.reload();
 }
 
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } }, 1);
 
 /***/ }),
 
@@ -32880,13 +32899,16 @@ function remove(index) {
 /*!*****************************!*\
   !*** ./src/edit-project.js ***!
   \*****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "editProject": () => (/* binding */ editProject)
 /* harmony export */ });
 /* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_display_projects__WEBPACK_IMPORTED_MODULE_0__]);
+_display_projects__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 Storage.prototype.setObj = function (key, obj) {
   return this.setItem(key, JSON.stringify(obj));
@@ -32930,6 +32952,8 @@ function editProject(index) {
   return;
 }
 
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -32937,13 +32961,16 @@ function editProject(index) {
 /*!**************************!*\
   !*** ./src/edit-todo.js ***!
   \**************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "editToDo": () => (/* binding */ editToDo)
 /* harmony export */ });
 /* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_display_projects__WEBPACK_IMPORTED_MODULE_0__]);
+_display_projects__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 Storage.prototype.setObj = function (key, obj) {
   return this.setItem(key, JSON.stringify(obj));
@@ -32989,6 +33016,8 @@ function editToDo(index, toDo) {
   return;
 }
 
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -32996,14 +33025,17 @@ function editToDo(index, toDo) {
 /*!*********************!*\
   !*** ./src/edit.js ***!
   \*********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "edit": () => (/* binding */ edit)
 /* harmony export */ });
 /* harmony import */ var _edit_todo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edit-todo */ "./src/edit-todo.js");
 /* harmony import */ var _edit_project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit-project */ "./src/edit-project.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_edit_todo__WEBPACK_IMPORTED_MODULE_0__, _edit_project__WEBPACK_IMPORTED_MODULE_1__]);
+([_edit_todo__WEBPACK_IMPORTED_MODULE_0__, _edit_project__WEBPACK_IMPORTED_MODULE_1__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 // This file contains very similar code to form.js except that it takes
 // different arguments and performs some different activities
 
@@ -33112,6 +33144,8 @@ function edit(type, index, currentTitle, currentDescription, currentDueDate, cur
   return formContainer;
 }
 
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -33119,8 +33153,9 @@ function edit(type, index, currentTitle, currentDescription, currentDueDate, cur
 /*!******************************!*\
   !*** ./src/firebase-init.js ***!
   \******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "app": () => (/* binding */ app),
@@ -33129,6 +33164,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/esm/index.esm.js");
 /* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/esm/index.esm.js");
 // Import the functions you need from the SDKs you need
+
 
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -33148,6 +33184,23 @@ var firebaseConfig = {
 var app = (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.initializeApp)(firebaseConfig);
 var db = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.getFirestore)(app);
 
+// if db is empty, initialize db to have an empty array and theme set to light
+
+var docRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db, "projects", "all");
+var docSnap = await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.getDoc)(docRef);
+var currentProjects = [];
+var theme = "light";
+if (!docSnap.exists()) {
+  await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.setDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db, "projects", "all"), {
+    currentProjects: currentProjects
+  });
+  await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.setDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db, "theme", "theme"), {
+    theme: theme
+  });
+}
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } }, 1);
 
 /***/ }),
 
@@ -33155,14 +33208,17 @@ var db = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.getFirestore)(app);
 /*!*********************!*\
   !*** ./src/form.js ***!
   \*********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "form": () => (/* binding */ form)
 /* harmony export */ });
 /* harmony import */ var _project_submit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./project-submit */ "./src/project-submit.js");
 /* harmony import */ var _todo_submit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./todo-submit */ "./src/todo-submit.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_project_submit__WEBPACK_IMPORTED_MODULE_0__, _todo_submit__WEBPACK_IMPORTED_MODULE_1__]);
+([_project_submit__WEBPACK_IMPORTED_MODULE_0__, _todo_submit__WEBPACK_IMPORTED_MODULE_1__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 function form(input, index) {
@@ -33254,6 +33310,8 @@ function form(input, index) {
   return formContainer;
 }
 
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -33344,6 +33402,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _firebase_init_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./firebase-init.js */ "./src/firebase-init.js");
 /* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/esm/index.esm.js");
 /* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/esm/index.esm.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_display_projects__WEBPACK_IMPORTED_MODULE_3__, _project_form__WEBPACK_IMPORTED_MODULE_4__, _edit__WEBPACK_IMPORTED_MODULE_5__, _firebase_init_js__WEBPACK_IMPORTED_MODULE_6__]);
+([_display_projects__WEBPACK_IMPORTED_MODULE_3__, _project_form__WEBPACK_IMPORTED_MODULE_4__, _edit__WEBPACK_IMPORTED_MODULE_5__, _firebase_init_js__WEBPACK_IMPORTED_MODULE_6__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -33472,7 +33532,6 @@ function addSizeToGoogleProfilePic(url) {
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 function authStateObserver(user) {
   if (user) {
-    console.log("User");
     // User is signed in!
     // Get the signed-in user's profile pic and name.
     var profilePicUrl = getProfilePicUrl();
@@ -33507,21 +33566,23 @@ function initFirebaseAuth() {
   (0,firebase_auth__WEBPACK_IMPORTED_MODULE_7__.onAuthStateChanged)((0,firebase_auth__WEBPACK_IMPORTED_MODULE_7__.getAuth)(), authStateObserver);
 }
 initFirebaseAuth();
-var test = currentProjects;
-await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_8__.setDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_8__.doc)(_firebase_init_js__WEBPACK_IMPORTED_MODULE_6__.db, "projects", "all"), {
-  test: test
-});
-var docRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_8__.doc)(_firebase_init_js__WEBPACK_IMPORTED_MODULE_6__.db, "projects", "all");
-var docSnap = await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_8__.getDoc)(docRef);
-if (docSnap.exists()) {
-  console.log("Document data:", docSnap.data());
-} else {
-  console.log("Dangit");
-}
+
+// const test = currentProjects;
+
+// await setDoc(doc(db, "projects", "all"), { test });
+
+// const docRef = doc(db, "projects", "all");
+// const docSnap = await getDoc(docRef);
+
+// if (docSnap.exists()) {
+//   console.log("Document data:", docSnap.data().test);
+// } else {
+//   console.log("Dangit");
+// }
 
 // END Firebase related
 __webpack_async_result__();
-} catch(e) { __webpack_async_result__(e); } }, 1);
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -33529,18 +33590,23 @@ __webpack_async_result__();
 /*!*****************************!*\
   !*** ./src/project-form.js ***!
   \*****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "newProject": () => (/* binding */ newProject)
 /* harmony export */ });
 /* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./form */ "./src/form.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_form__WEBPACK_IMPORTED_MODULE_0__]);
+_form__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 function newProject() {
   document.body.appendChild((0,_form__WEBPACK_IMPORTED_MODULE_0__.form)('project', "N/A"));
 }
 
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -33548,15 +33614,24 @@ function newProject() {
 /*!*******************************!*\
   !*** ./src/project-submit.js ***!
   \*******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "projectSubmit": () => (/* binding */ projectSubmit)
 /* harmony export */ });
 /* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./project */ "./src/project.js");
 /* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
-// This module contains a function for pushing a new project to the 
+/* harmony import */ var _firebase_init__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./firebase-init */ "./src/firebase-init.js");
+/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/esm/index.esm.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_display_projects__WEBPACK_IMPORTED_MODULE_1__, _firebase_init__WEBPACK_IMPORTED_MODULE_2__]);
+([_display_projects__WEBPACK_IMPORTED_MODULE_1__, _firebase_init__WEBPACK_IMPORTED_MODULE_2__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+// This module contains a function for pushing a new project to the
 // currentProjects array and locally storing that array
 
 // Each time currentProjects is updated, displayProjects() is called
@@ -33564,6 +33639,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+// retrieve data from firestore
+
+var docRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.doc)(_firebase_init__WEBPACK_IMPORTED_MODULE_2__.db, "projects", "all");
+var docSnap = await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.getDoc)(docRef);
+if (docSnap.exists()) {
+  console.log("Document data:", docSnap.data().currentProjects);
+} else {
+  console.log("No data");
+}
 Storage.prototype.setObj = function (key, obj) {
   return this.setItem(key, JSON.stringify(obj));
 };
@@ -33574,7 +33661,12 @@ var key = "projects";
 
 // Sort projects based on date
 
-var currentProjects = localStorage.getObj(key) || [];
+// let currentProjects = localStorage.getObj(key) || [];
+
+// if no projects have been added, the database will be empty and
+// there won't be a name corresponding to an empty array
+
+var currentProjects = docSnap.data().currentProjects || [];
 currentProjects.sort(function compare(a, b) {
   var dateA = new Date(a.dueDate);
   var dateB = new Date(b.dueDate);
@@ -33588,22 +33680,54 @@ for (var project in currentProjects) {
     return dateA - dateB;
   });
 }
-localStorage.setObj(key, currentProjects);
+await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.setDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.doc)(_firebase_init__WEBPACK_IMPORTED_MODULE_2__.db, "projects", "all"), {
+  currentProjects: currentProjects
+});
+
+// localStorage.setObj(key, currentProjects);
 function projectSubmit() {
-  // If currentProjects is null, assign an empty array
-  var currentProjects = localStorage.getObj(key) || [];
-  var title = document.getElementById("title").value;
-  var description = document.getElementById("description").value;
-  var dueDate = document.getElementById("due-date").value;
-  var priority = document.getElementById("priority").value;
-  var newProject = new _project__WEBPACK_IMPORTED_MODULE_0__["default"](title, description, dueDate, priority, false);
-  currentProjects.push(newProject);
-  localStorage.setObj(key, currentProjects);
-  (0,_display_projects__WEBPACK_IMPORTED_MODULE_1__.displayProjects)();
-  window.location.reload();
-  return newProject;
+  return _projectSubmit.apply(this, arguments);
+}
+function _projectSubmit() {
+  _projectSubmit = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+    var docRef, docSnap, currentProjects, title, description, dueDate, priority, newProject;
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          // If currentProjects is null, assign an empty array
+          // let currentProjects = localStorage.getObj(key) || [];
+          docRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.doc)(_firebase_init__WEBPACK_IMPORTED_MODULE_2__.db, "projects", "all");
+          _context.next = 3;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.getDoc)(docRef);
+        case 3:
+          docSnap = _context.sent;
+          currentProjects = docSnap.data().currentProjects || [];
+          title = document.getElementById("title").value;
+          description = document.getElementById("description").value;
+          dueDate = document.getElementById("due-date").value;
+          priority = document.getElementById("priority").value;
+          newProject = new _project__WEBPACK_IMPORTED_MODULE_0__["default"](title, description, dueDate, priority, false);
+          currentProjects.push(newProject);
+          _context.next = 13;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.setDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.doc)(_firebase_init__WEBPACK_IMPORTED_MODULE_2__.db, "projects", "all"), {
+            currentProjects: currentProjects
+          });
+        case 13:
+          // localStorage.setObj(key, currentProjects);
+          (0,_display_projects__WEBPACK_IMPORTED_MODULE_1__.displayProjects)();
+          window.location.reload();
+          return _context.abrupt("return", newProject);
+        case 16:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee);
+  }));
+  return _projectSubmit.apply(this, arguments);
 }
 
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } }, 1);
 
 /***/ }),
 
@@ -33726,14 +33850,17 @@ function setTheme() {
 /*!****************************!*\
   !*** ./src/todo-submit.js ***!
   \****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "toDoSubmit": () => (/* binding */ toDoSubmit)
 /* harmony export */ });
 /* harmony import */ var _todo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo */ "./src/todo.js");
 /* harmony import */ var _display_projects__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./display-projects */ "./src/display-projects.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_display_projects__WEBPACK_IMPORTED_MODULE_1__]);
+_display_projects__WEBPACK_IMPORTED_MODULE_1__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 // This module contains a function for pushing a new todo to the 
 // a given project in the currentProjects array and then locally storing that array
 
@@ -33768,6 +33895,8 @@ function toDoSubmit(index) {
   return toDo;
 }
 
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 

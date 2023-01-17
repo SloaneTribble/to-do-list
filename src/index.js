@@ -152,7 +152,6 @@ function addSizeToGoogleProfilePic(url) {
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 function authStateObserver(user) {
   if (user) {
-    console.log("User");
     // User is signed in!
     // Get the signed-in user's profile pic and name.
     let profilePicUrl = getProfilePicUrl();
@@ -190,17 +189,17 @@ function initFirebaseAuth() {
 
 initFirebaseAuth();
 
-const test = currentProjects;
+// const test = currentProjects;
 
-await setDoc(doc(db, "projects", "all"), { test });
+// await setDoc(doc(db, "projects", "all"), { test });
 
-const docRef = doc(db, "projects", "all");
-const docSnap = await getDoc(docRef);
+// const docRef = doc(db, "projects", "all");
+// const docSnap = await getDoc(docRef);
 
-if (docSnap.exists()) {
-  console.log("Document data:", docSnap.data());
-} else {
-  console.log("Dangit");
-}
+// if (docSnap.exists()) {
+//   console.log("Document data:", docSnap.data().test);
+// } else {
+//   console.log("Dangit");
+// }
 
 // END Firebase related

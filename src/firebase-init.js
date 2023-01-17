@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, setDoc, getDoc, doc } from "firebase/firestore";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -17,5 +18,18 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+// if db is empty, initialize db to have an empty array and theme set to light
+
+const docRef = doc(db, "projects", "all");
+const docSnap = await getDoc(docRef);
+
+let currentProjects = [];
+let theme = "light";
+
+if (!docSnap.exists()) {
+  await setDoc(doc(db, "projects", "all"), { currentProjects });
+  await setDoc(doc(db, "theme", "theme"), { theme });
+}
 
 export { app, db };
