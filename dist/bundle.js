@@ -32692,7 +32692,7 @@ var themeRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.doc)(_firebase
 var themeSnap = await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.getDoc)(themeRef);
 var docSnap = await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.getDoc)(docRef);
 var currentProjects = docSnap.data().currentProjects;
-var fireTheme = themeSnap.data().newTheme;
+var fireTheme = themeSnap.data().theme;
 console.log(themeSnap.data());
 Storage.prototype.setObj = function (key, obj) {
   return this.setItem(key, JSON.stringify(obj));
@@ -33190,7 +33190,8 @@ var firebaseConfig = {
 var app = (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.initializeApp)(firebaseConfig);
 var db = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.getFirestore)(app);
 
-// if db is empty, initialize db to have an empty array and theme set to light
+// if db is empty, initialize db to have an empty array
+// if theme is not set, go ahead and set it
 
 var docRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(db, "projects", "all");
 var docSnap = await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.getDoc)(docRef);
@@ -33872,16 +33873,16 @@ function setTheme() {
 }
 function _setTheme() {
   _setTheme = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-    var root, newTheme;
+    var root, theme;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           root = document.documentElement;
-          newTheme = root.classList.contains("dark") ? "light" : "dark";
-          root.className = newTheme;
+          theme = root.classList.contains("dark") ? "light" : "dark";
+          root.className = theme;
           _context.next = 5;
           return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.setDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(_firebase_init__WEBPACK_IMPORTED_MODULE_0__.db, "theme", "theme"), {
-            newTheme: newTheme
+            theme: theme
           });
         case 5:
           // localStorage.setObj(theme, newTheme);

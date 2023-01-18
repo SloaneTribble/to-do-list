@@ -16,7 +16,7 @@ const themeSnap = await getDoc(themeRef);
 const docSnap = await getDoc(docRef);
 
 let currentProjects = docSnap.data().currentProjects;
-let fireTheme = themeSnap.data().newTheme;
+let fireTheme = themeSnap.data().theme;
 console.log(themeSnap.data());
 
 Storage.prototype.setObj = function (key, obj) {

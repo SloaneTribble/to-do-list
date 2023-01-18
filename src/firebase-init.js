@@ -19,7 +19,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// if db is empty, initialize db to have an empty array and theme set to light
+// if db is empty, initialize db to have an empty array
+// if theme is not set, go ahead and set it
 
 const docRef = doc(db, "projects", "all");
 const docSnap = await getDoc(docRef);

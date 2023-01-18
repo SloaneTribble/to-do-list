@@ -22,11 +22,11 @@ let fireTheme = themeSnap.data().theme;
 
 async function setTheme() {
   const root = document.documentElement;
-  const newTheme = root.classList.contains("dark") ? "light" : "dark";
+  const theme = root.classList.contains("dark") ? "light" : "dark";
 
-  root.className = newTheme;
+  root.className = theme;
 
-  await setDoc(doc(db, "theme", "theme"), { newTheme });
+  await setDoc(doc(db, "theme", "theme"), { theme });
 
   // localStorage.setObj(theme, newTheme);
 
