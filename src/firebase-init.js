@@ -24,11 +24,17 @@ const db = getFirestore(app);
 const docRef = doc(db, "projects", "all");
 const docSnap = await getDoc(docRef);
 
+const themeRef = doc(db, "theme", "theme");
+const themeSnap = await getDoc(themeRef);
+
 let currentProjects = [];
 let theme = "light";
 
 if (!docSnap.exists()) {
   await setDoc(doc(db, "projects", "all"), { currentProjects });
+}
+
+if (!themeSnap.exists()) {
   await setDoc(doc(db, "theme", "theme"), { theme });
 }
 

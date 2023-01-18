@@ -16,7 +16,8 @@ const themeSnap = await getDoc(themeRef);
 const docSnap = await getDoc(docRef);
 
 let currentProjects = docSnap.data().currentProjects;
-let fireTheme = themeSnap.data().theme;
+let fireTheme = themeSnap.data().newTheme;
+console.log(themeSnap.data());
 
 Storage.prototype.setObj = function (key, obj) {
   return this.setItem(key, JSON.stringify(obj));
@@ -27,7 +28,7 @@ Storage.prototype.getObj = function (key) {
 
 const key = "projects";
 
-const theme = "theme";
+// const theme = "theme";
 
 // If currentProjects is null, assign an empty array
 
@@ -36,7 +37,8 @@ function displayProjects() {
 
   console.log("Data retrieved:", currentProjects, fireTheme);
 
-  let currentTheme = localStorage.getObj(theme);
+  // let currentTheme = localStorage.getObj(theme);
+  let currentTheme = fireTheme;
 
   const root = document.documentElement;
 
@@ -164,7 +166,8 @@ function displayProjects() {
 }
 
 function displayToDos(index) {
-  let currentProjects = localStorage.getObj(key) || [];
+  // ATTEMPTING TO USE GLOBAL PROJECT VARIABLE
+  // let currentProjects = localStorage.getObj(key) || [];
 
   let project = currentProjects[index];
   let projectToDos = project.toDos;
