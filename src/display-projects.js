@@ -19,20 +19,20 @@ let currentProjects = docSnap.data().currentProjects;
 let fireTheme = themeSnap.data().theme;
 console.log(themeSnap.data());
 
-Storage.prototype.setObj = function (key, obj) {
-  return this.setItem(key, JSON.stringify(obj));
-};
-Storage.prototype.getObj = function (key) {
-  return JSON.parse(this.getItem(key));
-};
+// Storage.prototype.setObj = function (key, obj) {
+//   return this.setItem(key, JSON.stringify(obj));
+// };
+// Storage.prototype.getObj = function (key) {
+//   return JSON.parse(this.getItem(key));
+// };
 
-const key = "projects";
+// const key = "projects";
 
 // const theme = "theme";
 
 // If currentProjects is null, assign an empty array
 
-function displayProjects() {
+async function displayProjects() {
   // let currentProjects = localStorage.getObj(key) || [];
 
   console.log("Data retrieved:", currentProjects, fireTheme);
@@ -100,10 +100,12 @@ function displayProjects() {
 
     const toDoList = displayToDos(i);
 
-    toDos.addEventListener("click", function () {
+    toDos.addEventListener("click", async function () {
       // Keep track of which tabs are open/closed on refresh
       currentProjects[i].isActive = true;
-      localStorage.setObj(key, currentProjects);
+
+      await setDoc(doc(db, "projects", "all"), { currentProjects });
+      // localStorage.setObj(key, currentProjects);
 
       project.appendChild(toDoList);
       toDoButtonContainer.removeChild(toDos);
@@ -113,10 +115,12 @@ function displayProjects() {
     const hideToDos = document.createElement("button");
     hideToDos.innerText = "Hide To-dos";
     hideToDos.classList.add("to-do-display");
-    hideToDos.addEventListener("click", function () {
+    hideToDos.addEventListener("click", async function () {
       // Keep track of which tabs are open/closed on refresh
       currentProjects[i].isActive = false;
-      localStorage.setObj(key, currentProjects);
+      await setDoc(doc(db, "projects", "all"), { currentProjects });
+
+      // localStorage.setObj(key, currentProjects);
 
       project.removeChild(toDoList);
       toDoButtonContainer.removeChild(hideToDos);
@@ -218,8 +222,8 @@ function displayToDos(index) {
     removeToDo.innerText = "Remove";
     removeToDo.addEventListener(
       "click",
-      function () {
-        removeIndividual(toDo, projectToDos, currentProjects);
+      async function () {
+        await removeIndividual(toDo, projectToDos, currentProjects);
         window.location.reload();
       },
       false
@@ -264,17 +268,21 @@ function displayToDos(index) {
   return toDoList;
 }
 
-function removeIndividual(e, projectToDos, currentProjects) {
+async function removeIndividual(e, projectToDos, currentProjects) {
   console.log(e);
   projectToDos.splice(e, 1);
-  localStorage.setObj(key, currentProjects);
+  await setDoc(doc(db, "projects", "all"), { currentProjects });
+
+  // localStorage.setObj(key, currentProjects);
 }
 
-function remove(index) {
+async function remove(index) {
   let currentProjects = localStorage.getObj(key) || [];
 
   currentProjects.splice(index, 1);
-  localStorage.setObj(key, currentProjects);
+  await setDoc(doc(db, "projects", "all"), { currentProjects });
+
+  // localStorage.setObj(key, currentProjects);
   window.location.reload();
 }
 

@@ -1,7 +1,8 @@
-import {form} from './form';
+import { form } from "./form";
 
-function newProject(){
-    document.body.appendChild(form('project', "N/A"));
+async function newProject() {
+  const newForm = await form("project", "N/A");
+  document.body.appendChild(newForm);
 }
 
-export {newProject};
+export { newProject };

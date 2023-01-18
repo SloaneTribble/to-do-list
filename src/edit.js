@@ -1,132 +1,129 @@
 // This file contains very similar code to form.js except that it takes
 // different arguments and performs some different activities
 
-import {editToDo} from './edit-todo';
-import {editProject} from './edit-project';
+import { editToDo } from "./edit-todo";
+import { editProject } from "./edit-project";
 
-// Storage.prototype.setObj = function(key, obj) {
-//     return this.setItem(key, JSON.stringify(obj))
-// }
-// Storage.prototype.getObj = function(key) {
-//     return JSON.parse(this.getItem(key))
-// }
+function edit(
+  type,
+  index,
+  currentTitle,
+  currentDescription,
+  currentDueDate,
+  currentPriority,
+  toDo = 0
+) {
+  const formContainer = document.createElement("div");
+  formContainer.classList.add("form-container");
 
-// const key = "projects";
+  const form = document.createElement("form");
+  form.classList.add("project-form");
 
-// let currentProjects = localStorage.getObj(key) || [];
+  const titleLabel = document.createElement("label");
+  titleLabel.setAttribute("for", "title");
+  titleLabel.innerText = type === "to-do" ? "To-do:" : "Project:";
 
-function edit(type, index, currentTitle, currentDescription, currentDueDate, currentPriority, toDo = 0){
+  const title = document.createElement("input");
+  title.type = "text";
+  title.name = "title";
+  title.placeholder = "Title";
+  title.id = "title";
+  title.defaultValue = currentTitle;
 
-    const formContainer = document.createElement('div');
-    formContainer.classList.add('form-container');
+  const descriptionLabel = document.createElement("label");
+  descriptionLabel.for = "description";
+  descriptionLabel.innerText = "Description: ";
 
-    const form = document.createElement("form");
-    form.classList.add('project-form');
+  const description = document.createElement("textarea");
+  description.classList.add("form-description");
+  description.name = "description";
 
-    const titleLabel = document.createElement('label');
-    titleLabel.setAttribute('for', 'title');
-    titleLabel.innerText = type === 'to-do' ? 'To-do:' : 'Project:';
+  let placeHolder = type === "project" ? "100" : "500";
+  description.placeholder = `Description (<${placeHolder} characters)`;
+  description.maxLength = placeHolder - 1;
 
-    const title = document.createElement('input');
-    title.type = 'text';
-    title.name = 'title';
-    title.placeholder = 'Title';
-    title.id = 'title';
-    title.defaultValue = currentTitle;
+  description.id = "description";
+  description.defaultValue = currentDescription;
 
-    const descriptionLabel = document.createElement('label');
-    descriptionLabel.for = 'description';
-    descriptionLabel.innerText = "Description: ";
+  const dueDateLabel = document.createElement("label");
+  dueDateLabel.for = "due-date";
+  dueDateLabel.innerText = "Due date: ";
 
-    const description = document.createElement('textarea');
-    description.classList.add('form-description');
-    description.name = 'description';
+  const dueDate = document.createElement("input");
+  dueDate.type = "date";
+  dueDate.name = "due-date";
+  dueDate.id = "due-date";
+  dueDate.defaultValue = currentDueDate;
 
-    let placeHolder = (type === 'project')? "100" : "500";
-    description.placeholder = `Description (<${placeHolder} characters)`;
-    description.maxLength = placeHolder - 1;
+  const priorityLabel = document.createElement("label");
+  priorityLabel.innerText = "Priority: ";
+  priorityLabel.htmlFor = "priority";
 
-    description.id = 'description';
-    description.defaultValue = currentDescription;
+  let priorities = ["low", "medium", "high"];
 
-    const dueDateLabel = document.createElement('label');
-    dueDateLabel.for= 'due-date';
-    dueDateLabel.innerText = "Due date: ";
+  const select = document.createElement("select");
+  select.name = "priority";
+  select.id = "priority";
 
-    const dueDate = document.createElement('input');
-    dueDate.type = 'date';
-    dueDate.name = 'due-date';
-    dueDate.id = 'due-date';
-    dueDate.defaultValue = currentDueDate;
+  for (const priority of priorities) {
+    let option = document.createElement("option");
+    option.value = priority;
+    option.text = priority.charAt(0).toUpperCase() + priority.slice(1);
+    select.appendChild(option);
+  }
 
-    const priorityLabel = document.createElement('label');
-    priorityLabel.innerText = 'Priority: ';
-    priorityLabel.htmlFor = 'priority';
+  select.value = currentPriority;
 
-    let priorities = ['low', 'medium', 'high'];
+  function handleForm(event) {
+    event.preventDefault();
+  }
+  form.addEventListener("submit", handleForm);
 
-    const select = document.createElement('select');
-    select.name = 'priority';
-    select.id = 'priority';
-
-    for (const priority of priorities){
-        let option = document.createElement('option');
-        option.value = priority;
-        option.text = priority.charAt(0).toUpperCase() + priority.slice(1);
-        select.appendChild(option);
+  const submit = document.createElement("button");
+  submit.classList.add("submit");
+  submit.type = "submit";
+  submit.innerText = "Submit";
+  submit.addEventListener("click", function () {
+    if (type === "to-do") {
+      editToDo(index, toDo);
+    } else if (type === "project") {
+      editProject(index);
+      return;
     }
+    form.reset();
+  });
 
-    select.value = currentPriority;
+  const cancel = document.createElement("button");
+  cancel.classList.add("cancel");
+  cancel.innerText = "Cancel";
+  cancel.addEventListener("click", function () {
+    window.location.reload();
+  });
 
-    function handleForm(event) { event.preventDefault(); } 
-    form.addEventListener('submit', handleForm);
+  form.appendChild(titleLabel);
+  form.appendChild(title);
 
-    const submit = document.createElement('button');
-    submit.classList.add('submit');
-    submit.type = 'submit';
-    submit.innerText = "Submit";
-    submit.addEventListener('click', function(){
-        
-        if(type === 'to-do') {editToDo(index, toDo);
-        } else if(type === 'project'){
-            editProject(index);
-            return
-        };
-        form.reset();
-    });
+  form.appendChild(descriptionLabel);
+  form.appendChild(description);
 
-    const cancel = document.createElement('button');
-    cancel.classList.add('cancel');
-    cancel.innerText = 'Cancel';
-    cancel.addEventListener('click', function(){
-        window.location.reload();
-    })
-    
-    
-    form.appendChild(titleLabel);
-    form.appendChild(title);
+  form.appendChild(dueDateLabel);
+  form.appendChild(dueDate);
 
-    form.appendChild(descriptionLabel);
-    form.appendChild(description);
+  form.appendChild(priorityLabel);
+  form.appendChild(select);
 
-    form.appendChild(dueDateLabel);
-    form.appendChild(dueDate);
+  form.appendChild(submit);
 
-    form.appendChild(priorityLabel);
-    form.appendChild(select);
+  form.appendChild(cancel);
 
-    form.appendChild(submit);
+  formContainer.appendChild(form);
 
-    form.appendChild(cancel);
+  function handleForm(event) {
+    event.preventDefault();
+  }
+  form.addEventListener("submit", handleForm);
 
-    formContainer.appendChild(form);
-
-    function handleForm(event) {event.preventDefault();}
-    form.addEventListener('submit', handleForm);
-    
-
-    return formContainer;
+  return formContainer;
 }
 
-
-export{edit};
+export { edit };

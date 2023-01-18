@@ -1,54 +1,52 @@
-// This module contains a function for pushing a new todo to the 
+// This module contains a function for pushing a new todo to the
 // a given project in the currentProjects array and then locally storing that array
 
 // Each time currentProjects is updated, displayProjects() is called
 // to ensure that the user sees all of the projects in storage
 
-import ToDo from './todo';
-import { removeIndividual } from './display-projects';
-import { displayProjects } from './display-projects';
+import ToDo from "./todo";
+import { removeIndividual } from "./display-projects";
+import { displayProjects } from "./display-projects";
+import { db } from "./firebase-init";
+import { setDoc, getDoc, doc } from "firebase/firestore";
 
-Storage.prototype.setObj = function(key, obj) {
-    return this.setItem(key, JSON.stringify(obj))
-}
-Storage.prototype.getObj = function(key) {
-    return JSON.parse(this.getItem(key))
-}
+const docRef = doc(db, "projects", "all");
+const docSnap = await getDoc(docRef);
+let currentProjects = docSnap.data().currentProjects;
 
-const key = "projects";
+// Storage.prototype.setObj = function (key, obj) {
+//   return this.setItem(key, JSON.stringify(obj));
+// };
+// Storage.prototype.getObj = function (key) {
+//   return JSON.parse(this.getItem(key));
+// };
 
+// const key = "projects";
 
+async function toDoSubmit(index) {
+  // If currentProjects is null, assign an empty array
+  // Check for the latest info whenever this function is called
 
+  let project = currentProjects[index];
 
-function toDoSubmit(index){
+  const title = document.getElementById("title").value;
+  const description = document.getElementById("description").value;
+  const dueDate = document.getElementById("due-date").value;
+  const priority = document.getElementById("priority").value;
 
-    // If currentProjects is null, assign an empty array
-    // Check for the latest info whenever this function is called
-    let currentProjects = localStorage.getObj(key) || [];
+  const toDo = new ToDo(title, description, dueDate, priority);
 
-    let project = currentProjects[index];
+  project.toDos.push(toDo);
 
-    const title = document.getElementById("title").value;
-    const description = document.getElementById("description").value;
-    const dueDate = document.getElementById("due-date").value;
-    const priority = document.getElementById("priority").value;
+  // localStorage.setObj(key, currentProjects);
 
-    const toDo = new ToDo(title, description, dueDate, priority);
+  await setDoc(doc(db, "projects", "all"), { currentProjects });
 
-    
-    project.toDos.push(toDo);
+  // await displayProjects();
 
+  window.location.reload();
 
-    localStorage.setObj(key, currentProjects);  
-
-    currentProjects = localStorage.getObj(key) || [];
-
-
-    displayProjects();
-
-    window.location.reload();
-
-    return toDo;
+  return toDo;
 }
 
-export {toDoSubmit};
+export { toDoSubmit };

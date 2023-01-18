@@ -1,122 +1,118 @@
-import {projectSubmit} from './project-submit';
-import {toDoSubmit} from './todo-submit';
+import { projectSubmit } from "./project-submit";
+import { toDoSubmit } from "./todo-submit";
 
+function form(input, index) {
+  const formContainer = document.createElement("div");
+  formContainer.classList.add("form-container");
 
-function form(input, index){
+  let type = input;
 
+  const form = document.createElement("form");
+  form.classList.add("project-form");
 
-    const formContainer = document.createElement('div');
-    formContainer.classList.add('form-container');
+  const titleLabel = document.createElement("label");
+  titleLabel.setAttribute("for", "title");
+  titleLabel.innerText = type === "project" ? "Project Title: " : "To-do: ";
 
-    let type = input;
+  const title = document.createElement("input");
+  title.type = "text";
+  title.name = "title";
+  title.placeholder = "Title";
+  title.id = "title";
 
-    const form = document.createElement("form");
-    form.classList.add('project-form');
+  const descriptionLabel = document.createElement("label");
+  descriptionLabel.for = "description";
+  descriptionLabel.innerText = "Description: ";
 
-    const titleLabel = document.createElement('label');
-    titleLabel.setAttribute('for', 'title');
-    titleLabel.innerText = (type === 'project')? "Project Title: " : "To-do: ";
+  const description = document.createElement("textarea");
+  description.name = "description";
 
-    const title = document.createElement('input');
-    title.type = 'text';
-    title.name = 'title';
-    title.placeholder = 'Title';
-    title.id = 'title';
+  let placeHolder = type === "project" ? "100" : "500";
+  description.placeholder = `Description (<${placeHolder} characters)`;
+  description.maxLength = placeHolder - 1;
+  description.id = "description";
+  description.style.rows = "2";
 
-    const descriptionLabel = document.createElement('label');
-    descriptionLabel.for = 'description';
-    descriptionLabel.innerText = "Description: ";
+  const dueDateLabel = document.createElement("label");
+  dueDateLabel.for = "due-date";
+  dueDateLabel.innerText = "Due date: ";
 
-    const description = document.createElement('textarea');
-    description.name = 'description';
+  const dueDate = document.createElement("input");
+  dueDate.type = "date";
+  dueDate.name = "due-date";
+  dueDate.id = "due-date";
 
-    let placeHolder = (type === 'project')? "100" : "500";
-    description.placeholder = `Description (<${placeHolder} characters)`;
-    description.maxLength = placeHolder - 1;
-    description.id = 'description';
-    description.style.rows = '2';
+  const priorityLabel = document.createElement("label");
+  priorityLabel.innerText = "Priority: ";
+  priorityLabel.htmlFor = "priority";
 
-    const dueDateLabel = document.createElement('label');
-    dueDateLabel.for= 'due-date';
-    dueDateLabel.innerText = "Due date: ";
+  let priorities = ["low", "medium", "high"];
 
-    const dueDate = document.createElement('input');
-    dueDate.type = 'date';
-    dueDate.name = 'due-date';
-    dueDate.id = 'due-date';
+  const select = document.createElement("select");
+  select.name = "priority";
+  select.id = "priority";
 
-    const priorityLabel = document.createElement('label');
-    priorityLabel.innerText = 'Priority: ';
-    priorityLabel.htmlFor = 'priority';
+  for (const priority of priorities) {
+    let option = document.createElement("option");
+    option.value = priority;
+    option.text = priority.charAt(0).toUpperCase() + priority.slice(1);
+    select.appendChild(option);
+  }
 
-    let priorities = ['low', 'medium', 'high'];
+  function handleForm(event) {
+    event.preventDefault();
+  }
+  form.addEventListener("submit", handleForm);
 
-    const select = document.createElement('select');
-    select.name = 'priority';
-    select.id = 'priority';
+  const submit = document.createElement("button");
+  submit.classList.add("submit");
+  submit.type = "submit";
+  submit.innerText = "Submit";
 
-    for (const priority of priorities){
-        let option = document.createElement('option');
-        option.value = priority;
-        option.text = priority.charAt(0).toUpperCase() + priority.slice(1);
-        select.appendChild(option);
+  submit.addEventListener("click", async function () {
+    if (title.value === "") {
+      alert("Please include a title.");
+      return;
     }
+    if (type === "project") {
+      projectSubmit();
+    } else if (type === "todo") {
+      toDoSubmit(index);
+    }
+    form.reset();
+  });
 
-    function handleForm(event) { event.preventDefault(); } 
-    form.addEventListener('submit', handleForm);
+  const cancel = document.createElement("button");
+  cancel.classList.add("cancel");
+  cancel.innerText = "Cancel";
+  cancel.addEventListener("click", function () {
+    window.location.reload();
+  });
 
-    const submit = document.createElement('button');
-    submit.classList.add('submit');
-    submit.type = 'submit';
-    submit.innerText = "Submit";
+  form.appendChild(titleLabel);
+  form.appendChild(title);
 
-    submit.addEventListener('click', function(){
-        if (title.value === ""){
-            alert("Please include a title.");
-            return;
-        }
-        if(type === 'project'){
-            projectSubmit();
-        } else if (type === 'todo'){
-            toDoSubmit(index);
-        }
-        form.reset();
-    });
+  form.appendChild(descriptionLabel);
+  form.appendChild(description);
 
-    const cancel = document.createElement('button');
-    cancel.classList.add('cancel');
-    cancel.innerText = 'Cancel';
-    cancel.addEventListener('click', function(){
-        window.location.reload();
-    });
+  form.appendChild(dueDateLabel);
+  form.appendChild(dueDate);
 
-    
-    
-    form.appendChild(titleLabel);
-    form.appendChild(title);
+  form.appendChild(priorityLabel);
+  form.appendChild(select);
 
-    form.appendChild(descriptionLabel);
-    form.appendChild(description);
+  form.appendChild(submit);
 
-    form.appendChild(dueDateLabel);
-    form.appendChild(dueDate);
+  form.appendChild(cancel);
 
-    form.appendChild(priorityLabel);
-    form.appendChild(select);
+  function handleForm(event) {
+    event.preventDefault();
+  }
+  form.addEventListener("submit", handleForm);
 
-    form.appendChild(submit);
+  formContainer.appendChild(form);
 
-    form.appendChild(cancel);
-
-    function handleForm(event) {event.preventDefault();}
-    form.addEventListener('submit', handleForm);
-
-    formContainer.appendChild(form);
-    
-
-    return formContainer;
+  return formContainer;
 }
 
-
-export{form};
-
+export { form };
