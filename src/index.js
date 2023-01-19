@@ -14,13 +14,15 @@ import { edit } from "./edit";
 
 // Before loading page, check to see if user has set a theme
 
-let currentTheme = localStorage.getObj("theme");
+// Pretty sure this code is taken care of in theme.js now
 
-console.log(currentTheme);
+// let currentTheme = localStorage.getObj("theme");
 
-if (currentTheme === null) {
-  localStorage.setObj("theme", "light");
-}
+// console.log(currentTheme);
+
+// if (currentTheme === null) {
+//   localStorage.setObj("theme", "light");
+// }
 
 document.body.appendChild(homeMaker());
 

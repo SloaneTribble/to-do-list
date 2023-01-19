@@ -30,7 +30,7 @@ async function setTheme() {
 
   // localStorage.setObj(theme, newTheme);
 
-  window.location.reload();
+  // window.location.reload();
 }
 
 export { setTheme };
