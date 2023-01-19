@@ -5,7 +5,6 @@
 // to ensure that the user sees all of the projects in storage
 
 import Project from "./project";
-import { displayProjects } from "./display-projects";
 import { db } from "./firebase-init";
 import { setDoc, getDoc, doc } from "firebase/firestore";
 
@@ -80,6 +79,7 @@ async function projectSubmit() {
 
   console.log("About to call setDoc with:", currentProjects);
 
+  // Transform array of custom objects into array of pure JS objects
   currentProjects = currentProjects.map((obj) => {
     return Object.assign({}, obj);
   });

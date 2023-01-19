@@ -277,8 +277,6 @@ async function removeIndividual(e, projectToDos, currentProjects) {
 }
 
 async function remove(index) {
-  let currentProjects = localStorage.getObj(key) || [];
-
   currentProjects.splice(index, 1);
   await setDoc(doc(db, "projects", "all"), { currentProjects });
 

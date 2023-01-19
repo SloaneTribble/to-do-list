@@ -3,10 +3,9 @@
 
 // Each time currentProjects is updated, displayProjects() is called
 // to ensure that the user sees all of the projects in storage
+import { displayProjects } from "./display-projects";
 
 import ToDo from "./todo";
-import { removeIndividual } from "./display-projects";
-import { displayProjects } from "./display-projects";
 import { db } from "./firebase-init";
 import { setDoc, getDoc, doc } from "firebase/firestore";
 
@@ -34,15 +33,19 @@ async function toDoSubmit(index) {
   const dueDate = document.getElementById("due-date").value;
   const priority = document.getElementById("priority").value;
 
-  const toDo = new ToDo(title, description, dueDate, priority);
+  let toDo = new ToDo(title, description, dueDate, priority);
+
+  toDo = Object.assign({}, toDo);
 
   project.toDos.push(toDo);
 
   // localStorage.setObj(key, currentProjects);
 
+  // Transform array of custom objects into array of pure JS objects
+  currentProjects = currentProjects.map((obj) => {
+    return Object.assign({}, obj);
+  });
   await setDoc(doc(db, "projects", "all"), { currentProjects });
-
-  // await displayProjects();
 
   window.location.reload();
 

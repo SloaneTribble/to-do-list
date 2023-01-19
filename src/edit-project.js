@@ -1,3 +1,5 @@
+import { displayProjects } from "./display-projects";
+
 import { db } from "./firebase-init";
 import { setDoc, getDoc, doc } from "firebase/firestore";
 
