@@ -33588,17 +33588,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 // if (currentTheme === null) {
 //   localStorage.setObj("theme", "light");
 // }
+// Storage.prototype.setObj = function (key, obj) {
+//   return this.setItem(key, JSON.stringify(obj));
+// };
+// Storage.prototype.getObj = function (key) {
+//   return JSON.parse(this.getItem(key));
+// };
 
+// const key = "projects";
+
+// let currentProjects = localStorage.getObj(key) || [];
+
+// Import the functions you need from the SDKs you need
+
+
+
+
+// retrieve data from firestore
+
+var docRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_8__.doc)(_firebase_init_js__WEBPACK_IMPORTED_MODULE_6__.db, "projects", "all");
+var docSnap = await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_8__.getDoc)(docRef);
+var currentProjects = docSnap.data().currentProjects;
 document.body.appendChild((0,_home__WEBPACK_IMPORTED_MODULE_2__.homeMaker)());
 (0,_display_projects__WEBPACK_IMPORTED_MODULE_3__.displayProjects)();
-Storage.prototype.setObj = function (key, obj) {
-  return this.setItem(key, JSON.stringify(obj));
-};
-Storage.prototype.getObj = function (key) {
-  return JSON.parse(this.getItem(key));
-};
-var key = "projects";
-var currentProjects = localStorage.getObj(key) || [];
 
 // Button for creating a new project
 
@@ -33614,49 +33626,59 @@ newProjectButton.addEventListener("click", function () {
 });
 var editProjectButtons = document.querySelectorAll(".edit-project-button");
 editProjectButtons.forEach(function (button) {
-  button.addEventListener("click", function () {
-    localStorage.setObj(key, currentProjects);
-    var formContainer = document.querySelector(".form-container");
-    if (document.body.contains(formContainer)) {
-      return;
-    }
-    var type = "project";
-    var index = button.id;
-    var title = currentProjects[index].title;
-    var description = currentProjects[index].description;
-    var dueDate = currentProjects[index].dueDate;
-    var priority = currentProjects[index].priority;
-    document.body.appendChild((0,_edit__WEBPACK_IMPORTED_MODULE_5__.edit)(type, index, title, description, dueDate, priority));
-  });
+  button.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+    var formContainer, type, index, title, description, dueDate, priority;
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          _context.next = 2;
+          return (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_8__.setDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_8__.doc)(_firebase_init_js__WEBPACK_IMPORTED_MODULE_6__.db, "projects", "all"), {
+            currentProjects: currentProjects
+          });
+        case 2:
+          // localStorage.setObj(key, currentProjects);
+          formContainer = document.querySelector(".form-container");
+          if (!document.body.contains(formContainer)) {
+            _context.next = 5;
+            break;
+          }
+          return _context.abrupt("return");
+        case 5:
+          type = "project";
+          index = button.id;
+          title = currentProjects[index].title;
+          description = currentProjects[index].description;
+          dueDate = currentProjects[index].dueDate;
+          priority = currentProjects[index].priority;
+          document.body.appendChild((0,_edit__WEBPACK_IMPORTED_MODULE_5__.edit)(type, index, title, description, dueDate, priority));
+        case 12:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee);
+  })));
 });
 document.querySelector(".theme-toggle").addEventListener("click", _theme__WEBPACK_IMPORTED_MODULE_1__.setTheme);
-
-// Firebase related
-
-// Import the functions you need from the SDKs you need
-
-
-
 
 // Signs-in User.
 function signIn() {
   return _signIn.apply(this, arguments);
 }
 function _signIn() {
-  _signIn = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+  _signIn = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
     var provider;
-    return _regeneratorRuntime().wrap(function _callee$(_context) {
-      while (1) switch (_context.prev = _context.next) {
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
         case 0:
           // Sign in Firebase using popup auth and Google as the identity provider.
           provider = new firebase_auth__WEBPACK_IMPORTED_MODULE_7__.GoogleAuthProvider();
-          _context.next = 3;
+          _context2.next = 3;
           return (0,firebase_auth__WEBPACK_IMPORTED_MODULE_7__.signInWithPopup)((0,firebase_auth__WEBPACK_IMPORTED_MODULE_7__.getAuth)(), provider);
         case 3:
         case "end":
-          return _context.stop();
+          return _context2.stop();
       }
-    }, _callee);
+    }, _callee2);
   }));
   return _signIn.apply(this, arguments);
 }
@@ -33746,7 +33768,7 @@ initFirebaseAuth();
 
 // END Firebase related
 __webpack_async_result__();
-} catch(e) { __webpack_async_result__(e); } });
+} catch(e) { __webpack_async_result__(e); } }, 1);
 
 /***/ }),
 
