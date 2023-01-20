@@ -19,19 +19,6 @@ if (docSnap.exists()) {
   console.log("No data");
 }
 
-// Storage.prototype.setObj = function (key, obj) {
-//   return this.setItem(key, JSON.stringify(obj));
-// };
-// Storage.prototype.getObj = function (key) {
-//   return JSON.parse(this.getItem(key));
-// };
-
-// const key = "projects";
-
-// Sort projects based on date
-
-// let currentProjects = localStorage.getObj(key) || [];
-
 // if no projects have been added, the database will be empty and
 // there won't be a name corresponding to an empty array
 
@@ -57,17 +44,8 @@ if (currentProjects.length > 1) {
 console.log("About to call setdoc with:", currentProjects);
 await setDoc(doc(db, "projects", "all"), { currentProjects });
 
-// localStorage.setObj(key, currentProjects);
-
 async function projectSubmit() {
-  // If currentProjects is null, assign an empty array
-
-  // let currentProjects = localStorage.getObj(key) || [];
-
   // USING GLOBALLY DEFINED PROJECTS
-  // const docRef = doc(db, "projects", "all");
-  // const docSnap = await getDoc(docRef);
-  // let currentProjects = docSnap.data().currentProjects || [];
 
   const title = document.getElementById("title").value;
   const description = document.getElementById("description").value;
@@ -85,7 +63,6 @@ async function projectSubmit() {
   });
   await setDoc(doc(db, "projects", "all"), { currentProjects });
 
-  // localStorage.setObj(key, currentProjects);
   window.location.reload();
 
   return newProject;

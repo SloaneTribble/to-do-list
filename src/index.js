@@ -12,28 +12,6 @@ import { newProject } from "./project-form";
 
 import { edit } from "./edit";
 
-// Before loading page, check to see if user has set a theme
-
-// Pretty sure this code is taken care of in theme.js now
-
-// let currentTheme = localStorage.getObj("theme");
-
-// console.log(currentTheme);
-
-// if (currentTheme === null) {
-//   localStorage.setObj("theme", "light");
-// }
-// Storage.prototype.setObj = function (key, obj) {
-//   return this.setItem(key, JSON.stringify(obj));
-// };
-// Storage.prototype.getObj = function (key) {
-//   return JSON.parse(this.getItem(key));
-// };
-
-// const key = "projects";
-
-// let currentProjects = localStorage.getObj(key) || [];
-
 // Import the functions you need from the SDKs you need
 import { app, db } from "./firebase-init.js";
 
@@ -44,21 +22,7 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  query,
-  orderBy,
-  limit,
-  onSnapshot,
-  setDoc,
-  getDoc,
-  updateDoc,
-  doc,
-  serverTimestamp,
-  set,
-} from "firebase/firestore";
+import { setDoc, getDoc, doc } from "firebase/firestore";
 
 // retrieve data from firestore
 
@@ -90,8 +54,6 @@ const editProjectButtons = document.querySelectorAll(".edit-project-button");
 editProjectButtons.forEach((button) => {
   button.addEventListener("click", async () => {
     await setDoc(doc(db, "projects", "all"), { currentProjects });
-
-    // localStorage.setObj(key, currentProjects);
 
     const formContainer = document.querySelector(".form-container");
 

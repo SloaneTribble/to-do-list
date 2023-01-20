@@ -19,25 +19,9 @@ let currentProjects = docSnap.data().currentProjects;
 let fireTheme = themeSnap.data().theme;
 console.log(themeSnap.data());
 
-// Storage.prototype.setObj = function (key, obj) {
-//   return this.setItem(key, JSON.stringify(obj));
-// };
-// Storage.prototype.getObj = function (key) {
-//   return JSON.parse(this.getItem(key));
-// };
-
-// const key = "projects";
-
-// const theme = "theme";
-
-// If currentProjects is null, assign an empty array
-
 async function displayProjects() {
-  // let currentProjects = localStorage.getObj(key) || [];
-
   console.log("Data retrieved:", currentProjects, fireTheme);
 
-  // let currentTheme = localStorage.getObj(theme);
   let currentTheme = fireTheme;
 
   const root = document.documentElement;
@@ -105,7 +89,6 @@ async function displayProjects() {
       currentProjects[i].isActive = true;
 
       await setDoc(doc(db, "projects", "all"), { currentProjects });
-      // localStorage.setObj(key, currentProjects);
 
       project.appendChild(toDoList);
       toDoButtonContainer.removeChild(toDos);
@@ -119,8 +102,6 @@ async function displayProjects() {
       // Keep track of which tabs are open/closed on refresh
       currentProjects[i].isActive = false;
       await setDoc(doc(db, "projects", "all"), { currentProjects });
-
-      // localStorage.setObj(key, currentProjects);
 
       project.removeChild(toDoList);
       toDoButtonContainer.removeChild(hideToDos);
@@ -171,7 +152,6 @@ async function displayProjects() {
 
 function displayToDos(index) {
   // ATTEMPTING TO USE GLOBAL PROJECT VARIABLE
-  // let currentProjects = localStorage.getObj(key) || [];
 
   let project = currentProjects[index];
   let projectToDos = project.toDos;
@@ -237,7 +217,7 @@ function displayToDos(index) {
       if (document.body.contains(formContainer)) {
         return;
       }
-
+      console.log("Edit:", projectToDos[toDo]);
       document.body.appendChild(
         edit(
           "to-do",
@@ -272,15 +252,12 @@ async function removeIndividual(e, projectToDos, currentProjects) {
   console.log(e);
   projectToDos.splice(e, 1);
   await setDoc(doc(db, "projects", "all"), { currentProjects });
-
-  // localStorage.setObj(key, currentProjects);
 }
 
 async function remove(index) {
   currentProjects.splice(index, 1);
   await setDoc(doc(db, "projects", "all"), { currentProjects });
 
-  // localStorage.setObj(key, currentProjects);
   window.location.reload();
 }
 

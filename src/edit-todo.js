@@ -9,18 +9,8 @@ const docSnap = await getDoc(docRef);
 
 let currentProjects = docSnap.data().currentProjects;
 
-// Storage.prototype.setObj = function(key, obj) {
-//     return this.setItem(key, JSON.stringify(obj))
-// }
-// Storage.prototype.getObj = function(key) {
-//     return JSON.parse(this.getItem(key))
-// }
-
-// const key = "projects";
-
 // Sort projects based on date
 
-// let currentProjects = localStorage.getObj(key) || [];
 currentProjects.sort(function compare(a, b) {
   let dateA = new Date(a.dueDate);
   let dateB = new Date(b.dueDate);
@@ -36,11 +26,7 @@ for (let project in currentProjects) {
   });
 }
 
-// localStorage.setObj(key, currentProjects);
-
 async function editToDo(index, toDo) {
-  // If currentProjects is null, assign an empty array
-  // let currentProjects = localStorage.getObj(key) || [];
   let projectToDos = currentProjects[index].toDos;
 
   const title = document.getElementById("title").value;
@@ -55,11 +41,12 @@ async function editToDo(index, toDo) {
   projectToDos[toDo].dueDate = dueDate;
   projectToDos[toDo].priority = priority;
 
+  currentProjects[index].toDos = projectToDos;
+
   await setDoc(doc(db, "projects", "all"), { currentProjects });
 
-  // localStorage.setObj(key, currentProjects);
-  await displayProjects();
-  window.location.reload();
+  //  await displayProjects();
+  // window.location.reload();
 
   return;
 }

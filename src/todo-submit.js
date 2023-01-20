@@ -13,15 +13,6 @@ const docRef = doc(db, "projects", "all");
 const docSnap = await getDoc(docRef);
 let currentProjects = docSnap.data().currentProjects;
 
-// Storage.prototype.setObj = function (key, obj) {
-//   return this.setItem(key, JSON.stringify(obj));
-// };
-// Storage.prototype.getObj = function (key) {
-//   return JSON.parse(this.getItem(key));
-// };
-
-// const key = "projects";
-
 async function toDoSubmit(index) {
   // If currentProjects is null, assign an empty array
   // Check for the latest info whenever this function is called
