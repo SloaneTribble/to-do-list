@@ -45,8 +45,7 @@ async function editToDo(index, toDo) {
 
   await setDoc(doc(db, "projects", "all"), { currentProjects });
 
-  //  await displayProjects();
-  // window.location.reload();
+  window.location.reload();
 
   return;
 }

@@ -32711,7 +32711,7 @@ function _displayProjects() {
           currentTheme = fireTheme;
           root = document.documentElement;
           root.className = currentTheme;
-          projectContainer = document.querySelector(".project-container"); // Clear the current display to prevent repetition
+          projectContainer = document.querySelector(".project-container");
           projectContainer.innerHTML = "";
           _loop2 = /*#__PURE__*/_regeneratorRuntime().mark(function _loop2(i) {
             var project, projectDetails, title, description, dueDate, priority, priorityColor, toDoButtonContainer, toDos, toDoList, hideToDos, addToDo, editProject, removeProject;
@@ -32902,8 +32902,9 @@ function displayToDos(index) {
             _context.next = 2;
             return removeIndividual(toDo, projectToDos, currentProjects);
           case 2:
-            window.location.reload();
-          case 3:
+            _context.next = 4;
+            return displayProjects();
+          case 4:
           case "end":
             return _context.stop();
         }
@@ -33136,8 +33137,9 @@ function _editToDo() {
             currentProjects: currentProjects
           });
         case 13:
+          window.location.reload();
           return _context.abrupt("return");
-        case 14:
+        case 15:
         case "end":
           return _context.stop();
       }

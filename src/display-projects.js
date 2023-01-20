@@ -30,7 +30,6 @@ async function displayProjects() {
 
   const projectContainer = document.querySelector(".project-container");
 
-  // Clear the current display to prevent repetition
   projectContainer.innerHTML = "";
 
   for (let i = 0; i < currentProjects.length; i++) {
@@ -204,7 +203,7 @@ function displayToDos(index) {
       "click",
       async function () {
         await removeIndividual(toDo, projectToDos, currentProjects);
-        window.location.reload();
+        await displayProjects();
       },
       false
     );
