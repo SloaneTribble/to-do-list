@@ -1,8 +1,8 @@
 # to-do-list
 
-This assignment from The Odin Project is designed to offer a bit more practice with Javascript fundamentals, along with modules and Webpack, before moving on to more advanced topics.  
+This assignment from The Odin Project is designed to offer a bit more practice with Javascript fundamentals, along with modules and Webpack, before moving on to more advanced topics.
 
-Live Preview: https://sloanetribble.github.io/to-do-list/
+Live Preview (using local storage): https://sloanetribble.github.io/to-do-list/
 
 Notable features of this app:
 
@@ -12,3 +12,7 @@ Notable features of this app:
 - User can edit and remove projects and tasks
 - Toggle between light and dark themes
 - User tasks and theme setting are managed with local storage
+
+I revisited this project in order to practice working with Firebase, a backend service.
+
+Live Preview (using Firebase authentication and Firestore): https://to-do-list-bdf1f.web.app
