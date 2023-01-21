@@ -83,8 +83,13 @@ button:active {
   border-bottom: 2px solid var(--border-color);
   background-color: var(--background-color);
   display: grid;
-  grid-template-columns: 3fr 4fr 2fr;
+  grid-template-columns: 3fr 4fr 2fr 1fr 1fr 2fr 0.5fr;
   min-width: 100vw;
+}
+
+.user-pic {
+  height: 50px;
+  width: 50px;
 }
 
 .header > * {
@@ -274,15 +279,4 @@ a:link {
 
 a:visited {
   color: chocolate;
-}
-
-.user-name,
-.user-pic {
-  border: solid 2px purple;
-  background-color: white;
-}
-
-.user-pic {
-  height: 50px;
-  width: 50px;
 }
