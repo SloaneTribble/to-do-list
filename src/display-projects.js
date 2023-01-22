@@ -7,7 +7,6 @@ import { form } from "./form";
 import { edit } from "./edit";
 import { db } from "./firebase-init";
 import { setDoc, getDoc, doc } from "firebase/firestore";
-
 // retrieve data from firestore
 
 const docRef = doc(db, "projects", "all");

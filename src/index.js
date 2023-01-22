@@ -1,3 +1,10 @@
+/**
+ * Upon authenticating a user, display-projects should access an array of objects
+ * corresponding to the user's id.
+ *
+ * All updates should be stored in relation to that specific object array.
+ */
+
 import "./style.css";
 
 // Initial page load functions
@@ -79,7 +86,7 @@ document.querySelector(".theme-toggle").addEventListener("click", setTheme);
 // Signs-in User.
 async function signIn() {
   // Sign in Firebase using popup auth and Google as the identity provider.
-  var provider = new GoogleAuthProvider();
+  let provider = new GoogleAuthProvider();
   await signInWithPopup(getAuth(), provider);
 }
 
@@ -119,11 +126,15 @@ function addSizeToGoogleProfilePic(url) {
   return url;
 }
 
+// Must find a way to access user data after the user has signed in,
+// and use that data to retrieve relevant projects and to-dos
+
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 function authStateObserver(user) {
   if (user) {
     // User is signed in!
     // Get the signed-in user's profile pic and name.
+
     let profilePicUrl = getProfilePicUrl();
     let userName = getUserName();
 
